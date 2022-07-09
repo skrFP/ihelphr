@@ -1,0 +1,103 @@
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { useTheme } from "@react-navigation/native";
+import useCompanyProfile from "../../hooks/ProfileDetail/Company/useCompanyProfile";
+import useCompanyJobs from "../../hooks/ProfileDetail/Company/useCompanyJobs";
+import CompanyTop from "../../components/Dynamic/Company/CompanyTop";
+import Border from "../../components/Border";
+import CompanyAbout from "../../components/Dynamic/Company/CompanyAbout";
+import CompanyPortf from "../../components/Dynamic/Company/CompanyPortf";
+import Spinner from "../../components/Spinner";
+import CompanyJobs from "../../components/Dynamic/Company/CompanyJobs";
+import Header from "../../components/Header/Header";
+const ViewCompanyProfile = (props) => {
+  const { id } = props.route.params;
+  const { colors } = useTheme();
+  const [companyProfile] = useCompanyProfile(id);
+  const [companyJobs, loading] = useCompanyJobs(id);
+  if (!companyProfile) {
+    return null;
+  }
+
+  return (
+    <SafeAreaView style={{ backgroundColor: colors.header }}>
+      <Header isBack={true} />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <CompanyTop
+          cover={companyProfile.cover}
+          profile={companyProfile.profile}
+          point={companyProfile.point}
+          name={companyProfile.name}
+          category={companyProfile.category && companyProfile.category.name}
+          jobCount={companyProfile.jobNumber}
+          followerCount={companyProfile.follower}
+          followingCount={companyProfile.following}
+          isFollow={companyProfile.isFollowing}
+          id={companyProfile._id}
+          data={companyProfile}
+        />
+        <View style={{ bottom: 30 }}>
+          <Border />
+          <CompanyAbout
+            about={companyProfile.about}
+            web={companyProfile.web}
+            phone={companyProfile.phone}
+            workerNumber={companyProfile.employerNumber}
+            createYear={companyProfile.createYear}
+            location={companyProfile.location}
+          />
+          <Border />
+          {companyProfile.portfolio && (
+            <>
+              <CompanyPortf
+                image1={companyProfile.portfolio.image1}
+                image2={companyProfile.portfolio.image2}
+                image3={companyProfile.portfolio.image3}
+                image4={companyProfile.portfolio.image4}
+                image5={companyProfile.portfolio.image5}
+                image6={companyProfile.portfolio.image6}
+              />
+              <Border />
+            </>
+          )}
+
+          {loading ? (
+            <Spinner />
+          ) : (
+            <>
+              <Text
+                style={{
+                  color: colors.primaryText,
+                  fontFamily: "Sf-bold",
+                  fontSize: 20,
+                  marginHorizontal: 20,
+                  marginVertical: 15,
+                }}
+              >
+                Ажлын зарууд
+              </Text>
+              {companyJobs.map((data) => {
+                return (
+                  <View key={data._id}>
+                    <CompanyJobs
+                      id={data._id}
+                      createUser={data.createUser}
+                      occupation={data.occupation}
+                      type={data.type}
+                      salary={data.salary}
+                      count={data.count}
+                    />
+                  </View>
+                );
+              })}
+            </>
+          )}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
+
+export default ViewCompanyProfile;
+
+const styles = StyleSheet.create({});
