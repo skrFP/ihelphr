@@ -29,7 +29,7 @@ const CvScreen = () => {
   const getCvs = () => {
     axios
       .get(
-        `${api}/api/v1/questionnaires?select=workingCompany working profession firstName lastName profile score experienceCount familyCount courseCount achievementCount birth createUser&limit=1000`
+        `${api}/api/v1/questionnaires?select=workingCompany working profession firstName lastName profile score experienceCount familyCount courseCount achievementCount birth createUser salaryExpectation experiences&limit=1000`
       )
       .then((res) => {
         if (isMounted) {
@@ -52,7 +52,7 @@ const CvScreen = () => {
   }
   return (
     <SafeAreaView style={{ backgroundColor: colors.header, flex: 1 }}>
-      <CompanyHeader />
+      <CompanyHeader isSearch={true} isNotification={true} />
       {point.point > 1000 ? (
         <View style={{ backgroundColor: colors.background, marginBottom: 100 }}>
           <FlatList
@@ -95,9 +95,6 @@ const CvScreen = () => {
         </View>
       )}
     </SafeAreaView>
-    // <SafeAreaView>
-    //   <Text onPress={() => state.logout()}>logout</Text>
-    // </SafeAreaView>
   );
 };
 

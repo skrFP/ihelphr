@@ -12,6 +12,8 @@ import ViewUserFollower from "../screens/Dynamic/ViewUserFollower";
 import UserSendWorkRequest from "../screens/Dynamic/UserSendWorkRequest";
 import PostSettings from "../screens/Network/PostSettings";
 import EditPost from "../screens/Network/EditPost";
+import BoostPost from "../screens/Profile/User/Wallet/BoostPost";
+import ViewUserPost from "../screens/Dynamic/ViewUserPost";
 const NetworkingGroup = () => {
   const NetworkingStack = createNativeStackNavigator();
   return (
@@ -86,12 +88,32 @@ const NetworkingGroup = () => {
           options={{ headerShown: false, fullScreenGestureEnabled: true }}
         />
         <NetworkingStack.Screen
+          name="ViewUserPosts"
+          component={ViewUserPost}
+          options={{
+            headerShown: true,
+            presentation: "formSheet",
+            title: "Хэрэглэгчийн пост",
+            headerLeft: () => <MyBackButton />,
+          }}
+        />
+        <NetworkingStack.Screen
           name="UserSendWorkRequest"
           component={UserSendWorkRequest}
           options={{
             headerShown: true,
             presentation: "formSheet",
             title: "Ажлын санал илгээх",
+            headerLeft: () => <MyBackButton />,
+          }}
+        />
+        <NetworkingStack.Screen
+          name="BoostPost"
+          component={BoostPost}
+          options={{
+            headerShown: true,
+            presentation: "formSheet",
+            title: "Пост бүүстлэх",
             headerLeft: () => <MyBackButton />,
           }}
         />

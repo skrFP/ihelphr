@@ -7,6 +7,8 @@ import ViewUserFollower from "../screens/Dynamic/ViewUserFollower";
 import ViewUserFollowing from "../screens/Dynamic/ViewUserFollowings";
 import UserSendWorkRequest from "../screens/Dynamic/UserSendWorkRequest";
 import MyBackButton from "../components/Header/MyBackButton";
+import NotificationScreen from "../screens/Dynamic/NotificationScreen";
+import ViewUserPost from "../screens/Dynamic/ViewUserPost";
 const CvGroup = () => {
   const CvStack = createNativeStackNavigator();
   return (
@@ -38,12 +40,30 @@ const CvGroup = () => {
           options={{ headerShown: false, fullScreenGestureEnabled: true }}
         />
         <CvStack.Screen
+          name="ViewUserPosts"
+          component={ViewUserPost}
+          options={{
+            headerShown: true,
+            presentation: "formSheet",
+            title: "Хэрэглэгчийн пост",
+            headerLeft: () => <MyBackButton />,
+          }}
+        />
+        <CvStack.Screen
           name="UserSendWorkRequest"
           component={UserSendWorkRequest}
           options={{
             title: "Ажлын санал илгээх",
             headerLeft: () => <MyBackButton />,
             presentation: "formSheet",
+          }}
+        />
+        <CvStack.Screen
+          name="NotificationScreen"
+          component={NotificationScreen}
+          options={{
+            headerShown: false,
+            fullScreenGestureEnabled: true,
           }}
         />
       </CvStack.Group>

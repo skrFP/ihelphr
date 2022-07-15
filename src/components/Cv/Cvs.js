@@ -7,7 +7,6 @@ import CircularProgress from "react-native-circular-progress-indicator";
 const Cvs = ({ item }) => {
   const { colors } = useTheme();
   const navigation = useNavigation();
-
   return (
     <View
       style={{
@@ -88,7 +87,9 @@ const Cvs = ({ item }) => {
                 }}
               >
                 Ажлын туршлага:{" "}
-                <Text style={{ fontFamily: "Sf-regular" }}>9-11</Text>
+                <Text style={{ fontFamily: "Sf-regular" }}>
+                  {item.experiences}
+                </Text>
               </Text>
               <Text
                 style={{
@@ -99,13 +100,15 @@ const Cvs = ({ item }) => {
                 }}
               >
                 Цалингийн хүлээлт:{" "}
-                <Text style={{ fontFamily: "Sf-regular" }}>3,000,000₮</Text>
+                <Text style={{ fontFamily: "Sf-regular" }}>
+                  {item.salaryExpectation}
+                </Text>
               </Text>
             </View>
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{ marginRight: 10 }}>
+      <View style={{ marginRight: 10, position: "absolute", right: 0 }}>
         <CircularProgress
           value={item.score}
           activeStrokeColor={"#3A1C71"}

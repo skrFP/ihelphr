@@ -234,9 +234,17 @@ const Posts = (props) => {
                         color: colors.secondaryText,
                       }}
                     >
+                      {createUser.profession}{" "}
+                      {createUser.workingCompany &&
+                        `@${createUser.workingCompany}`}
+                    </Text>
+                    <Text
+                      style={{
+                        color: colors.secondaryText,
+                      }}
+                    >
                       Sponsored
                     </Text>
-                    <Text> {createUser.profession} </Text>
                   </>
                 ) : (
                   <>
@@ -358,6 +366,11 @@ const Posts = (props) => {
             fontFamily: "Sf-thin",
             fontSize: 12,
           }}
+          onPress={() =>
+            navigation.navigate("NetworkingPostDetailScreen", {
+              id: postId,
+            })
+          }
         >
           {counter + " Таалагдсан"}
         </Text>
@@ -368,6 +381,11 @@ const Posts = (props) => {
             fontFamily: "Sf-thin",
             fontSize: 12,
           }}
+          onPress={() =>
+            navigation.navigate("NetworkingPostDetailScreen", {
+              id: postId,
+            })
+          }
         >
           {commentCount + " Сэтгэгдэл"}
         </Text>
@@ -378,6 +396,11 @@ const Posts = (props) => {
               fontFamily: "Sf-thin",
               fontSize: 12,
             }}
+            onPress={() =>
+              navigation.navigate("NetworkingPostDetailScreen", {
+                id: postId,
+              })
+            }
           >
             {shareCount + " Хуваалцсан"}
           </Text>
@@ -416,7 +439,9 @@ const Posts = (props) => {
         <TouchableOpacity
           style={{ flexDirection: "row", alignItems: "center" }}
           onPress={() =>
-            navigation.navigate("PostDetailScreen", { id: postId })
+            navigation.navigate("NetworkingPostDetailScreen", {
+              id: postId,
+            })
           }
         >
           <MaterialCommunityIcons

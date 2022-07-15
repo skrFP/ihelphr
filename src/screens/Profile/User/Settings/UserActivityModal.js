@@ -36,6 +36,7 @@ const UserActivityModal = () => {
         keyExtractor={(item, index) => index}
         ListHeaderComponent={<View style={{ marginBottom: 20 }} />}
         renderItem={({ item }) => {
+          console.log(item);
           return (
             <View>
               {item.type === "Comment" && (
@@ -43,7 +44,7 @@ const UserActivityModal = () => {
                   {item.postId && (
                     <TouchableOpacity
                       onPress={() =>
-                        navigation.navigate("SettingPostDetail", {
+                        navigation.navigate("NetworkingPostDetailScreen", {
                           id: item.postId._id,
                         })
                       }
@@ -131,7 +132,7 @@ const UserActivityModal = () => {
                 <>
                   <TouchableOpacity
                     onPress={() =>
-                      navigation.navigate("SettingPostDetail", {
+                      navigation.navigate("NetworkingPostDetailScreen", {
                         id: item.postId._id,
                         isLiked: item.postId.isLiked,
                       })
@@ -211,7 +212,7 @@ const UserActivityModal = () => {
               {item.type === "Like" && (
                 <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate("SettingPostDetail", {
+                    navigation.navigate("NetworkingPostDetailScreen", {
                       id: item.postId && item.postId._id,
                     })
                   }
@@ -285,7 +286,7 @@ const UserActivityModal = () => {
               {item.type === "JobSave" && (
                 <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate("SettingWorkDetail", {
+                    navigation.navigate("UserWorkDetail", {
                       id: item.jobId._id,
                     })
                   }
@@ -365,7 +366,7 @@ const UserActivityModal = () => {
               {item.type === "Post" && (
                 <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate("SettingWorkDetail", {
+                    navigation.navigate("NetworkingPostDetailScreen", {
                       id: item.postId._id,
                     })
                   }

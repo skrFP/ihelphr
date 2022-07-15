@@ -8,7 +8,7 @@ const CompanySettingModal = () => {
   const { colors } = useTheme();
   const state = useContext(UserContext);
   const companyExit = () => {
-    state.companyLogout();
+    state.logout();
   };
   return (
     <View style={{ marginHorizontal: 20, flex: 1 }}>

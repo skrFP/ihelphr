@@ -13,7 +13,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { api } from "../../../Constants";
 
-const EmployeeSearch = () => {
+const AllCompanySearch = () => {
   const [filterData, setFilterData] = useState([]);
   const [masterData, setMasterData] = useState([]);
   const [search, setSearch] = useState("");
@@ -24,7 +24,7 @@ const EmployeeSearch = () => {
     return () => {};
   }, []);
   const fetchCompany = () => {
-    const apiURL = `${api}/api/v1/profiles?select=isEmployee profile firstName category&limit=1000`;
+    const apiURL = `${api}/api/v1/profiles?select=profile firstName category&limit=1000`;
     fetch(apiURL)
       .then((response) => response.json())
       .then((responseJson) => {
@@ -38,7 +38,9 @@ const EmployeeSearch = () => {
   const searchFilter = (text) => {
     if (text) {
       const newData = masterData.filter((item) => {
-        const itemData = item.firstName ? item.firstName.toUpperCase() : "".toUpperCase();
+        const itemData = item.firstName
+          ? item.firstName.toUpperCase()
+          : "".toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -52,40 +54,34 @@ const EmployeeSearch = () => {
   const ItemView = ({ item }) => {
     return (
       <>
-        {item.isEmployee === true && (
-          <>
-            <TouchableOpacity
-              style={{
-                flexDirection: "row",
-                marginHorizontal: 10,
-                alignItems: "center",
-              }}
-              onPress={() =>
-                navigation.navigate("ViewCompanyProfile", { id: item._id })
-              }
-            >
-              <Image
-                source={{ uri: `${api}/upload/${item.profile}` }}
-                style={{ width: 50, height: 50, borderRadius: 30 }}
-              />
-              <View style={{ marginLeft: 10 }}>
-                <Text style={{ color: colors.primaryText }}>
-                  {item.firstName}
-                </Text>
-                <Text style={{ color: colors.secondaryText }}>
-                  {item.category && item.category.name}
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <View
-              style={{
-                borderWidth: 1,
-                borderColor: colors.border,
-                marginVertical: 10,
-              }}
-            />
-          </>
-        )}
+        <TouchableOpacity
+          style={{
+            flexDirection: "row",
+            marginHorizontal: 10,
+            alignItems: "center",
+          }}
+          onPress={() =>
+            navigation.navigate("ViewCompanyProfile", { id: item._id })
+          }
+        >
+          <Image
+            source={{ uri: `${api}/upload/${item.profile}` }}
+            style={{ width: 50, height: 50, borderRadius: 30 }}
+          />
+          <View style={{ marginLeft: 10 }}>
+            <Text style={{ color: colors.primaryText }}>{item.firstName}</Text>
+            <Text style={{ color: colors.secondaryText }}>
+              {item.category && item.category.name}
+            </Text>
+          </View>
+        </TouchableOpacity>
+        <View
+          style={{
+            borderWidth: 1,
+            borderColor: colors.border,
+            marginVertical: 10,
+          }}
+        />
       </>
     );
   };
@@ -143,6 +139,6 @@ const EmployeeSearch = () => {
   );
 };
 
-export default EmployeeSearch;
+export default AllCompanySearch;
 
 const styles = StyleSheet.create({});

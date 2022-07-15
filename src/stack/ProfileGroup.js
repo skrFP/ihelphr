@@ -39,7 +39,6 @@ import ViewUserFollower from "../screens/Dynamic/ViewUserFollower";
 import ChangeAccountModal from "../screens/Profile/ChangeAccountModal";
 import { useTheme } from "@react-navigation/native";
 import PersonLoginScreen from "../screens/Auth/PersonLoginScreen";
-import CompanyLoginScreen from "../screens/Auth/CompanyLoginScreen";
 import ChangeCompanyLogin from "../screens/Profile/ChangeAccount/ChangeCompanyLogin";
 import CoursePackageModal from "../screens/Profile/User/Edit/CoursePackageModal";
 import ExperiencePackageModal from "../screens/Profile/User/Edit/ExperiencePackageModal";
@@ -50,7 +49,6 @@ import EditAbout from "../screens/Profile/User/Edit/EditAbout";
 import ExperienceAddModal from "../screens/Profile/User/Edit/ExperienceAddModal";
 import ExperienceDetailModal from "../screens/Profile/User/Edit/ExperienceDetailModal";
 import LanguageAddModal from "../screens/Profile/User/Edit/LanguageAddModal";
-import LanguageModal from "../screens/Profile/User/Edit/EditModal/LanguageModal";
 import LanguagePackagaModal from "../screens/Profile/User/Edit/LanguagePackageModal";
 import LanguageDetailModal from "../screens/Profile/User/Edit/LangaugeDetailModal";
 import NotificationScreen from "../screens/Dynamic/NotificationScreen";
@@ -58,6 +56,11 @@ import ChangePasswordModal from "../screens/Profile/User/Settings/ChangePassword
 import UserVerifyScreen from "../screens/Profile/User/Settings/UserVerifyScreen";
 import AddPostScreen from "../screens/Network/AddPostScreen";
 import ViewCompanyProfile from "../screens/Dynamic/ViewCompanyProfile";
+import CompanyWorkDetail from "../screens/Profile/Company/CompanyWorkDetail";
+import ViewUserProfile from "../screens/Dynamic/ViewUserProfile";
+import NetworkingPostDetailScreen from "../screens/Network/NetworkingPostDetailScreen";
+import CompanyPortfolia from "../screens/Profile/Company/CompanyEditCoverProfile/CompanyPortfolia";
+import ViewUserPost from "../screens/Dynamic/ViewUserPost";
 const ProfileGroup = () => {
   const ProfileStack = createNativeStackNavigator();
   const state = useContext(UserContext);
@@ -424,6 +427,14 @@ const ProfileGroup = () => {
               }}
             />
             <ProfileStack.Screen
+              name="NetworkingPostDetailScreen"
+              component={NetworkingPostDetailScreen}
+              options={{
+                headerShown: false,
+                presentation: "formSheet",
+              }}
+            />
+            <ProfileStack.Screen
               name="UserRecievedJob"
               component={UserRecievedJob}
               options={{
@@ -601,6 +612,18 @@ const ProfileGroup = () => {
             options={{ headerShown: false, fullScreenGestureEnabled: true }}
           />
         </>
+        {/* Port */}
+        <ProfileStack.Screen
+          name="CompanyPortfolia"
+          component={CompanyPortfolia}
+          options={{
+            headerShown: true,
+            presentation: "formSheet",
+            title: "Портфолиа",
+            headerLeft: () => <MyBackButton />,
+          }}
+        />
+        {/* port end */}
       </ProfileStack.Group>
       <ProfileStack.Group>
         <ProfileStack.Screen
@@ -610,6 +633,32 @@ const ProfileGroup = () => {
             headerShown: true,
             presentation: "formSheet",
             title: "Компани профайл",
+            headerLeft: () => <MyBackButton />,
+          }}
+        />
+        <ProfileStack.Screen
+          name="ViewUserProfile"
+          component={ViewUserProfile}
+          options={{
+            headerShown: false,
+            presentation: "formSheet",
+          }}
+        />
+        <ProfileStack.Screen
+          name="CompanyWorkDetail"
+          component={CompanyWorkDetail}
+          options={{
+            headerShown: false,
+            presentation: "formSheet",
+          }}
+        />
+        <ProfileStack.Screen
+          name="ViewUserPosts"
+          component={ViewUserPost}
+          options={{
+            headerShown: true,
+            presentation: "formSheet",
+            title: "Хэрэглэгчийн пост",
             headerLeft: () => <MyBackButton />,
           }}
         />

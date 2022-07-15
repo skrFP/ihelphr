@@ -56,14 +56,19 @@ const Header = (props) => {
               color={colors.primaryText}
               onPress={() => navigation.navigate("EmployeeSavedWork")}
             />
-          ) : (
+          ) : isSearch ? (
             <Ionicons
               name="search"
               size={25}
               color={colors.primaryText}
-              onPress={() => navigation.navigate("NetworkingSearch")}
+              onPress={() =>
+                navigation.navigate("Хайх", {
+                  screen: "SearchScreen",
+                  initial: false,
+                })
+              }
             />
-          )}
+          ) : null}
         </View>
         <View>
           <Image

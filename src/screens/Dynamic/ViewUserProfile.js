@@ -11,25 +11,29 @@ import Header from "../../components/Header/Header";
 import Border from "../../components/Border";
 import axios from "axios";
 import { api } from "../../../Constants";
+import Posts from "../../components/Network/Posts";
 const ViewUserProfile = (props) => {
   const { id } = props.route.params;
   const [userProfile, profileLoading] = useUserProfile(id);
   const [cv, cvLoading] = useCv(id);
   const { colors } = useTheme();
   const [activityData, setActivityData] = useState([]);
+
+  const getActivityData = () => {
+    axios
+      .get(`${api}/api/v1/posts/${id}/user`)
+      .then((res) => {
+        setActivityData(res.data.data);
+        console.log(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err.response, "aaa1");
+      });
+  };
+
   useEffect(() => {
     getActivityData();
   }, []);
-  const getActivityData = () => {
-    axios
-      .get(`${api}api/v1/posts/${id}/user`)
-      .then((res) => {
-        setActivityData(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err, "aaa");
-      });
-  };
   if (!cv || !userProfile) {
     return null;
   }
@@ -57,7 +61,6 @@ const ViewUserProfile = (props) => {
               marginHorizontal: 10,
               fontFamily: "Sf-bold",
               fontSize: 20,
-              marginBottom: 100,
             }}
           >
             Оруулсан нийтлэл
@@ -65,10 +68,7 @@ const ViewUserProfile = (props) => {
           {activityData &&
             activityData.map((item) => {
               return (
-                <View
-                  key={item._id}
-                  style={{ marginTop: 10, marginBottom: 1000 }}
-                >
+                <View key={item._id} style={{}}>
                   {item.createUser && (
                     <Posts
                       postId={item._id}
@@ -95,6 +95,7 @@ const ViewUserProfile = (props) => {
               );
             })}
         </View>
+        <View style={{ marginBottom: 100 }} />
       </ScrollView>
     </SafeAreaView>
   );

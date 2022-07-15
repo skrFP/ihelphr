@@ -44,7 +44,7 @@ const EmployeeScreen = () => {
   return (
     <SafeAreaView style={{ backgroundColor: "#141414", marginBottom: 115 }}>
       {state.isCompany ? (
-        <CompanyHeader isEmployeeAddWork={true} />
+        <CompanyHeader isEmployeeAddWork={true} isSearch={true} />
       ) : (
         <Header isEmployeeSaved={true} />
       )}

@@ -181,6 +181,9 @@ const UserProfileTop = ({ userProfile, isFollowing }) => {
           style={{
             alignItems: "center",
           }}
+          onPress={() =>
+            navigation.navigate("ViewUserPosts", { id: userProfile.id })
+          }
         >
           <Text style={{ color: colors.primaryText }}>
             {userProfile.postNumber}

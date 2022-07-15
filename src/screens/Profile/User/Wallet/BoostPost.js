@@ -14,7 +14,7 @@ import MyButton from "../../../../components/MyButton";
 
 const BoostPost = (props) => {
   const { data } = props.route.params;
-
+  console.log(data);
   const { colors } = useTheme();
   const [boostDay, setBoostDay] = useState(1);
   const [userPoint, setUserPoint] = useState([]);

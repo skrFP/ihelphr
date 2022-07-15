@@ -63,9 +63,7 @@ const PostSettings = ({ route }) => {
       <View>
         <TouchableOpacity
           style={{ flexDirection: "row", alignItems: "center", marginTop: 20 }}
-          onPress={() =>
-            navigation.navigate("BoostPost", { id: id, postData: postData })
-          }
+          onPress={() => navigation.navigate("BoostPost", { data: postData })}
         >
           <SimpleLineIcons name="energy" size={28} color={colors.primaryText} />
           <Text

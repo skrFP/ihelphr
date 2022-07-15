@@ -322,7 +322,6 @@ const EmployeeAddWork = () => {
               occupationName === "" ? "Мэргэжил сонгох" : `${occupationName}`
             }
             onPress={checkOccupation}
-            style={{ marginVertical: 5, padding: 7 }}
           />
           <Text style={[styles.textTitle, { color: colors.primaryText }]}>
             Үнийн санал
@@ -330,7 +329,6 @@ const EmployeeAddWork = () => {
           <MyButton
             text={price === "" ? "Нас сонгох" : price}
             onPress={checkPrice}
-            style={{ marginVertical: 5, padding: 7 }}
           />
           <Text style={[styles.textTitle, { color: colors.primaryText }]}>
             Зарцуулах цаг хугацаа
@@ -338,7 +336,6 @@ const EmployeeAddWork = () => {
           <MyButton
             text={time === "" ? "Нас сонгох" : time}
             onPress={checkTime}
-            style={{ marginVertical: 5, padding: 7 }}
           />
           <Text style={[styles.textTitle, { color: colors.primaryText }]}>
             Ажилчдийн тоо
@@ -346,7 +343,6 @@ const EmployeeAddWork = () => {
           <MyButton
             text={workerNumber === "" ? "Нас сонгох" : workerNumber}
             onPress={checkWorkerNumber}
-            style={{ marginVertical: 5, padding: 7 }}
           />
           <Text style={[styles.textTitle, { color: colors.primaryText }]}>
             Зарын төрөл
@@ -362,13 +358,9 @@ const EmployeeAddWork = () => {
                 : "Зарын төрөл сонгох"
             }
             onPress={checkOrders}
-            style={{ marginVertical: 5, padding: 7 }}
           />
-          <MyButton
-            text="Илгээх"
-            onPress={sendWork}
-            style={{ marginVertical: 10, marginBottom: 100, padding: 7 }}
-          />
+          <MyButton text="Илгээх" onPress={sendWork} />
+          <View style={{ marginBottom: 200 }} />
         </ScrollView>
       </View>
       {/* Мэргэжил сонгох */}

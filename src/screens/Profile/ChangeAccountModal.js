@@ -3,8 +3,7 @@ import React, { useContext } from "react";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import jwt_decode from "jwt-decode";
 import UserContext from "../../context/UserContext";
-import { LinearGradient } from "expo-linear-gradient";
-import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 import { api } from "../../../Constants";
 const ChangeAccountModal = () => {
   const { colors } = useTheme();
@@ -24,6 +23,9 @@ const ChangeAccountModal = () => {
     await state.login(state.phone, state.password);
     navigation.goBack();
   };
+  const logout = () => {
+    state.logout();
+  };
   return (
     <View>
       <View
@@ -36,8 +38,8 @@ const ChangeAccountModal = () => {
           paddingHorizontal: 20,
         }}
       />
-      {decoded && companyDecoded && (
-        <>
+      <>
+        {decoded ? (
           <>
             <View
               style={{
@@ -94,6 +96,7 @@ const ChangeAccountModal = () => {
               />
             </TouchableOpacity>
           </>
+        ) : companyDecoded ? (
           <>
             <View
               style={{
@@ -149,9 +152,26 @@ const ChangeAccountModal = () => {
               />
             </TouchableOpacity>
           </>
-        </>
-      )}
-      {companyDecoded ? (
+        ) : null}
+      </>
+      <TouchableOpacity
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          marginTop: 20,
+          alignSelf: "center",
+        }}
+        onPress={logout}
+      >
+        <MaterialIcons name="logout" size={28} color={colors.primaryText} />
+
+        <Text
+          style={{ color: colors.primaryText, marginLeft: 20, fontSize: 18 }}
+        >
+          Аккоунт гаргах
+        </Text>
+      </TouchableOpacity>
+      {/* {companyDecoded ? (
         <View style={{}}>
           <View style={{ alignItems: "center", marginTop: 30 }}>
             <FontAwesome5
@@ -262,7 +282,7 @@ const ChangeAccountModal = () => {
             </TouchableOpacity>
           </View>
         </View>
-      ) : null}
+      ) : null} */}
     </View>
   );
 };

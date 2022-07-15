@@ -100,10 +100,7 @@ const UserProfileScreen = () => {
           </Text>
           {activityData.map((item) => {
             return (
-              <View
-                key={item._id}
-                style={{ marginVertical: 10, marginBottom: 100 }}
-              >
+              <View key={item._id} style={{}}>
                 {item.createUser && (
                   <Posts
                     postId={item._id}
@@ -128,6 +125,7 @@ const UserProfileScreen = () => {
             );
           })}
         </View>
+        <View style={{ marginBottom: 100 }} />
       </ScrollView>
       <LinearGradient
         colors={["#3A1C71", "#D76D77", "#FFAF7B"]}

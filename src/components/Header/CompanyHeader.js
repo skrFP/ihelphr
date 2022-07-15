@@ -1,12 +1,45 @@
 import { Image, View, TouchableOpacity, Text } from "react-native";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { useNavigation, useTheme } from "@react-navigation/native";
+import UserContext from "../../context/UserContext";
+import axios from "axios";
+import { api } from "../../../Constants";
 const CompanyHeader = (props) => {
-  const { isBack, notification, isEmployeeAddWork, isEmployerAddWork } = props;
+  const {
+    isBack,
+    isEmployeeAddWork,
+    isEmployerAddWork,
+    isSearch,
+    isNotification,
+  } = props;
   const navigation = useNavigation();
   const { colors } = useTheme();
+  const state = useContext(UserContext);
+  const [companyProfile, setCompanyProfile] = useState(null);
+  let isMounted = true;
+  const loadCompanyProfile = () => {
+    axios
+      .get(`${api}/api/v1/profiles/${state.companyId}?select=notification`)
+      .then((res) => {
+        if (isMounted) {
+          setCompanyProfile(res.data.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
+  useEffect(() => {
+    loadCompanyProfile();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+  if (!companyProfile) {
+    return null;
+  }
   return (
     <View
       style={{
@@ -36,14 +69,19 @@ const CompanyHeader = (props) => {
               color={colors.primaryText}
               onPress={() => navigation.goBack()}
             />
-          ) : (
+          ) : isSearch ? (
             <Ionicons
               name="search"
               size={25}
               color={colors.primaryText}
-              onPress={() => navigation.navigate("NetworkingSearch")}
+              onPress={() =>
+                navigation.navigate("Хайх", {
+                  screen: "SearchScreen",
+                  initial: false,
+                })
+              }
             />
-          )}
+          ) : null}
         </View>
         <View>
           <Image
@@ -56,39 +94,7 @@ const CompanyHeader = (props) => {
           />
         </View>
         <View style={{ flexDirection: "row" }}>
-          {notification ? (
-            <TouchableOpacity style={{}}>
-              <Ionicons
-                name="md-notifications-outline"
-                size={30}
-                color={colors.primaryText}
-                style={{ marginRight: 10 }}
-              />
-
-              <View
-                style={{
-                  position: colors.primary,
-                  backgroundColor: "red",
-                  borderRadius: 20,
-                  paddingHorizontal: 3.5,
-                  position: "absolute",
-                  top: 0,
-                  right: 20,
-                }}
-              >
-                <Text
-                  style={{
-                    color: colors.primaryText,
-                    fontFamily: "Sf-bold",
-                    padding: 3,
-                    fontSize: 10,
-                  }}
-                >
-                  {notification}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          ) : isEmployerAddWork ? (
+          {isEmployerAddWork ? (
             <Ionicons
               name="add"
               size={30}
@@ -102,6 +108,41 @@ const CompanyHeader = (props) => {
               color={colors.primaryText}
               onPress={() => navigation.navigate("EmployeeAddWork")}
             />
+          ) : isNotification ? (
+            <TouchableOpacity
+              onPress={() => navigation.navigate("NotificationScreen")}
+            >
+              <Ionicons
+                name="md-notifications-outline"
+                size={30}
+                color={colors.primaryText}
+                style={{ marginRight: 10 }}
+              />
+              {companyProfile.notification ? (
+                <View
+                  style={{
+                    position: colors.primary,
+                    backgroundColor: "red",
+                    borderRadius: 20,
+                    paddingHorizontal: 3.5,
+                    position: "absolute",
+                    top: 0,
+                    right: 20,
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: colors.primaryText,
+                      fontFamily: "Sf-bold",
+                      padding: 3,
+                      fontSize: 10,
+                    }}
+                  >
+                    {companyProfile.notification}
+                  </Text>
+                </View>
+              ) : null}
+            </TouchableOpacity>
           ) : null}
         </View>
       </View>

@@ -17,6 +17,7 @@ import { ScrollView } from "react-native-gesture-handler";
 const fullWidth = Dimensions.get("screen").width;
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { api } from "../../../Constants";
+import NetworkingTextInput from "../../components/NetworkingTextInput";
 const NetworkingPostDetailScreen = (props) => {
   const { id } = props.route.params;
   const navigation = useNavigation();
@@ -506,11 +507,11 @@ const NetworkingPostDetailScreen = (props) => {
           );
         })}
       </ScrollView>
-      {/* <NetworkingTextInput
-          value={commentText}
-          onChangeText={setCommentText}
-          onPress={postComment}
-        /> */}
+      <NetworkingTextInput
+        value={commentText}
+        onChangeText={setCommentText}
+        onPress={postComment}
+      />
     </KeyboardAvoidingView>
   );
 };

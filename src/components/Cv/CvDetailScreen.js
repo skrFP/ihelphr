@@ -5,6 +5,7 @@ import {
   Image,
   SafeAreaView,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -27,7 +28,6 @@ const CvDetailScreen = (props) => {
     axios
       .get(`${api}/api/v1/questionnaires/${id}`)
       .then((res) => {
-        console.log(res.data.data, "ggwp");
         setData(res.data.data);
       })
       .catch((err) => {
@@ -592,22 +592,54 @@ const CvDetailScreen = (props) => {
             </>
           )}
         </View>
-        <MyButton
-          text={"Татах"}
-          onPress={printToFile}
-          style={{ marginHorizontal: 20, marginTop: 10 }}
-        />
-        <MyButton
-          text={"Ажлын санал тавих"}
-          style={{ marginHorizontal: 20, marginTop: 10 }}
-          onPress={() => navigation.navigate("UserSendWorkRequest", { id: id })}
-        />
-        <MyButton
-          text={"Профайл руу очих"}
-          style={{ marginHorizontal: 20, marginTop: 10 }}
-          onPress={() => navigation.navigate("ViewUserProfile", { id: id })}
-        />
+        {/* Tatah */}
+        <TouchableOpacity
+          style={{
+            padding: 10,
 
+            borderWidth: 1,
+            borderRadius: 20,
+            marginVertical: 10,
+            margin: 20,
+          }}
+          onPress={printToFile}
+        >
+          <Text style={{ textAlign: "center", color: colors.primaryText }}>
+            Татах
+          </Text>
+        </TouchableOpacity>
+        {/* Ajliin sanal tavih */}
+        <TouchableOpacity
+          style={{
+            padding: 10,
+
+            borderWidth: 1,
+            borderRadius: 20,
+            marginVertical: 10,
+            margin: 20,
+          }}
+          onPress={() => navigation.navigate("UserSendWorkRequest", { id: id })}
+        >
+          <Text style={{ textAlign: "center", color: colors.primaryText }}>
+            Ажлын санал тавих
+          </Text>
+        </TouchableOpacity>
+        {/* Profile ruu ochih */}
+        <TouchableOpacity
+          style={{
+            padding: 10,
+
+            borderWidth: 1,
+            borderRadius: 20,
+            marginVertical: 10,
+            margin: 20,
+          }}
+          onPress={() => navigation.navigate("ViewUserProfile", { id: id })}
+        >
+          <Text style={{ textAlign: "center", color: colors.primaryText }}>
+            Профайл руу очих
+          </Text>
+        </TouchableOpacity>
         <View style={{ marginVertical: 100 }} />
       </ScrollView>
     </SafeAreaView>

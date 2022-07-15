@@ -117,13 +117,16 @@ const UserProfileTop = ({ userProfile, cv }) => {
             </Text>
             <Text
               style={{
-                bottom: 0,
+                bottom: cv.profession && cv.profession.length < 15 ? 0 : -15,
                 position: "absolute",
                 fontFamily: "Sf-thin",
                 color: colors.secondaryText,
+                width: 150,
               }}
+              numberOfLines={2}
             >
-              {cv.profession} {cv.workingCompany && `@${cv.workingCompany}`}
+              {cv.profession}
+              {cv.workingCompany && `@${cv.workingCompany}`}
             </Text>
           </View>
         </View>
@@ -253,6 +256,9 @@ const UserProfileTop = ({ userProfile, cv }) => {
           style={{
             alignItems: "center",
           }}
+          onPress={() =>
+            navigation.navigate("ViewUserPosts", { id: userProfile.id })
+          }
         >
           <Text style={{ color: colors.primaryText }}>
             {userProfile.postNumber}

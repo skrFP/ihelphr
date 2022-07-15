@@ -14,6 +14,11 @@ import ViewCompanyProfile from "../screens/Dynamic/ViewCompanyProfile";
 import ViewUserProfile from "../screens/Dynamic/ViewUserProfile";
 import ViewUserFollower from "../screens/Dynamic/ViewUserFollower";
 import ViewUserFollowings from "../screens/Dynamic/ViewUserFollowings";
+import CustomSearchModal from "../screens/Search/Work/CustomSearchModal";
+import CustomSearchedModal from "../screens/Search/Work/CustomSearchedModal";
+import AllCompanySearch from "../screens/Search/AllCompanySearch";
+import NotificationScreen from "../screens/Dynamic/NotificationScreen";
+import ViewUserPost from "../screens/Dynamic/ViewUserPost";
 const SearchGroup = () => {
   const SearchStack = createNativeStackNavigator();
   return (
@@ -27,6 +32,11 @@ const SearchGroup = () => {
         <SearchStack.Screen
           name="CompanySearch"
           component={CompanySearch}
+          options={{ headerShown: false, fullScreenGestureEnabled: true }}
+        />
+        <SearchStack.Screen
+          name="AllCompanySearch"
+          component={AllCompanySearch}
           options={{ headerShown: false, fullScreenGestureEnabled: true }}
         />
         <SearchStack.Screen
@@ -56,6 +66,26 @@ const SearchGroup = () => {
           options={{
             fullScreenGestureEnabled: true,
             headerShown: false,
+          }}
+        />
+        <SearchStack.Screen
+          name="CustomSearchModal"
+          component={CustomSearchModal}
+          options={{
+            fullScreenGestureEnabled: true,
+            presentation: "formSheet",
+            title: "Ажлын зар сортлох",
+            headerLeft: () => <MyBackButton />,
+          }}
+        />
+        <SearchStack.Screen
+          name="CustomSearchedModal"
+          component={CustomSearchedModal}
+          options={{
+            fullScreenGestureEnabled: true,
+            presentation: "formSheet",
+            title: "Олдсон ажлын зар",
+            headerLeft: () => <MyBackButton />,
           }}
         />
         <SearchStack.Screen
@@ -113,6 +143,24 @@ const SearchGroup = () => {
             fullScreenGestureEnabled: true,
             title: "Дагдаг хүмүүс",
             headerLeft: () => <MyBackButton />,
+          }}
+        />
+        <SearchStack.Screen
+          name="ViewUserPosts"
+          component={ViewUserPost}
+          options={{
+            headerShown: true,
+            presentation: "formSheet",
+            title: "Хэрэглэгчийн пост",
+            headerLeft: () => <MyBackButton />,
+          }}
+        />
+        <SearchStack.Screen
+          name="NotificationScreen"
+          component={NotificationScreen}
+          options={{
+            headerShown: false,
+            fullScreenGestureEnabled: true,
           }}
         />
       </SearchStack.Group>

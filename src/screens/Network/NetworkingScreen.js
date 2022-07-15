@@ -85,133 +85,103 @@ const NetworkingScreen = () => {
 
   return (
     <SafeAreaView style={{ backgroundColor: colors.header, flex: 1 }}>
-      <Header />
-      {state.isCompany ? (
-        <View
-          style={{
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: colors.background,
-            opacity: 0.3,
-            flexDirection: "row",
-          }}
-        >
-          <View
-            style={{
-              backgroundColor: "#c4c4c4",
-              padding: 20,
-              width: "100%",
+      <Header isSearch={true} />
 
-              borderWidth: 1,
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <Entypo name="lock" size={20} color="black" />
-            <Text style={{ textAlign: "center" }}>
-              Та компани хаягаар нэвтэрсэн байна. Давхар хэрэглэгчийн аккаоунт
-              нээсэн үед нетворкинг ашиглах боломжтой болно.
-            </Text>
-          </View>
-        </View>
-      ) : (
-        <FlatList
-          data={followData}
-          onRefresh={onRefresh}
-          refreshing={isFetching}
-          ListFooterComponent={noMore ? NoMoreData : renderFooter}
-          showsVerticalScrollIndicator={false}
-          onEndReached={handleMore}
-          initialNumToRender={5}
-          onEndReachedThreshold={0}
-          ListHeaderComponent={
-            <>
-              <TouchableOpacity
-                onPress={() => navigation.navigate("AddPostScreen")}
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  borderWidth: 1,
-                  borderColor: colors.border,
-                  padding: 10,
-                  paddingBottom: 20,
-                  justifyContent: "space-between",
-                  marginTop: 10,
-                  backgroundColor: colors.background,
-                }}
-              >
-                <View style={{ flexDirection: "row", alignItems: "center" }}>
-                  <ImageBackground
-                    source={{ uri: `${api}/upload/${userProfile.profile}` }}
-                    style={{ width: 50, height: 50 }}
-                    imageStyle={{ borderRadius: 50 }}
-                  >
-                    <Image
-                      style={{ width: 54, height: 54, bottom: 2, right: 2 }}
-                      source={
-                        userProfile.status === "lookingForJob"
-                          ? require("../../../assets/looking.png")
-                          : userProfile.status === "opentowork"
-                          ? require("../../../assets/open.png")
-                          : userProfile.status === "getEmployee"
-                          ? require("../../../assets/hiring.png")
-                          : null
-                      }
-                    />
-                  </ImageBackground>
-                  <View style={{ marginLeft: 10 }}>
-                    <Text style={{ color: colors.secondaryText }}>
-                      Та хэлэх зүйлээ бичнэ үү?
-                    </Text>
-                  </View>
-                </View>
-                <FontAwesome5
-                  name="images"
-                  size={24}
-                  color="#FFB6C1"
-                  style={{ marginRight: 10 }}
-                />
-              </TouchableOpacity>
-              <View
-                style={{
-                  borderWidth: 1,
-                  borderColor: colors.border,
-                  marginTop: 10,
-                }}
-              />
-            </>
-          }
-          keyExtractor={(item, index) => index}
-          renderItem={({ item }) => {
-            return (
-              <View style={{ backgroundColor: colors.background }}>
-                {item.createUser && (
-                  <Posts
-                    postId={item._id}
-                    createUser={item.createUser}
-                    createdAt={item.createdAt}
-                    body={item.body}
-                    photo={item.photo}
-                    isShared={item.isShare}
-                    sharedUser={item.sharePost && item.sharePost.createUser}
-                    sharedId={item.sharePost && item.sharePost._id}
-                    sharedCreatedAt={item.sharePost && item.sharePost.createdAt}
-                    sharedBody={item.sharePost && item.sharePost.body}
-                    sharedPhoto={item.sharePost && item.sharePost.photo}
-                    likeCount={item.like}
-                    commentCount={item.comment}
-                    shareCount={item.share}
-                    isLiked={item.isLiked}
-                    isCompany={item.createUser.organization}
-                    isBoost={item.isBoost}
+      <FlatList
+        data={followData}
+        onRefresh={onRefresh}
+        refreshing={isFetching}
+        ListFooterComponent={noMore ? NoMoreData : renderFooter}
+        showsVerticalScrollIndicator={false}
+        onEndReached={handleMore}
+        initialNumToRender={5}
+        onEndReachedThreshold={0}
+        ListHeaderComponent={
+          <>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("AddPostScreen")}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                borderWidth: 1,
+                borderColor: colors.border,
+                padding: 10,
+                paddingBottom: 20,
+                justifyContent: "space-between",
+                marginTop: 10,
+                backgroundColor: colors.background,
+              }}
+            >
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <ImageBackground
+                  source={{ uri: `${api}/upload/${userProfile.profile}` }}
+                  style={{ width: 50, height: 50 }}
+                  imageStyle={{ borderRadius: 50 }}
+                >
+                  <Image
+                    style={{ width: 54, height: 54, bottom: 2, right: 2 }}
+                    source={
+                      userProfile.status === "lookingForJob"
+                        ? require("../../../assets/looking.png")
+                        : userProfile.status === "opentowork"
+                        ? require("../../../assets/open.png")
+                        : userProfile.status === "getEmployee"
+                        ? require("../../../assets/hiring.png")
+                        : null
+                    }
                   />
-                )}
+                </ImageBackground>
+                <View style={{ marginLeft: 10 }}>
+                  <Text style={{ color: colors.secondaryText }}>
+                    Та хэлэх зүйлээ бичнэ үү?
+                  </Text>
+                </View>
               </View>
-            );
-          }}
-        />
-      )}
+              <FontAwesome5
+                name="images"
+                size={24}
+                color="#FFB6C1"
+                style={{ marginRight: 10 }}
+              />
+            </TouchableOpacity>
+            <View
+              style={{
+                borderWidth: 1,
+                borderColor: colors.border,
+                marginTop: 10,
+              }}
+            />
+          </>
+        }
+        keyExtractor={(item, index) => index}
+        renderItem={({ item }) => {
+          return (
+            <View style={{ backgroundColor: colors.background }}>
+              {item.createUser && (
+                <Posts
+                  postId={item._id}
+                  createUser={item.createUser}
+                  createdAt={item.createdAt}
+                  body={item.body}
+                  photo={item.photo}
+                  isShared={item.isShare}
+                  sharedUser={item.sharePost && item.sharePost.createUser}
+                  sharedId={item.sharePost && item.sharePost._id}
+                  sharedCreatedAt={item.sharePost && item.sharePost.createdAt}
+                  sharedBody={item.sharePost && item.sharePost.body}
+                  sharedPhoto={item.sharePost && item.sharePost.photo}
+                  likeCount={item.like}
+                  commentCount={item.comment}
+                  shareCount={item.share}
+                  isLiked={item.isLiked}
+                  isCompany={item.createUser.organization}
+                  isBoost={item.isBoost}
+                />
+              )}
+            </View>
+          );
+        }}
+      />
     </SafeAreaView>
   );
 };

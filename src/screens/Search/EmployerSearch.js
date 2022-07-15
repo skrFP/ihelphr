@@ -38,7 +38,9 @@ const EmployerSearch = () => {
   const searchFilter = (text) => {
     if (text) {
       const newData = masterData.filter((item) => {
-        const itemData = item.name ? item.name.toUpperCase() : "".toUpperCase();
+        const itemData = item.firstName
+          ? item.firstName.toUpperCase()
+          : "".toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });

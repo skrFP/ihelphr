@@ -61,16 +61,15 @@ const StackNavigator = () => {
             tabBarInactiveTintColor: colors.secondaryText,
           })}
         >
-          {state.isCompany ? (
+          <Tab.Screen
+            name="Хайх"
+            component={SearchGroup}
+            options={{ headerShown: false }}
+          />
+          {state.isCompany && (
             <Tab.Screen
               name="Анкет сан"
               component={CvGroup}
-              options={{ headerShown: false }}
-            />
-          ) : (
-            <Tab.Screen
-              name="Хайх"
-              component={SearchGroup}
               options={{ headerShown: false }}
             />
           )}
@@ -85,12 +84,13 @@ const StackNavigator = () => {
             component={EmployerGroup}
             options={{ headerShown: false }}
           />
-          <Tab.Screen
-            name="Нетворк"
-            component={NetworkingGroup}
-            options={{ headerShown: false }}
-          />
-
+          {!state.isCompany && (
+            <Tab.Screen
+              name="Нетворк"
+              component={NetworkingGroup}
+              options={{ headerShown: false }}
+            />
+          )}
           <Tab.Screen
             name="Профайл"
             component={ProfileGroup}

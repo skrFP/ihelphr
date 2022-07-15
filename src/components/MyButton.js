@@ -6,7 +6,6 @@ const MyButton = (props) => {
     <TouchableOpacity
       style={{
         padding: 10,
-        backgroundColor: "#FFB6C1",
         borderWidth: 1,
         borderRadius: 20,
       }}

@@ -1,6 +1,6 @@
 import { StyleSheet, View, Image, Dimensions, Text } from "react-native";
 import React from "react";
-import { useTheme } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 import { api } from "../../../../Constants";
 const fullWidth = Dimensions.get("screen").width;
@@ -8,6 +8,7 @@ const fullWidth = Dimensions.get("screen").width;
 const CompanyPortf = (props) => {
   const { image1, image2, image3, image4, image5, image6 } = props;
   const { colors } = useTheme();
+  const navigation = useNavigation();
   return (
     <>
       <View
@@ -33,6 +34,7 @@ const CompanyPortf = (props) => {
           size={24}
           color={colors.primaryText}
           style={{}}
+          onPress={() => navigation.navigate("CompanyPortfolia")}
         />
       </View>
 
