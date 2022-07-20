@@ -130,7 +130,7 @@ const CategorySearch = () => {
               }}
             />
           ) : (
-            <View style={{ marginTop: 200 }}>
+            <View>
               <Empty text="Таны хайсан ажлын байр одоогоор байхгүй байна" />
             </View>
           )}

@@ -61,6 +61,9 @@ import ViewUserProfile from "../screens/Dynamic/ViewUserProfile";
 import NetworkingPostDetailScreen from "../screens/Network/NetworkingPostDetailScreen";
 import CompanyPortfolia from "../screens/Profile/Company/CompanyEditCoverProfile/CompanyPortfolia";
 import ViewUserPost from "../screens/Dynamic/ViewUserPost";
+import ChangeCompanyPassword from "../screens/Profile/Company/CompanySetting/ChangeCompanyPassword";
+import WorkBoostModal from "../screens/Profile/User/Wallet/WorkBoostModal";
+import ViewCompanyJobs from "../screens/Dynamic/ViewCompanyJobs";
 const ProfileGroup = () => {
   const ProfileStack = createNativeStackNavigator();
   const state = useContext(UserContext);
@@ -149,6 +152,26 @@ const ProfileGroup = () => {
                 headerShown: true,
                 presentation: "formSheet",
                 title: "Ашигласан үйлчилгээнүүд",
+                headerLeft: () => <MyBackButton />,
+              }}
+            />
+            <ProfileStack.Screen
+              name="ChangeCompanyPassword"
+              component={ChangeCompanyPassword}
+              options={{
+                headerShown: true,
+                presentation: "formSheet",
+                title: "Нууц үг солих",
+                headerLeft: () => <MyBackButton />,
+              }}
+            />
+            <ProfileStack.Screen
+              name="WorkBoostModal"
+              component={WorkBoostModal}
+              options={{
+                headerShown: true,
+                presentation: "formSheet",
+                title: "Ажлын зар",
                 headerLeft: () => <MyBackButton />,
               }}
             />
@@ -645,11 +668,23 @@ const ProfileGroup = () => {
           }}
         />
         <ProfileStack.Screen
+          name="ViewCompanyJobs"
+          component={ViewCompanyJobs}
+          options={{
+            headerShown: true,
+            presentation: "formSheet",
+            title: "Ажлын зар",
+            headerLeft: () => <MyBackButton />,
+          }}
+        />
+        <ProfileStack.Screen
           name="CompanyWorkDetail"
           component={CompanyWorkDetail}
           options={{
-            headerShown: false,
+            headerShown: true,
             presentation: "formSheet",
+            title: "Ажлын зар",
+            headerLeft: () => <MyBackButton />,
           }}
         />
         <ProfileStack.Screen

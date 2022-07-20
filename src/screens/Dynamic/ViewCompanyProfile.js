@@ -1,5 +1,5 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { useTheme } from "@react-navigation/native";
 import useCompanyProfile from "../../hooks/ProfileDetail/Company/useCompanyProfile";
 import useCompanyJobs from "../../hooks/ProfileDetail/Company/useCompanyJobs";
@@ -10,19 +10,26 @@ import CompanyPortf from "../../components/Dynamic/Company/CompanyPortf";
 import Spinner from "../../components/Spinner";
 import CompanyJobs from "../../components/Dynamic/Company/CompanyJobs";
 import Header from "../../components/Header/Header";
+import UserContext from "../../context/UserContext";
+import CompanyHeader from "../../components/Header/CompanyHeader";
 const ViewCompanyProfile = (props) => {
   const { id } = props.route.params;
   const { colors } = useTheme();
   const [companyProfile] = useCompanyProfile(id);
   const [companyJobs, loading] = useCompanyJobs(id);
+  const state = useContext(UserContext);
   if (!companyProfile) {
     return null;
   }
 
   return (
     <SafeAreaView style={{ backgroundColor: colors.header }}>
-      <Header isBack={true} />
       <ScrollView showsVerticalScrollIndicator={false}>
+        {state.isCompany ? (
+          <CompanyHeader isBack={true} />
+        ) : (
+          <Header isBack={true} />
+        )}
         <CompanyTop
           cover={companyProfile.cover}
           profile={companyProfile.profile}

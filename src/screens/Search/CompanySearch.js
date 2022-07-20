@@ -30,6 +30,7 @@ const CompanySearch = () => {
             borderWidth: 1,
             borderRadius: 20,
             marginVertical: 10,
+            borderColor: colors.border,
             margin: 20,
           }}
           onPress={() => navigation.navigate("EmployerSearch")}
@@ -45,6 +46,7 @@ const CompanySearch = () => {
             borderWidth: 1,
             borderRadius: 20,
             marginVertical: 10,
+            borderColor: colors.border,
             margin: 20,
           }}
           onPress={() => navigation.navigate("EmployeeSearch")}
@@ -66,6 +68,7 @@ const CompanySearch = () => {
             borderRadius: 20,
             marginVertical: 10,
             margin: 20,
+            borderColor: colors.border,
           }}
           onPress={() => navigation.navigate("AllCompanySearch")}
         >

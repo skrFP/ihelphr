@@ -27,7 +27,7 @@ const CompanyJobs = (props) => {
       >
         <TouchableOpacity
           style={{ flexDirection: "row", alignItems: "center" }}
-          onPress={() => navigation.navigate("WorkDetailScreen", { id })}
+          onPress={() => navigation.navigate("CompanyWorkDetail", { id })}
         >
           <Image
             source={{

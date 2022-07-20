@@ -1,5 +1,5 @@
 import { SafeAreaView, ScrollView, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useTheme } from "@react-navigation/native";
 import useUserProfile from "../../hooks/ProfileDetail/User/useUserProfile";
 import useCv from "../../hooks/ProfileDetail/User/useCv";
@@ -12,13 +12,15 @@ import Border from "../../components/Border";
 import axios from "axios";
 import { api } from "../../../Constants";
 import Posts from "../../components/Network/Posts";
+import UserContext from "../../context/UserContext";
+import CompanyHeader from "../../components/Header/CompanyHeader";
 const ViewUserProfile = (props) => {
   const { id } = props.route.params;
   const [userProfile, profileLoading] = useUserProfile(id);
   const [cv, cvLoading] = useCv(id);
   const { colors } = useTheme();
   const [activityData, setActivityData] = useState([]);
-
+  const state = useContext(UserContext);
   const getActivityData = () => {
     axios
       .get(`${api}/api/v1/posts/${id}/user`)
@@ -40,7 +42,12 @@ const ViewUserProfile = (props) => {
   return (
     <SafeAreaView style={{ backgroundColor: colors.header }}>
       {/* Header */}
-      <Header isBack={true} />
+      {state.isCompany ? (
+        <CompanyHeader isBack={true} />
+      ) : (
+        <Header isBack={true} />
+      )}
+
       {/* ProfileDetails */}
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Cover && Profile && Wallet && FirstName && Anket && setting && follower counts */}

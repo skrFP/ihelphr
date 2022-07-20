@@ -111,17 +111,21 @@ const PointUseScreen = () => {
                 <>
                   <MyButton
                     text="Зар бүүстлэх"
-                    style={{ marginTop: 10 }}
-                    onPress={() =>
-                      navigation.navigate("ProductUsePoint", { type: "post" })
-                    }
+                    onPress={() => {
+                      navigation.navigate("ProductUsePoint", { type: "work" });
+                      setModalVisible(false);
+                    }}
                   />
+
+                  <View style={{ marginVertical: 5 }} />
                   <MyButton
                     text="Онцгой компани"
-                    style={{ marginTop: 10 }}
-                    onPress={() =>
-                      navigation.navigate("ProductUsePoint", { type: "post" })
-                    }
+                    onPress={() => {
+                      navigation.navigate("ProductUsePoint", {
+                        type: "company",
+                      });
+                      setModalVisible(false);
+                    }}
                   />
                 </>
               ) : (

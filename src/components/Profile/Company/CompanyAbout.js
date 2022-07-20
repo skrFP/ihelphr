@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import * as Linking from "expo-linking";
-import { useTheme } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 import {
   AntDesign,
   MaterialCommunityIcons,
@@ -10,8 +10,9 @@ import {
   SimpleLineIcons,
 } from "@expo/vector-icons";
 const CompanyAbout = (props) => {
-  const { about, web, phone, workerNumber, createYear, location } = props;
+  const { about, web, phone, workerNumber, createYear, location, data } = props;
   const { colors } = useTheme();
+  const navigation = useNavigation();
   return (
     <View style={{ marginHorizontal: 20, marginBottom: 10 }}>
       <View
@@ -36,6 +37,9 @@ const CompanyAbout = (props) => {
           size={24}
           color={colors.primaryText}
           style={{}}
+          onPress={() =>
+            navigation.navigate("CompanyProfileEdit", { data: data })
+          }
         />
       </View>
       {/* About */}

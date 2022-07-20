@@ -7,6 +7,9 @@ import EmployerAddWork from "../screens/Employer/EmployerAddWork";
 import MyBackButton from "../components/Header/MyBackButton";
 import UserSavedWork from "../screens/Profile/User/Settings/UserSavedWork";
 import UserWorkDetail from "../screens/Profile/User/Settings/UserWorkDetail";
+import CompanyWorkDetail from "../screens/Profile/Company/CompanyWorkDetail";
+import ViewCompanyJobs from "../screens/Dynamic/ViewCompanyJobs";
+import NotificationScreen from "../screens/Dynamic/NotificationScreen";
 const EmployerGroup = () => {
   const EmployerStack = createNativeStackNavigator();
   return (
@@ -20,19 +23,19 @@ const EmployerGroup = () => {
         <EmployerStack.Screen
           name="EmployerWorkDetail"
           component={EmployerWorkDetail}
-          options={{ headerShown: false }}
+          options={{ headerShown: false, fullScreenGestureEnabled: true }}
         />
         <EmployerStack.Screen
           name="EmployerAddWork"
           component={EmployerAddWork}
-          options={{ headerShown: false }}
+          options={{ headerShown: false, fullScreenGestureEnabled: true }}
         />
       </EmployerStack.Group>
       <EmployerStack.Group>
         <EmployerStack.Screen
           name="ViewCompanyProfile"
           component={ViewCompanyProfile}
-          options={{ headerShown: false }}
+          options={{ headerShown: false, fullScreenGestureEnabled: true }}
         />
         <EmployerStack.Screen
           name="UserSavedWork"
@@ -51,6 +54,31 @@ const EmployerGroup = () => {
             headerShown: true,
             presentation: "formSheet",
             title: "Хадгалсан ажлын байр",
+            headerLeft: () => <MyBackButton />,
+          }}
+        />
+        <EmployerStack.Screen
+          name="ViewCompanyJobs"
+          component={ViewCompanyJobs}
+          options={{
+            headerShown: true,
+            presentation: "formSheet",
+            title: "Ажлын зар",
+            headerLeft: () => <MyBackButton />,
+          }}
+        />
+        <EmployerStack.Screen
+          name="NotificationScreen"
+          component={NotificationScreen}
+          options={{ headerShown: false, fullScreenGestureEnabled: true }}
+        />
+        <EmployerStack.Screen
+          name="CompanyWorkDetail"
+          component={CompanyWorkDetail}
+          options={{
+            headerShown: true,
+            presentation: "formSheet",
+            title: "Ажлын зар",
             headerLeft: () => <MyBackButton />,
           }}
         />

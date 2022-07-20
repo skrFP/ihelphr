@@ -14,17 +14,11 @@ const CustomSearchedModal = (props) => {
   const [refresh, setRefresh] = useState(false);
   const getWorkSearch = () => {
     axios
-      .get(`${api}/api/v1/jobs?limit=1000`, {
-        params: {
-          salary: salary && salary,
-          age: age && age,
-          level: level && level,
-          education: education && education,
-          experience: experience && experience,
-          gender: gender && gender,
-          type: type && type,
-        },
-      })
+      .get(
+        `${api}/api/v1/jobs?limit=1000&${salary && `salary=${salary}`}${
+          age && `age=${age}`
+        }`
+      )
       .then((res) => {
         setWorks(res.data.data);
         console.log(res.data.data);

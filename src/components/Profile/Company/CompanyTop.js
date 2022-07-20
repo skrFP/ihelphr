@@ -246,6 +246,9 @@ const CompanyTop = (props) => {
             style={{
               alignItems: "center",
             }}
+            onPress={() =>
+              navigation.navigate("ViewCompanyJobs", { id: data._id })
+            }
           >
             <Text style={{ color: colors.primaryText }}>{jobCount}</Text>
             <Text

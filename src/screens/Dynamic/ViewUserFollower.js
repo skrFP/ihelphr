@@ -1,15 +1,18 @@
 import { StyleSheet, View, FlatList, SafeAreaView } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useTheme } from "@react-navigation/native";
 import { api } from "../../../Constants";
 import Empty from "../../components/Empty";
 import Header from "../../components/Header/Header";
 import DynamicFollower from "../../components/Dynamic/DynamicFollower";
+import CompanyHeader from "../../components/Header/CompanyHeader";
+import UserContext from "../../context/UserContext";
 const ViewUserFollower = (props) => {
   const { id } = props.route.params;
   const [followerData, setFollowerData] = useState([]);
   const { colors } = useTheme();
+  const state = useContext(UserContext);
   const getFollowerData = () => {
     axios
       .get(`${api}/api/v1/follows/${id}/followers`)
@@ -26,7 +29,11 @@ const ViewUserFollower = (props) => {
   }, []);
   return (
     <SafeAreaView style={{ backgroundColor: colors.header }}>
-      <Header isBack={true} />
+      {state.isCompany ? (
+        <CompanyHeader isBack={true} />
+      ) : (
+        <Header isBack={true} />
+      )}
       <View style={{ backgroundColor: colors.background }}>
         {followerData.length > 0 ? (
           <FlatList

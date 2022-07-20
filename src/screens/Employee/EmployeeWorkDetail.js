@@ -10,6 +10,7 @@ import Icon from "@expo/vector-icons/Entypo";
 import { Ionicons } from "@expo/vector-icons";
 import UserContext from "../../context/UserContext";
 import Header from "../../components/Header/Header";
+import CompanyHeader from "../../components/Header/CompanyHeader";
 const EmployeeWorkDetail = (props) => {
   const state = useContext(UserContext);
   const { id, isLiked } = props.route.params;
@@ -69,7 +70,11 @@ const EmployeeWorkDetail = (props) => {
   };
   return (
     <SafeAreaView style={{ backgroundColor: colors.header, height: "100%" }}>
-      <Header isBack={true} />
+      {state.isCompany ? (
+        <CompanyHeader isBack={true} />
+      ) : (
+        <Header isBack={true} />
+      )}
       <ScrollView style={{}} showsVerticalScrollIndicator={false}>
         <View style={{ margin: 10 }}>
           {/* Company */}

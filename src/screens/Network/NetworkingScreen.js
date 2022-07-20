@@ -10,7 +10,11 @@ import {
 } from "react-native";
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import { useNavigation, useTheme } from "@react-navigation/native";
+import {
+  useIsFocused,
+  useNavigation,
+  useTheme,
+} from "@react-navigation/native";
 import { FontAwesome5, Entypo } from "@expo/vector-icons";
 import { api } from "../../../Constants";
 import UserContext from "../../context/UserContext";
@@ -21,6 +25,7 @@ const NetworkingScreen = () => {
   const state = useContext(UserContext);
   const { colors } = useTheme();
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const [followData, setFollowData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [pageCurrent, setPageCurrent] = useState(1);
@@ -44,7 +49,7 @@ const NetworkingScreen = () => {
     setIsFetching(false);
     getFollowData();
     return () => {};
-  }, [pageCurrent, isFetching]);
+  }, [pageCurrent, isFetching, isFocused]);
   const onRefresh = () => {
     setIsFetching(true);
   };
@@ -85,7 +90,7 @@ const NetworkingScreen = () => {
 
   return (
     <SafeAreaView style={{ backgroundColor: colors.header, flex: 1 }}>
-      <Header isSearch={true} />
+      <Header userSearch={true} />
 
       <FlatList
         data={followData}

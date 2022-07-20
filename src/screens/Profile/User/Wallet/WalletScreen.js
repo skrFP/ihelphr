@@ -22,7 +22,7 @@ import moment from "moment";
 import UserContext from "../../../../context/UserContext";
 import { api } from "../../../../../Constants";
 import Header from "../../../../components/Header/Header";
-
+import CompanyHeader from "../../../../components/Header/CompanyHeader";
 const WalletScreen = ({ route }) => {
   const { point } = route.params;
   const { colors } = useTheme();
@@ -78,7 +78,12 @@ const WalletScreen = ({ route }) => {
         opacity: modalVisible ? 0.1 : 1,
       }}
     >
-      <Header isBack={true} />
+      {state.isCompany ? (
+        <CompanyHeader isBack={true} />
+      ) : (
+        <Header isBack={true} />
+      )}
+
       <ScrollView style={{ backgroundColor: colors.background }}>
         <Text
           style={{

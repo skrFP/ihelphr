@@ -128,15 +128,17 @@ const SpecialWork = (props) => {
             </Text>
           </View>
         </TouchableOpacity>
-        <View style={{}}>
-          <Icon
-            name={isLike ? "heart" : "heart-outlined"}
-            size={30}
-            color={"white"}
-            onPress={isLike ? unLiked : liked}
-            style={{ textAlign: "right", marginRight: 20 }}
-          />
-        </View>
+        {!state.isCompany && (
+          <View style={{}}>
+            <Icon
+              name={isLike ? "heart" : "heart-outlined"}
+              size={30}
+              color={"white"}
+              onPress={isLike ? unLiked : liked}
+              style={{ textAlign: "right", marginRight: 20 }}
+            />
+          </View>
+        )}
       </View>
     </View>
   );

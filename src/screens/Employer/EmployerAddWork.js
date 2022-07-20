@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-gesture-handler";
-import { useTheme } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 import axios from "axios";
 import { api } from "../../../Constants";
 import FormText from "../../components/FormText";
@@ -24,7 +24,7 @@ const EmployerAddWork = () => {
   const state = useContext(UserContext);
   const [normalDay, setNormalDay] = useState(7);
   const [isType, setIsType] = useState(1);
-
+  const navigation = useNavigation();
   // Цалин Modal
   const [modalVisible, setModalVisible] = useState(false);
   const [salary, setSalary] = useState("");
@@ -56,6 +56,7 @@ const EmployerAddWork = () => {
       .post(`${api}/api/v1/jobs/${state.companyId}`, addWork)
       .then((res) => {
         console.log(res.data.data);
+        navigation.goBack();
       })
       .catch((err) => alert(err));
   };
@@ -364,7 +365,10 @@ const EmployerAddWork = () => {
     <SafeAreaView style={{ backgroundColor: "#141414" }}>
       <CompanyHeader isBack={true} notification={notification.notification} />
       <View style={{ backgroundColor: colors.background }}>
-        <ScrollView style={{ marginHorizontal: 20 }}>
+        <ScrollView
+          style={{ marginHorizontal: 20 }}
+          showsVerticalScrollIndicator={false}
+        >
           <Text style={[styles.textTitle, { color: colors.primaryText }]}>
             Гарчиг
           </Text>
@@ -529,16 +533,11 @@ const EmployerAddWork = () => {
           <MyButton
             text={gender === "" ? "Хүйс сонгох" : gender}
             onPress={checkGender}
-            style={{ marginVertical: 5, padding: 7 }}
           />
           <Text style={[styles.textTitle, { color: colors.primaryText }]}>
             Нас сонгох
           </Text>
-          <MyButton
-            text={age === "" ? "Нас сонгох" : age}
-            onPress={checkAge}
-            style={{ marginVertical: 5, padding: 7 }}
-          />
+          <MyButton text={age === "" ? "Нас сонгох" : age} onPress={checkAge} />
           <Text style={[styles.textTitle, { color: colors.primaryText }]}>
             Ажлын туршлага сонгох
           </Text>
@@ -547,7 +546,6 @@ const EmployerAddWork = () => {
               experience === "" ? "Ажлын туршлага сонгох" : `${experience} жил`
             }
             onPress={checkExperience}
-            style={{ marginVertical: 5, padding: 7 }}
           />
           <Text style={[styles.textTitle, { color: colors.primaryText }]}>
             Боловсрол сонгох
@@ -555,7 +553,6 @@ const EmployerAddWork = () => {
           <MyButton
             text={education === "" ? "Боловсрол сонгох" : `${education}`}
             onPress={checkEducation}
-            style={{ marginVertical: 5, padding: 7 }}
           />
           <Text style={[styles.textTitle, { color: colors.primaryText }]}>
             Мэргэжил сонгох
@@ -565,7 +562,6 @@ const EmployerAddWork = () => {
               occupationName === "" ? "Мэргэжил сонгох" : `${occupationName}`
             }
             onPress={checkOccupation}
-            style={{ marginVertical: 5, padding: 7 }}
           />
           <Text style={[styles.textTitle, { color: colors.primaryText }]}>
             Level сонгох
@@ -573,7 +569,6 @@ const EmployerAddWork = () => {
           <MyButton
             text={level === "" ? "Level сонгох" : `${level}`}
             onPress={checkLevel}
-            style={{ marginVertical: 5, padding: 7 }}
           />
           <Text style={[styles.textTitle, { color: colors.primaryText }]}>
             Цагын төрөл сонгох
@@ -581,7 +576,6 @@ const EmployerAddWork = () => {
           <MyButton
             text={type === "" ? "Цагын төрөл сонгох" : `${type}`}
             onPress={checkType}
-            style={{ marginVertical: 5, padding: 7 }}
           />
           <Text style={[styles.textTitle, { color: colors.primaryText }]}>
             Зарын төрөл
@@ -597,13 +591,10 @@ const EmployerAddWork = () => {
                 : "Зарын төрөл сонгох"
             }
             onPress={checkOrders}
-            style={{ marginVertical: 5, padding: 7 }}
           />
-          <MyButton
-            text="Илгээх"
-            onPress={sendWork}
-            style={{ marginVertical: 10, marginBottom: 100, padding: 7 }}
-          />
+          <View style={{ marginVertical: 5 }} />
+          <MyButton text="Илгээх" onPress={sendWork} />
+          <View style={{ marginBottom: 100 }} />
         </ScrollView>
       </View>
       {/* Modals */}

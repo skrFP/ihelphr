@@ -1,13 +1,16 @@
 import { StyleSheet, View, FlatList, SafeAreaView } from "react-native";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useTheme } from "@react-navigation/native";
 import DynamicFollowing from "../../components/Dynamic/DynamicFollowing";
 import { api } from "../../../Constants";
 import Empty from "../../components/Empty";
 import Header from "../../components/Header/Header";
+import UserContext from "../../context/UserContext";
+import CompanyHeader from "../../components/Header/CompanyHeader";
 const ViewUserFollowings = (props) => {
   const { id } = props.route.params;
+  const state = useContext(UserContext);
   const [followingData, setFollowingData] = useState([]);
   const { colors } = useTheme();
   const getFollowerData = () => {
@@ -26,7 +29,12 @@ const ViewUserFollowings = (props) => {
   }, []);
   return (
     <SafeAreaView style={{ backgroundColor: colors.header }}>
-      <Header isBack={true} />
+      {state.isCompany ? (
+        <CompanyHeader isBack={true} />
+      ) : (
+        <Header isBack={true} />
+      )}
+
       <View style={{ backgroundColor: colors.background }}>
         {followingData.length > 0 ? (
           <FlatList

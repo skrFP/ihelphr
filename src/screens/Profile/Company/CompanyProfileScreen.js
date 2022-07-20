@@ -48,6 +48,7 @@ const CompanyProfileScreen = () => {
             workerNumber={companyProfile.employerNumber}
             createYear={companyProfile.createYear}
             location={companyProfile.location}
+            data={companyProfile}
           />
           <Border />
           <CompanyPortf

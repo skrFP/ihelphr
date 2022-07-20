@@ -27,6 +27,7 @@ const SearchScreen = () => {
             borderWidth: 1,
             borderRadius: 20,
             marginTop: 10,
+            borderColor: colors.border,
           }}
           onPress={() => navigation.navigate("UserSearch")}
         >
@@ -42,6 +43,7 @@ const SearchScreen = () => {
             borderWidth: 1,
             borderRadius: 20,
             marginVertical: 10,
+            borderColor: colors.border,
           }}
           onPress={() => navigation.navigate("CompanySearch")}
         >
@@ -57,6 +59,7 @@ const SearchScreen = () => {
 
             borderWidth: 1,
             borderRadius: 20,
+            borderColor: colors.border,
           }}
           onPress={() => navigation.navigate("MyJobs")}
         >
@@ -71,6 +74,7 @@ const SearchScreen = () => {
             borderWidth: 1,
             borderRadius: 20,
             marginVertical: 10,
+            borderColor: colors.border,
           }}
           onPress={() => navigation.navigate("WorkSearch")}
         >
@@ -85,6 +89,7 @@ const SearchScreen = () => {
 
             borderWidth: 1,
             borderRadius: 20,
+            borderColor: colors.border,
           }}
           onPress={() => navigation.navigate("CategorySearch")}
         >

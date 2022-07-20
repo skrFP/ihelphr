@@ -5,7 +5,8 @@ import { useNavigation, useTheme } from "@react-navigation/native";
 import UserContext from "../../context/UserContext";
 import useUserProfile from "../../hooks/ProfileDetail/User/useUserProfile";
 const Header = (props) => {
-  const { isBack, isSearch, isEmployerSaved, isEmployeeSaved } = props;
+  const { isBack, isSearch, isEmployerSaved, isEmployeeSaved, userSearch } =
+    props;
   const navigation = useNavigation();
   const { colors } = useTheme();
   const state = useContext(UserContext);
@@ -67,6 +68,13 @@ const Header = (props) => {
                   initial: false,
                 })
               }
+            />
+          ) : userSearch ? (
+            <Ionicons
+              name="search"
+              size={25}
+              color={colors.primaryText}
+              onPress={() => navigation.navigate("UserSearch")}
             />
           ) : null}
         </View>

@@ -98,7 +98,7 @@ const WorkSearch = () => {
           <TouchableOpacity
             style={{
               padding: 10,
-
+              borderColor: colors.border,
               borderWidth: 1,
               borderRadius: 20,
               marginVertical: 10,
@@ -131,7 +131,7 @@ const WorkSearch = () => {
               }}
             />
           ) : (
-            <View style={{ marginTop: 200 }}>
+            <View>
               <Empty text="Таны хайсан ажлын байр одоогоор байхгүй байна" />
             </View>
           )}

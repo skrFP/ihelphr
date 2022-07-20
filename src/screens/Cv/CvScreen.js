@@ -54,13 +54,14 @@ const CvScreen = () => {
     <SafeAreaView style={{ backgroundColor: colors.header, flex: 1 }}>
       <CompanyHeader isSearch={true} isNotification={true} />
       {point.point > 1000 ? (
-        <View style={{ backgroundColor: colors.background, marginBottom: 100 }}>
+        <View style={{ backgroundColor: colors.background }}>
           <FlatList
             data={cvData.sort((a, b) => b.score - a.score)}
             keyExtractor={(item, index) => index}
             renderItem={({ item }) => {
               return <Cvs item={item} />;
             }}
+            ListFooterComponent={<View style={{ marginBottom: 100 }} />}
           />
         </View>
       ) : (

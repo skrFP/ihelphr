@@ -46,21 +46,24 @@ const AddPostScreen = () => {
     axios
       .post(`${api}/api/v1/posts`, { body: postText })
       .then((res) => {
-        const newPost = res.data.article;
-        const xhr = new XMLHttpRequest();
-        const fileExt = profileImage.substring(
-          profileImage.lastIndexOf(".") + 1
-        );
-        xhr.addEventListener("load", (event) => handleUploadComplete(event));
-        xhr.upload.addEventListener("progress", handleUploadProgress);
-        const formData = new FormData();
-        formData.append("file", {
-          uri: profileImage,
-          type: `image/${fileExt}`,
-          name: "new__profile",
-        });
-        xhr.open("PUT", `${api}/api/v1/posts/${newPost._id}/photo`);
-        xhr.send(formData);
+        if (profileImage) {
+          const newPost = res.data.article;
+          const xhr = new XMLHttpRequest();
+          const fileExt = profileImage.substring(
+            profileImage.lastIndexOf(".") + 1
+          );
+          xhr.addEventListener("load", (event) => handleUploadComplete(event));
+          xhr.upload.addEventListener("progress", handleUploadProgress);
+          const formData = new FormData();
+          formData.append("file", {
+            uri: profileImage,
+            type: `image/${fileExt}`,
+            name: "new__profile",
+          });
+          xhr.open("PUT", `${api}/api/v1/posts/${newPost._id}/photo`);
+          xhr.send(formData);
+        }
+        navigation.goBack();
       })
       .catch((err) => alert(err));
   };
@@ -69,7 +72,6 @@ const AddPostScreen = () => {
   const handleUploadComplete = () => {
     setUploadProgress(0);
     setUploadTotal(0);
-    navigation.goBack();
   };
   const handleUploadProgress = (event) => {
     if (uploadTotal === 0) setUploadTotal(event.total);
@@ -147,25 +149,26 @@ const AddPostScreen = () => {
           Мэдээлэл оруулах
         </Text>
         {postText.length > 0 ? (
-          <LinearGradient
-            colors={["#3A1C71", "#D76D77", "#FFAF7B"]}
-            start={[0.0, 0.5]}
-            end={[1.0, 0.5]}
-            style={{
-              borderRadius: 18,
-              top: 10,
-              right: 14,
-              opacity: 1,
-              padding: 5,
-            }}
-          >
-            <AntDesign
-              name="rightcircleo"
-              size={28}
-              color={colors.primaryText}
-              onPress={sendNetworkingPost}
-            />
-          </LinearGradient>
+          <TouchableOpacity onPress={sendNetworkingPost}>
+            <LinearGradient
+              colors={["#3A1C71", "#D76D77", "#FFAF7B"]}
+              start={[0.0, 0.5]}
+              end={[1.0, 0.5]}
+              style={{
+                borderRadius: 18,
+                top: 10,
+                right: 14,
+                opacity: 1,
+                padding: 5,
+              }}
+            >
+              <AntDesign
+                name="rightcircleo"
+                size={28}
+                color={colors.primaryText}
+              />
+            </LinearGradient>
+          </TouchableOpacity>
         ) : (
           <TouchableOpacity
             style={{
@@ -174,7 +177,7 @@ const AddPostScreen = () => {
               right: 14,
               padding: 5,
             }}
-            onPress={sendNetworkingPost}
+            disabled
           >
             <AntDesign
               name="rightcircleo"

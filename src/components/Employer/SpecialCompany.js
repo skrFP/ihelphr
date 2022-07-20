@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import Icon from "@expo/vector-icons/Entypo";
 import { api } from "../../../Constants";
 const SpecialCompany = (props) => {
   const { data } = props;

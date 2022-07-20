@@ -14,6 +14,7 @@ import PostSettings from "../screens/Network/PostSettings";
 import EditPost from "../screens/Network/EditPost";
 import BoostPost from "../screens/Profile/User/Wallet/BoostPost";
 import ViewUserPost from "../screens/Dynamic/ViewUserPost";
+import NotificationScreen from "../screens/Dynamic/NotificationScreen";
 const NetworkingGroup = () => {
   const NetworkingStack = createNativeStackNavigator();
   return (
@@ -115,6 +116,14 @@ const NetworkingGroup = () => {
             presentation: "formSheet",
             title: "Пост бүүстлэх",
             headerLeft: () => <MyBackButton />,
+          }}
+        />
+        <NetworkingStack.Screen
+          name="NotificationScreen"
+          component={NotificationScreen}
+          options={{
+            headerShown: false,
+            fullScreenGestureEnabled: true,
           }}
         />
         {/* <NetworkingStack.Screen */}

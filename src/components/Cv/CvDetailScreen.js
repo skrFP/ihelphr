@@ -17,6 +17,7 @@ import { useNavigation, useTheme } from "@react-navigation/native";
 import useUserProfile from "../../hooks/ProfileDetail/User/useUserProfile";
 import MyButton from "../MyButton";
 import Border from "../Border";
+import moment from "moment";
 
 const CvDetailScreen = (props) => {
   const { id } = props.route.params;
@@ -40,164 +41,136 @@ const CvDetailScreen = (props) => {
   if (!userProfile) {
     return null;
   }
+
+  // <p>· CEO, <span> ihelp.mn, Novelist LLC,</span> Ulaanbaatar, Mongolia, Jan 2021 to present </p>
+  // <p>· CEO, <span> Career Developer Magazine, </span> Novelist Time LLC, Ulaanbaatar, Mongolia, Dec 2021 to
+  //     present </p>
+  // <p>· COO, <span> Individual Restaurant LLC, </span> Ulaanbaatar, Mongolia, Sep 2021 to Nov 2021. </p>
+  // <p>· Deputy CEO, <span> Forbes Mongolia Magazine, </span> Ulaanbaatar, Mongolia, Aug 2021 to Sep 2021. </p>
+  // <p>· Chief Business Officer, <span> Asia Mining Magazine LLC, </span> Ulaanbaatar, Mongolia, Mar 2021 to Aug
+  //     2021. </p>
+  // <p>· Deputy Sales Director, <span> Bloomberg TV Mongolia, </span> Ulaanbaatar, Mongolia, Sep 2020 to Aug
+  //     2020
+  // </p>
+  // <p>· Manager, <span> National News Corporation LLC, Bloomberg TV Mongolia, </span> Ulaanbaatar, Mongolia,
+  //     February 2018 to Sep 2019 </p>
+  // <p>· Internship, <span> World Vision Mongolia, </span> Ulaanbaatar, Mongolia, November 2017 to February 2018
+  // </p>
+  // <p>· Fellow, Gegeen Undes NGO, Ulaanbaatar, Mongolia, 2014 to 2016</p>
+  // <p>· Internship, Erdenet Mining Corporation, Erdenet, Mongolia, September to October 2015</p>
+  // <p>· Math teacher, Elite education center, Ulaanbaatar, Mongolia, 2013 to 2014</p>
+  // <p>· Vice president, Researcher club, NUM-SIRPA, Ulaanbatar, Mongolia, 2013 to 2014</p>
+  // </p>
   const html = `
-  <html>
-    <head>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
-    </head>
-    <body>
-    <h2 style="text-align: center;">
-    <strong>${data.lastName} ${data.firstName}</strong>
-  </h2>
-  <p>&nbsp;</p>
-  <div>
-    <div class="row" style="display: flex;">
-      <div class="column" style="flex: 50%;">
-        <p style="padding-left: 40px; text-align: left;">
-          <img src="${api}/upload/${data.profile}" width="172" height="255" />
-        </p>
+  <html lang="en">
+
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <style>
+      * {
+    box-sizing: border-box;
+  }   
+      p {
+          font-size: 18px;
+      }
+      .column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    height: 300px; 
+    align-items: center;
+  }
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+    align-items: center;
+  }
+  </style> 
+  <body>
+      <div style="font-family:Arial, Helvetica, sans-serif;">
+          <h1 style="margin-top: 120px;">
+              ${data.lastName} ${data.firstName}
+          </h1>
+          <div class="row">
+          <div class="column">
+              <img width="63%" src="${api}/upload/${data.profile}" alt="">
+          </div>
+          <div class="column"  style="float:right; padding-right: 15%; ">
+              <h3 style="color: #338DFF;"> CONTACTS</h3>
+              <p">Born in Erdenet city, Mongolia <br>
+                  Lives in Ulaanbaatar, Mongolia <br>
+                  <span style="font-size:12px;"> address </span> </p>
+              <br>
+              <a  href="naki.mongolia@gmail.com">naki.mongolia@gmail.com</a> <br>
+              <a  href="namkhaidorj@ihelp.mn">namkhaidorj@ihelp.mn</a> <br>
+              <span  style="font-size: 12px;"> e-mail </span>      
+              <p> 
+                  976-99757475 <br>
+                  <span style="font-size: 12px;"> phone number </span>
+              </p>
+          </div>
       </div>
-      <div class="column" style="flex: 50%;">
-        <p style="text-align: right;">
-          <span style="color: #0000ff; background-color: #00ffff;">
-            <strong>ХОЛБОО БАРИХ</strong>
-          </span>
-        </p>
-        <p style="text-align: right;">
-          <span style="font-weight: 400;">Born in ${data.birthPlace}</span>
-        </p>
-        <p style="text-align: right;">
-          <span style="font-weight: 400;">Lives in ${data.location}</span>
-        </p>
-        <p style="text-align: right;">
-          <span style="font-weight: 400;">Хаяг</span>
-        </p>  
-        <p style="text-align: right;">
-            <span style="font-weight: 400;">${userProfile.email}</span>
-        </p>
-        <p style="text-align: right;">
-          <span style="font-weight: 400;">И-мэйл</span>
-        </p>
-        <p style="text-align: right;">
-          <span style="font-weight: 400;">${userProfile.phone}</span>
-        </p>
-        <p style="text-align: right;">
-          <span style="font-weight: 400;">Утасны дугаар</span>
-        </p>
+          <h3> <span style="color: #338DFF;">⭐EXPERIENCES </span></h3>
+          <div>
+            ${
+              data.experience &&
+              data.experience.map((e) => {
+                return e.end;
+              })
+            }
+            </div>
+          <h3 style="color: #338DFF;">🎓 EDUCATION</h3>
+          <div>
+              <p>· International Business Management & Marketing, Pre-master’s program, University of Sheffield, UK,
+                  2019-2020</p>
+              <p>· Bachelor of International Economic Relations, National University of Mongolia (NUM), School of
+                  International Relations and Public Administration (SIRPA), 2012 to 2016</p>
+              <p>· High school education, Erdmiin san school, Erdenet city, Mongolia, 2009-2012</p>
+          </div>
+          <h3 style="color: #338DFF;">👑 AWARDS</h3>
+          <div>
+              <p>· Best of the year, Bloomberg TV Mongolia, National News Corporation LLC, 2019 </p>
+              <p>· The Leader Youngman of the Year, Mongolian Youth Organization, 2018</p>
+              <p>· The first place in the essay contest, “Passport to the world”, Education USA /EARC/, 2016</p>
+              <p>· The best delegate prize of the Model United Nations, awarded by NUM-SIRPA, 2015</p>
+              <p>· Student’s scholarship awarded by Zorig Foundation & LG, 2014 </p>
+              <p>· 3rd place in essay contest of World peaceful day, 2012</p>
+          </div>
+          <h3 style="color: #338DFF;">💻 COMPUTER SKILLS</h3>
+          <div>
+              <p>· <span style="color: blue;">Basic: </span>Windows software, macOS</p>
+              <p>· <span style="color: blue;">Intermediate: </span>Camtasia Studio, Microsoft Dynamic NAV</p>
+              <p>· <span style="color: blue;">Advanced: </span>Google apps; Microsoft office; other online platforms</p>
+          </div>
+          <h3 style="color: #338DFF;">✏️ LANGUAGE</h3>
+          <div>
+              <p>· <span style="color: blue;">Native: </span> Mongolian, <span style="color: blue;"> Advanced:
+                  </span>English</p>
+          </div>
+          <h3 style="color: #338DFF;">🎲 HOBBIES AND INTERESTS</h3>
+          <div>
+              <p>· <span style="color: blue;"> Hosting: </span>Morning View Series – Motivational & inspirational content
+                  that interviews successful leaders to share their experience, principles & philosophy to youth -
+                  <br> <span><a href=" www.youtube.com/c/morningviewseries"> www.youtube.com/c/morningviewseries</a>
+                  </span>
+              </p>
+              <p>· <span style="color: blue;"> Volunteering: </span>One Asia 2015</p>
+              <p>· <span style="color: blue;"> Public speaking: </span>World Speech day 2016; NUM-SIRPA UN Model 2015;
+                  Mongolian National Orator Championship 2015; Scientific conferences etc.</p>
+          </div>
+          <h2 style="color:#338DFF ;">DETAILED SKILLS & ACHIEVEMENTS</h2>
+          <p>✓ Experienced in business planning, customer acquisition, negotiation, communication and event organization
+          </p>
+          <p>✓ Expanded acquaintance and communication</p>
+          <p>✓ Increased interpretation skills and ability to make understand individual</p>
+          <p>✓ Improved leadership skills</p>
+          <p>✓ Enhanced skills in research and development</p>
+          <p>✓ Strengthened motivation to reach targeted goals and ambition</p>
       </div>
-    </div>         
-    <p style="padding-left: 40px;">
-      <span style="color: #0000ff; background-color: #00ffff;">
-        <strong>Ажлын туршлага</strong>
-      </span>
-    </p>
-    ${
-      data.experience &&
-      data.experience.map((element) => {
-        <ul>
-          <li style="list-style-type: none;">
-            <ul>
-              <li style="font-weight: 400;" aria-level="1">
-                <span style="font-weight: 400;">${element.position}</span>
-                <strong>, ${element.company} </strong>
-                <span style="font-weight: 400;">, </span>
-                <em>
-                  <span style="font-weight: 400;">${element.location}</span>
-                </em>
-                <span style="font-weight: 400;">, ${element.type}</span>
-              </li>
-            </ul>
-          </li>
-        </ul>;
-      })
-    }
-    <p style="padding-left: 40px;">
-      <span style="color: #0000ff; background-color: #00ffff;">
-        <strong>EDUCATION</strong>
-      </span>
-    </p>
-    <ul>
-      <li style="list-style-type: none;">
-        <ul>
-          <li style="font-weight: 400;" aria-level="1">
-            <span style="font-weight: 400;">International Business Management &amp; Marketing, Pre-master&rsquo;s program, </span>
-            <em>
-              <span style="font-weight: 400;">University of Sheffield, UK, 2019-2020</span>
-            </em>
-          </li>
-          <li style="font-weight: 400;" aria-level="1">
-            <span style="font-weight: 400;">Bachelor of International Economic Relations, </span>
-            <em>
-              <span style="font-weight: 400;">National University of Mongolia (NUM), School of International Relations and Public Administration (SIRPA), 2012 to 2016</span>
-            </em>
-          </li>
-          <li style="font-weight: 400;" aria-level="1">
-            <span style="font-weight: 400;">High school education, </span>
-            <em>
-              <span style="font-weight: 400;">Erdmiin san school, Erdenet city, Mongolia, 2009-2012</span>
-            </em>
-          </li>
-        </ul>
-      </li>
-    </ul>
-    <p style="padding-left: 40px;">
-      <span style="color: #0000ff; background-color: #00ffff;">
-        <strong>AWARDS</strong>
-      </span>
-    </p>
-    <ul>
-      <li style="list-style-type: none;">
-        <ul>
-          <li style="font-weight: 400;" aria-level="1">
-            <span style="font-weight: 400;">Best of the year, Bloomberg TV Mongolia, National News Corporation LLC, 2019&nbsp;&nbsp;</span>
-          </li>
-          <li style="font-weight: 400;" aria-level="1">
-            <span style="font-weight: 400;">The Leader Youngman of the Year, Mongolian Youth Organization, 2018</span>
-          </li>
-          <li style="font-weight: 400;" aria-level="1">
-            <span style="font-weight: 400;">The first place in the essay contest, &ldquo;Passport to the world&rdquo;, Education USA /EARC/, 2016</span>
-          </li>
-          <li style="font-weight: 400;" aria-level="1">
-            <span style="font-weight: 400;">The best delegate prize of the Model United Nations, awarded by NUM-SIRPA, 2015</span>
-          </li>
-          <li style="font-weight: 400;" aria-level="1">
-            <span style="font-weight: 400;">Student&rsquo;s scholarship awarded by Zorig Foundation &amp; LG, 2014&nbsp;</span>
-          </li>
-          <li style="font-weight: 400;" aria-level="1">
-            <span style="font-weight: 400;">3rd place in essay contest of World peaceful day, 2012</span>
-          </li>
-        </ul>
-      </li>
-    </ul>
-    <p style="padding-left: 40px;">
-      <span style="color: #0000ff; background-color: #00ffff;">
-        <strong>LANGUAGE</strong>
-      </span>
-    </p>
-    <ul>
-      <li style="list-style-type: none;">
-        <ul>
-          <li style="font-weight: 400;" aria-level="1">
-            <span style="font-weight: 400;">Native:</span>
-            <span style="font-weight: 400;"> Mongolian, </span>
-            <span style="font-weight: 400;">Advanced:</span>
-            <span style="font-weight: 400;"> English</span>
-          </li>
-        </ul>
-      </li>
-    </ul>
-    <p style="padding-left: 40px;">
-      <span style="color: #0000ff; background-color: #00ffff;">
-        <strong>Huviin ur chadvar</strong>
-      </span>
-    </p>
-    <p style="padding-left: 40px;">
-      <span style="color: #0000ff; background-color: #00ffff;">
-        <strong>Ger buliin medeelel</strong>
-      </span>
-    </p>
-  </div>
-    </body>
+  </body>
   </html>
   `;
   const printToFile = async () => {

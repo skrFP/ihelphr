@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, ScrollView, SafeAreaView } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
-import { useTheme } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 import axios from "axios";
 import { api } from "../../../Constants";
 import FormText from "../../components/FormText";
@@ -20,6 +20,7 @@ const EmployeeAddWork = () => {
   const [isType, setIsType] = useState(1);
   const [normalDay, setNormalDay] = useState(7);
   const [specialModal, setSpecialModal] = useState(false);
+  const navigation = useNavigation();
   // Мэргэжил сонгох
   const [occupationModal, setOccupationModal] = useState(false);
   const [occupationName, setOccupationName] = useState("");
@@ -37,6 +38,7 @@ const EmployeeAddWork = () => {
       .post(`${api}/api/v1/announcements`, addWork)
       .then((res) => {
         console.log(res.data.data);
+        navigation.goBack();
       })
       .catch((err) => alert(err));
   };

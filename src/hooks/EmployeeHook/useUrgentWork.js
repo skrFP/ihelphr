@@ -4,7 +4,6 @@ import { api } from "../../../Constants";
 
 export default (refresh) => {
   const [urgentWork, setUrgentWork] = useState([]);
-
   const [urgentError, setUrgentError] = useState(null);
   const [urgentLoading, setUrgentLoading] = useState(false);
 
