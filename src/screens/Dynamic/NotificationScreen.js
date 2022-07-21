@@ -29,7 +29,6 @@ const NotificationScreen = () => {
       )
       .then((res) => {
         setNotifData(res.data.data);
-        console.log(res.data.data);
       })
       .catch((err) => {
         alert(err);
@@ -86,7 +85,6 @@ const NotificationScreen = () => {
         keyExtractor={(item, index) => index}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }) => {
-          console.log(item, "aaa");
           return (
             <TouchableOpacity
               style={{

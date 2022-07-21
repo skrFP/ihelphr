@@ -13,7 +13,6 @@ const UserSavedWork = () => {
       .get(`${api}/api/v1/likes/${state.userId}/jobs`)
       .then((res) => {
         setSavedWork(res.data.data);
-        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);

@@ -30,7 +30,6 @@ const NetworkingPostDetailScreen = (props) => {
         .get(`${api}/api/v1/posts/${id}`, { cancelToken: source.token })
         .then((res) => {
           setPostDetail(res.data.data);
-          console.log(res.data.data);
         })
         .catch((err) => {
           alert(err);

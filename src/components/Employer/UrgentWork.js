@@ -15,7 +15,7 @@ import axios from "axios";
 import UserContext from "../../context/UserContext";
 import { Ionicons } from "@expo/vector-icons";
 const UrgentWork = (props) => {
-  const { id, createUser, occupation, type, urgent, salary } = props;
+  const { id, createUser, occupation, type, urgent, salary, isSentCv } = props;
   const navigation = useNavigation();
   const state = useContext(UserContext);
   const { colors } = useTheme();
@@ -148,8 +148,7 @@ const UrgentWork = (props) => {
         {!state.isCompany && (
           <View style={{ flexDirection: "row", marginRight: 10 }}>
             <Ionicons
-              // send
-              name="send-outline"
+              name={isSentCv ? "send" : "send-outline"}
               size={26}
               color="white"
               style={{ marginRight: 10, top: 1 }}

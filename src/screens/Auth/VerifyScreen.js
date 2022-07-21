@@ -42,7 +42,6 @@ const VerificationScreen = (props) => {
   const thirdInput = useRef();
   const fourthInput = useRef();
   const [otp, setOtp] = useState({ 1: "", 2: "", 3: "", 4: "" });
-  console.log(otp);
   return (
     <View style={{ backgroundColor: "white", height: "100%" }}>
       <View style={styles.container}>

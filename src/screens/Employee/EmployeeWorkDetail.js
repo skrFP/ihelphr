@@ -23,7 +23,6 @@ const EmployeeWorkDetail = (props) => {
       .get(`${api}/api/v1/announcements/${id}`)
       .then((res) => {
         setWorkDetail(res.data.data);
-        console.log(res.data.data);
       })
       .catch((err) => {
         alert(err);

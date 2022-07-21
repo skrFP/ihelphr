@@ -23,7 +23,7 @@ const UserProfileTop = ({ userProfile, isFollowing }) => {
     if (following) {
       setFollowing(false);
       axios
-        .delete(`${api}/api/v1/follows/${userProfile._id}`)
+        .post(`${api}/api/v1/follows/${userProfile._id}`)
         .then((res) => {
           Alert.alert("Амжилттай дагахаа болилоо");
         })
@@ -163,7 +163,7 @@ const UserProfileTop = ({ userProfile, isFollowing }) => {
             />
             <Text style={{ textAlign: "center", top: 3, color: colors.border }}>
               {" "}
-              {following ? "Дагахгүй" : "Дагах"}
+              {following ? "Дагадаг" : "Дагах"}
             </Text>
           </View>
         </TouchableOpacity>

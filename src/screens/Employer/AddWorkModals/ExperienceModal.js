@@ -22,24 +22,26 @@ const ExperienceModal = (props) => {
     >
       <View style={{ backgroundColor: colors.background, height: "100%" }}>
         <ModalHeader
-          text="Ажлын туршлага сонгох"
+          text="Ажлын туршлага"
           clicked={() => setExperienceModal(false)}
         />
         <View style={{ marginHorizontal: 10 }}>
-          {["0-1", "1-3", "3-5", "5-10", "10+", "хамаагүй"].map((l, i) => (
-            <TouchableOpacity
-              onPress={() => {
-                setExperience(l);
-                checkExperience(l);
-              }}
-              key={i}
-            >
-              <Text style={[styles.text, { color: colors.primaryText }]}>
-                {l}
-              </Text>
-              <View style={[styles.border, { borderColor: colors.border }]} />
-            </TouchableOpacity>
-          ))}
+          {["0-1", "1-3", "3-5", "5-10", "10-аас дээш", "Xамаагүй"].map(
+            (l, i) => (
+              <TouchableOpacity
+                onPress={() => {
+                  setExperience(l);
+                  checkExperience(l);
+                }}
+                key={i}
+              >
+                <Text style={[styles.text, { color: colors.primaryText }]}>
+                  {l}
+                </Text>
+                <View style={[styles.border, { borderColor: colors.border }]} />
+              </TouchableOpacity>
+            )
+          )}
         </View>
       </View>
     </Modal>
@@ -53,7 +55,6 @@ const styles = StyleSheet.create({
     margin: 5,
     fontSize: 15,
     padding: 10,
-    fontFamily: "Sf-bold",
   },
   border: {
     borderWidth: 1,

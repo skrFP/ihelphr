@@ -5,13 +5,18 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
+  Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigation, useTheme } from "@react-navigation/native";
-import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  AntDesign,
+  MaterialCommunityIcons,
+  Ionicons,
+} from "@expo/vector-icons";
 import { api } from "../../../../Constants";
 import axios from "axios";
-
+import UserContext from "../../../context/UserContext";
 const fullWidth = Dimensions.get("screen").width;
 const fullHeight = Dimensions.get("screen").height;
 const CompanyTop = (props) => {
@@ -30,11 +35,16 @@ const CompanyTop = (props) => {
     id,
   } = props;
   const [following, setFollowing] = useState(isFollow);
+  const state = useContext(UserContext);
   const onFollow = () => {
     if (following) {
       setFollowing(false);
       axios
-        .delete(`${api}/api/v1/follows/${id}`)
+        .post(
+          `${api}/api/v1/follows/${id}/${
+            state.isCompany ? state.companyId : state.userId
+          }`
+        )
         .then((res) => {
           Alert.alert("Амжилттай дагахаа болилоо");
         })
@@ -44,7 +54,11 @@ const CompanyTop = (props) => {
     } else {
       setFollowing(true);
       axios
-        .post(`${api}/api/v1/follows/${id}`)
+        .post(
+          `${api}/api/v1/follows/${id}/${
+            state.isCompany ? state.companyId : state.userId
+          }`
+        )
         .then((res) => {
           Alert.alert("Амжилттай дагалаа");
         })
@@ -70,6 +84,7 @@ const CompanyTop = (props) => {
         }}
       >
         {/* Pro pic and Name category */}
+
         <View
           style={{
             flexDirection: "row",
@@ -108,6 +123,75 @@ const CompanyTop = (props) => {
             </Text>
           </View>
         </View>
+        {/* Employer employee status */}
+        <View style={{ marginTop: 25, marginRight: 10 }}>
+          {data.isEmployer && (
+            <View
+              style={{
+                backgroundColor: "#3da4e3",
+                flexDirection: "row",
+                marginTop: 5,
+                borderColor: colors.border,
+                borderRadius: 20,
+                alignItems: "center",
+                padding: 2,
+                paddingEnd: 15,
+              }}
+            >
+              <Text> </Text>
+              <Ionicons
+                name={"business"}
+                size={18}
+                color={colors.primaryText}
+              />
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontFamily: "Sf-medium",
+                  color: colors.primaryText,
+                  left: 5,
+                }}
+              >
+                {" "}
+                Ажил олгогч
+              </Text>
+            </View>
+          )}
+
+          {data.isEmployee && (
+            <View
+              style={{
+                backgroundColor: "#ff914d",
+                flexDirection: "row",
+                marginTop: 5,
+                borderWidth: 1,
+                borderColor: colors.border,
+                borderRadius: 20,
+                alignItems: "center",
+                padding: 2,
+                paddingHorizontal: 5,
+                alignContent: "center",
+                alignSelf: "center",
+              }}
+            >
+              <Ionicons
+                name={"briefcase"}
+                size={18}
+                color={colors.primaryText}
+              />
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontFamily: "Sf-medium",
+                  color: colors.primaryText,
+                }}
+              >
+                {" "}
+                Ажил гүйцэтгэгч
+              </Text>
+            </View>
+          )}
+        </View>
       </View>
       <View style={{ bottom: 50 }}>
         {/* Profile Edit and setting */}
@@ -128,9 +212,6 @@ const CompanyTop = (props) => {
               borderRadius: 10,
               flex: 0.66,
             }}
-            onPress={() =>
-              navigation.navigate("CompanyProfileEdit", { data: data })
-            }
           >
             {/* Профайл янзлах */}
             <View style={{ flexDirection: "row", alignSelf: "center" }}>
@@ -138,29 +219,32 @@ const CompanyTop = (props) => {
                 name="cube-send"
                 size={24}
                 color={colors.border}
-                style={{ top: 5 }}
+                style={{ top: 7 }}
               />
               <Text
                 style={{
                   textAlign: "center",
-                  top: 8,
+                  top: 10,
                   color: colors.border,
                   right: 5,
                 }}
               >
                 {" "}
-                Ажлын санал илгээх{"   "}
+                Анкет илгээх{"   "}
               </Text>
             </View>
           </TouchableOpacity>
+
           {/* Тохиргоо */}
           <TouchableOpacity
             style={{
-              backgroundColor: "#FFB6C1",
+              backgroundColor: !following ? "#FFB6C1" : null,
               marginHorizontal: 5,
               paddingVertical: 8,
               borderRadius: 10,
               flex: 0.34,
+              borderWidth: 1,
+              borderColor: colors.border,
             }}
             onPress={onFollow}
           >
@@ -168,13 +252,17 @@ const CompanyTop = (props) => {
               <AntDesign
                 name={following ? "deleteuser" : "adduser"}
                 size={24}
-                color={colors.border}
+                color={!following ? colors.border : colors.primaryText}
               />
               <Text
-                style={{ textAlign: "center", top: 3, color: colors.border }}
+                style={{
+                  textAlign: "center",
+                  top: 3,
+                  color: !following ? colors.border : colors.primaryText,
+                }}
               >
                 {" "}
-                {following ? "Дагахгүй" : "Дагах"}
+                {following ? "Дагадаг" : "Дагах"}
               </Text>
             </View>
           </TouchableOpacity>

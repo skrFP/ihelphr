@@ -21,6 +21,10 @@ import NotificationScreen from "../screens/Dynamic/NotificationScreen";
 import ViewUserPost from "../screens/Dynamic/ViewUserPost";
 import CompanyWorkDetail from "../screens/Profile/Company/CompanyWorkDetail";
 import ViewCompanyJobs from "../screens/Dynamic/ViewCompanyJobs";
+import EmployerWorkDetail from "../screens/Employer/EmployerWorkDetail";
+import FollowedCompany from "../screens/Search/FollowedCompany";
+import CompanyFilterModal from "../screens/Search/Company/CompanyFilterModal";
+import ResultedCompanyModal from "../screens/Search/Company/ResultedCompanyModal";
 const SearchGroup = () => {
   const SearchStack = createNativeStackNavigator();
   return (
@@ -44,6 +48,14 @@ const SearchGroup = () => {
         <SearchStack.Screen
           name="EmployerSearch"
           component={EmployerSearch}
+          options={{
+            headerShown: false,
+            fullScreenGestureEnabled: true,
+          }}
+        />
+        <SearchStack.Screen
+          name="EmployerWorkDetail"
+          component={EmployerWorkDetail}
           options={{
             headerShown: false,
             fullScreenGestureEnabled: true,
@@ -183,6 +195,36 @@ const SearchGroup = () => {
           options={{
             headerShown: false,
             fullScreenGestureEnabled: true,
+          }}
+        />
+        <SearchStack.Screen
+          name="FollowedCompany"
+          component={FollowedCompany}
+          options={{
+            fullScreenGestureEnabled: true,
+            title: "Дагадаг компани",
+            headerLeft: () => <MyBackButton />,
+            presentation: "formSheet",
+          }}
+        />
+        <SearchStack.Screen
+          name="CompanyFilterModal"
+          component={CompanyFilterModal}
+          options={{
+            fullScreenGestureEnabled: true,
+            title: "Компани сортлох",
+            headerLeft: () => <MyBackButton />,
+            presentation: "formSheet",
+          }}
+        />
+        <SearchStack.Screen
+          name="ResultedCompanyModal"
+          component={ResultedCompanyModal}
+          options={{
+            fullScreenGestureEnabled: true,
+            title: "Компани",
+            headerLeft: () => <MyBackButton />,
+            presentation: "formSheet",
           }}
         />
       </SearchStack.Group>

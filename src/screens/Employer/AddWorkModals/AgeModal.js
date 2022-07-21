@@ -16,9 +16,9 @@ const AgeModal = (props) => {
       }}
     >
       <View style={{ backgroundColor: colors.background, height: "100%" }}>
-        <ModalHeader text="Нас сонгох" clicked={() => setAgeModal(false)} />
+        <ModalHeader text="Нас" clicked={() => setAgeModal(false)} />
         <View style={{ marginHorizontal: 10 }}>
-          {["18-25", "26-30", "31-36", "37-45", "45+", "хамаагүй"].map(
+          {["18-25", "26-30", "31-36", "37-45", "45-аас дээш", "Хамаагүй"].map(
             (l, i) => (
               <TouchableOpacity
                 onPress={() => {
@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
     margin: 5,
     fontSize: 15,
     padding: 10,
-    fontFamily: "Sf-bold",
   },
   border: {
     borderWidth: 1,

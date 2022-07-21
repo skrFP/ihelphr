@@ -11,7 +11,6 @@ const CvScreen = () => {
   const [cvData, setCvData] = useState([]);
   const { colors } = useTheme();
   const state = useContext(UserContext);
-  console.log(state);
   const [point, setPoint] = useState([]);
   let isMounted = true;
   const getPermision = () => {

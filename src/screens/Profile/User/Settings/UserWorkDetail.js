@@ -85,7 +85,7 @@ const UserWorkDetail = (props) => {
               marginTop: 10,
             }}
             onPress={() =>
-              navigation.navigate("CompanyProfileDetail", {
+              navigation.navigate("ViewCompanyProfile", {
                 id: workDetail.createUser._id,
               })
             }

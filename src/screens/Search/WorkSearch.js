@@ -101,8 +101,8 @@ const WorkSearch = () => {
               borderColor: colors.border,
               borderWidth: 1,
               borderRadius: 20,
-              marginVertical: 10,
-              margin: 20,
+              marginTop: 10,
+              marginHorizontal: 10,
             }}
             onPress={() => setModalVisible(true)}
           >

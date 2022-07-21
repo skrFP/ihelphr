@@ -61,7 +61,7 @@ const UserProfileCourse = ({ data }) => {
               <View style={{ flexDirection: "row", marginHorizontal: 20 }}>
                 <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate("CompanyProfileDetail", { id: e._id })
+                    navigation.navigate("ViewCompanyProfile", { id: e._id })
                   }
                 >
                   <Image

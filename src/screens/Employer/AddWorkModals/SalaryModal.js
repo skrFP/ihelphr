@@ -16,10 +16,7 @@ const SalaryModal = (props) => {
       }}
     >
       <View style={{ backgroundColor: colors.background, height: "100%" }}>
-        <ModalHeader
-          text="Цалингын хэмжээ"
-          clicked={() => setModalVisible(false)}
-        />
+        <ModalHeader text="Цалин" clicked={() => setModalVisible(false)} />
         <View style={{ marginHorizontal: 10 }}>
           {[
             "400,000 - 600,000",
@@ -61,7 +58,6 @@ const styles = StyleSheet.create({
     margin: 5,
     fontSize: 15,
     padding: 10,
-    fontFamily: "Sf-bold",
   },
   border: {
     borderWidth: 1,

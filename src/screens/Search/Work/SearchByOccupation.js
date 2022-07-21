@@ -134,6 +134,7 @@ const SearchByOccupation = (props) => {
             renderItem={ItemView}
             style={{ backgroundColor: colors.background }}
             contentContainerStyle={{ backgroundColor: colors.background }}
+            ListFooterComponent={<View style={{ marginBottom: 200 }} />}
           />
         </View>
       </Modal>

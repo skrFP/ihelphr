@@ -10,10 +10,9 @@ const EmployeeSavedWork = () => {
   const [savedWork, setSavedWork] = useState([]);
   const getSavedWork = () => {
     axios
-      .get(`${api}/api/v1/likes/${state.userId}/jobs`)
+      .get(`${api}/api/v1/likes/${state.userId}/announcements`)
       .then((res) => {
         setSavedWork(res.data.data);
-        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -29,13 +28,13 @@ const EmployeeSavedWork = () => {
         savedWork.map((item) => {
           return (
             <View key={item._id}>
-              {item.job && (
+              {item.announcement && (
                 <EmployeeWork
-                  id={item.job._id}
-                  createUser={item.job.createUser}
-                  occupation={item.job.occupation}
-                  type={item.job.type}
-                  salary={item.job.salary}
+                  id={item.announcement._id}
+                  createUser={item.announcement.createUser}
+                  occupation={item.announcement.occupation}
+                  type={item.announcement.skill}
+                  salary={item.announcement.price}
                 />
               )}
             </View>

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, Alert } from "react-native";
+import { Text, View, Image, Alert } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { api } from "../../../Constants";
@@ -74,14 +74,12 @@ const EmployerWorkDetail = (props) => {
       ) : (
         <Header isBack={true} />
       )}
-
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{ backgroundColor: colors.background }}
       >
         <View style={{ margin: 10 }}>
           {/* Company */}
-
           {workDetail.createUser && (
             <TouchableOpacity
               style={{
@@ -265,7 +263,6 @@ const EmployerWorkDetail = (props) => {
             >
               Tавигдах шаардлага
             </Text>
-
             <View style={{ marginLeft: 10 }}>
               {workDetail.skill && (
                 <View style={{ flexDirection: "row" }}>
@@ -315,7 +312,6 @@ const EmployerWorkDetail = (props) => {
                   </Text>
                 </View>
               )}
-
               {workDetail.education && (
                 <View style={{ flexDirection: "row" }}>
                   <MaterialCommunityIcons
@@ -328,7 +324,6 @@ const EmployerWorkDetail = (props) => {
                   </Text>
                 </View>
               )}
-
               {workDetail.gender && (
                 <View style={{ flexDirection: "row", marginVertical: 10 }}>
                   <MaterialCommunityIcons
@@ -341,7 +336,6 @@ const EmployerWorkDetail = (props) => {
                   </Text>
                 </View>
               )}
-
               {workDetail.language && (
                 <View style={{ flexDirection: "row" }}>
                   <MaterialCommunityIcons
@@ -411,5 +405,3 @@ const EmployerWorkDetail = (props) => {
 };
 
 export default EmployerWorkDetail;
-
-const styles = StyleSheet.create({});

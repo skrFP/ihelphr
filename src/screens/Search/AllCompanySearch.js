@@ -9,9 +9,10 @@ import {
   SafeAreaView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import AntDesign from "@expo/vector-icons/AntDesign";
+import { AntDesign, SimpleLineIcons } from "@expo/vector-icons";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { api } from "../../../Constants";
+import EmployeeData from "../../components/Search/Company/EmployeeData";
 
 const AllCompanySearch = () => {
   const [filterData, setFilterData] = useState([]);
@@ -24,7 +25,7 @@ const AllCompanySearch = () => {
     return () => {};
   }, []);
   const fetchCompany = () => {
-    const apiURL = `${api}/api/v1/profiles?select=profile firstName category&limit=1000`;
+    const apiURL = `${api}/api/v1/profiles?select=profile firstName category isFollowing&limit=1000`;
     fetch(apiURL)
       .then((response) => response.json())
       .then((responseJson) => {
@@ -51,40 +52,6 @@ const AllCompanySearch = () => {
       setSearch(text);
     }
   };
-  const ItemView = ({ item }) => {
-    return (
-      <>
-        <TouchableOpacity
-          style={{
-            flexDirection: "row",
-            marginHorizontal: 10,
-            alignItems: "center",
-          }}
-          onPress={() =>
-            navigation.navigate("ViewCompanyProfile", { id: item._id })
-          }
-        >
-          <Image
-            source={{ uri: `${api}/upload/${item.profile}` }}
-            style={{ width: 50, height: 50, borderRadius: 30 }}
-          />
-          <View style={{ marginLeft: 10 }}>
-            <Text style={{ color: colors.primaryText }}>{item.firstName}</Text>
-            <Text style={{ color: colors.secondaryText }}>
-              {item.category && item.category.name}
-            </Text>
-          </View>
-        </TouchableOpacity>
-        <View
-          style={{
-            borderWidth: 1,
-            borderColor: colors.border,
-            marginVertical: 10,
-          }}
-        />
-      </>
-    );
-  };
 
   return (
     <SafeAreaView style={{ backgroundColor: "#141414", height: "100%" }}>
@@ -93,6 +60,7 @@ const AllCompanySearch = () => {
           flexDirection: "row",
           alignItems: "center",
           marginHorizontal: 10,
+          justifyContent: "space-around",
         }}
       >
         <AntDesign
@@ -107,18 +75,28 @@ const AllCompanySearch = () => {
           onChangeText={(text) => searchFilter(text)}
           style={{
             backgroundColor: colors.border,
-            padding: 15,
-            width: "90%",
-            marginLeft: 10,
+            padding: 10,
+            width: "80%",
+            marginHorizontal: 10,
             borderRadius: 20,
             color: colors.primaryText,
+          }}
+        />
+        <SimpleLineIcons
+          name="equalizer"
+          size={25}
+          color={colors.primaryText}
+          onPress={() => {
+            navigation.navigate("CompanyFilterModal");
           }}
         />
       </View>
       <FlatList
         data={filterData}
         keyExtractor={(item, index) => index}
-        renderItem={ItemView}
+        renderItem={({ item }) => {
+          return <EmployeeData item={item} isFollowing={item.isFollowing} />;
+        }}
         ListHeaderComponent={
           <>
             <Text

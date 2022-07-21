@@ -32,7 +32,6 @@ const LanguageAddModal = () => {
       .post(`${api}/api/v1/questionnaires/language`, language)
       .then((res) => {
         navigation.goBack();
-        console.log(res.data);
       })
       .catch((err) => alert(err));
   };

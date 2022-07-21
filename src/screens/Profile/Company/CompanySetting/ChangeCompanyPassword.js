@@ -22,7 +22,6 @@ const ChangeCompanyPassword = () => {
         resetToken: recievedToken,
       })
       .then((res) => {
-        console.log(res.data.data);
         navigation.goBack();
       })
       .catch((err) => {

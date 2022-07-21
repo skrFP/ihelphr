@@ -204,7 +204,7 @@ const ProfileGroup = () => {
               options={{
                 headerShown: true,
                 presentation: "formSheet",
-                title: "CV үүсгэх",
+                title: "Анкет үүсгэх",
                 headerLeft: () => <MyBackButton />,
               }}
             />

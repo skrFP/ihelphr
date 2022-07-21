@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View, Modal, TouchableOpacity } from "react-native";
 import React from "react";
-import ModalHeader from "../../../components/ModalHeader";
 import { useTheme } from "@react-navigation/native";
+import ModalHeader from "../../../components/ModalHeader";
 
-const TypeModal = (props) => {
-  const { typeModal, setTypeModal, setType, checkType } = props;
+const ChooseTypeModal = (props) => {
+  const { typeModal, setTypeModal, setTypeName } = props;
   const { colors } = useTheme();
   return (
     <Modal
@@ -16,22 +16,13 @@ const TypeModal = (props) => {
       }}
     >
       <View style={{ backgroundColor: colors.background, height: "100%" }}>
-        <ModalHeader text="Цагийн төрөл" clicked={() => setTypeModal(false)} />
+        <ModalHeader text="Сонгох" clicked={() => setTypeModal(false)} />
         <View style={{ marginHorizontal: 10 }}>
-          {[
-            "Бүтэн цаг",
-            "Хагас цаг",
-            "Freelancer",
-            "Self-employed",
-            "Contract",
-            "Intern",
-            "Apprentice",
-            "Seasonal",
-          ].map((l, i) => (
+          {["Ажил хийе", "Ажил өгье", "Хамаагүй"].map((l, i) => (
             <TouchableOpacity
               onPress={() => {
-                setType(l);
-                checkType(l);
+                setTypeName(l);
+                setTypeModal(!typeModal);
               }}
               key={i}
             >
@@ -47,13 +38,14 @@ const TypeModal = (props) => {
   );
 };
 
-export default TypeModal;
+export default ChooseTypeModal;
 
 const styles = StyleSheet.create({
   text: {
     margin: 5,
     fontSize: 15,
     padding: 10,
+    fontFamily: "Sf-bold",
   },
   border: {
     borderWidth: 1,

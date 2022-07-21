@@ -15,13 +15,16 @@ const CustomSearchedModal = (props) => {
   const getWorkSearch = () => {
     axios
       .get(
-        `${api}/api/v1/jobs?limit=1000&${salary && `salary=${salary}`}${
-          age && `age=${age}`
-        }`
+        `${api}/api/v1/jobs?limit=1000${salary ? `&salary=${salary}` : ""}${
+          level ? `&level=${level}` : ""
+        }${education ? `&education=${education}` : ""}${
+          age ? `&age=${age}` : ""
+        }${experience ? `&experience=${experience}` : ""}${
+          gender ? `&gender=${gender}` : ""
+        }${type ? `&type=${type}` : ""}`
       )
       .then((res) => {
         setWorks(res.data.data);
-        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -55,7 +58,7 @@ const CustomSearchedModal = (props) => {
               }}
             />
           ) : (
-            <View style={{ marginTop: 200 }}>
+            <View>
               <Empty text="Таны хайсан ажлын байр одоогоор байхгүй байна" />
             </View>
           )}

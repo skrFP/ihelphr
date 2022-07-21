@@ -16,7 +16,7 @@ const LevelModal = (props) => {
       }}
     >
       <View style={{ backgroundColor: colors.background, height: "100%" }}>
-        <ModalHeader text="Хүйс сонгох" clicked={() => setLevelModal(false)} />
+        <ModalHeader text="Албан тушаал" clicked={() => setLevelModal(false)} />
         <View style={{ marginHorizontal: 10 }}>
           {[
             "Мэргэжилтэн",
@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
     margin: 5,
     fontSize: 15,
     padding: 10,
-    fontFamily: "Sf-bold",
   },
   border: {
     borderWidth: 1,

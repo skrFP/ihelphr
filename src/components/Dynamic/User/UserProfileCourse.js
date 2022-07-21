@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import React from "react";
-import Border from "../../Border";
-import { AntDesign, SimpleLineIcons } from "@expo/vector-icons";
+
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { api } from "../../../../Constants";
 import moment from "moment";
@@ -43,7 +42,7 @@ const UserProfileCourse = ({ data }) => {
               <View style={{ flexDirection: "row", marginHorizontal: 20 }}>
                 <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate("CompanyProfileDetail", { id: e._id })
+                    navigation.navigate("ViewCompanyProfile", { id: e._id })
                   }
                 >
                   <Image

@@ -37,7 +37,6 @@ const EmployeeAddWork = () => {
     axios
       .post(`${api}/api/v1/announcements`, addWork)
       .then((res) => {
-        console.log(res.data.data);
         navigation.goBack();
       })
       .catch((err) => alert(err));

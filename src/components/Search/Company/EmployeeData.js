@@ -1,22 +1,22 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity, Image } from "react-native";
 import React, { useContext, useState } from "react";
-import { useNavigation, useTheme } from "@react-navigation/native";
 import axios from "axios";
-import UserContext from "../../context/UserContext";
-import { api } from "../../../Constants";
+import { api } from "../../../../Constants";
+import UserContext from "../../../context/UserContext";
+import { useNavigation, useTheme } from "@react-navigation/native";
 import AntDesign from "@expo/vector-icons/AntDesign";
-const DynamicFollowing = (props) => {
-  const { followUser, isFollowing } = props;
+const EmployeeData = (props) => {
   const { colors } = useTheme();
   const navigation = useNavigation();
-  const [follow, setFollow] = useState(isFollowing);
+  const { isFollowing, item } = props;
   const state = useContext(UserContext);
+  const [follow, setFollow] = useState(isFollowing);
   const onFollow = () => {
     if (follow) {
       setFollow(false);
       axios
         .post(
-          `${api}/api/v1/follows/${followUser._id}/${
+          `${api}/api/v1/follows/${item.id}/${
             state.isCompany ? state.companyId : state.userId
           }`
         )
@@ -30,7 +30,7 @@ const DynamicFollowing = (props) => {
       setFollow(true);
       axios
         .post(
-          `${api}/api/v1/follows/${followUser._id}/${
+          `${api}/api/v1/follows/${item.id}/${
             state.isCompany ? state.companyId : state.userId
           }`
         )
@@ -42,42 +42,29 @@ const DynamicFollowing = (props) => {
         });
     }
   };
-
   return (
     <>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          marginHorizontal: 20,
-          marginTop: 10,
-          justifyContent: "space-between",
-        }}
-      >
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <TouchableOpacity
           style={{
             flexDirection: "row",
+            marginHorizontal: 10,
             alignItems: "center",
           }}
           onPress={() =>
-            navigation.navigate("UserProfileDetail", {
-              id: followUser._id,
-            })
+            navigation.navigate("ViewCompanyProfile", { id: item._id })
           }
         >
           <Image
-            source={{ uri: `${api}/upload/${followUser.profile}` }}
-            style={{ width: 50, height: 50, borderRadius: 50 }}
+            source={{ uri: `${api}/upload/${item.profile}` }}
+            style={{ width: 50, height: 50, borderRadius: 30 }}
           />
-          <Text
-            style={{
-              margin: 10,
-              fontWeight: "bold",
-              color: colors.primaryText,
-            }}
-          >
-            {followUser.firstName}
-          </Text>
+          <View style={{ marginLeft: 10 }}>
+            <Text style={{ color: colors.primaryText }}>{item.firstName}</Text>
+            <Text style={{ color: colors.secondaryText }}>
+              {item.category && item.category.name}
+            </Text>
+          </View>
         </TouchableOpacity>
         <TouchableOpacity
           style={{
@@ -129,6 +116,4 @@ const DynamicFollowing = (props) => {
   );
 };
 
-export default DynamicFollowing;
-
-const styles = StyleSheet.create({});
+export default EmployeeData;

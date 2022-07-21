@@ -12,12 +12,12 @@ import ModalHeader from "../../../components/ModalHeader";
 import { useTheme } from "@react-navigation/native";
 import { api } from "../../../../Constants";
 
-const OccupationModal = (props) => {
+const CategoryModal = (props) => {
   const {
     occupationModal,
     setOccupationModal,
     setOccupationName,
-    checkOccupation,
+    setOccupationId,
   } = props;
   const { colors } = useTheme();
   const [filterData, setFilterData] = useState([]);
@@ -28,7 +28,7 @@ const OccupationModal = (props) => {
     return () => {};
   }, []);
   const fetchUser = () => {
-    const apiURL = `${api}/api/v1/occupations?select=name`;
+    const apiURL = `${api}/api/v1/categories?select=name`;
     fetch(apiURL)
       .then((response) => response.json())
       .then((responseJson) => {
@@ -63,7 +63,8 @@ const OccupationModal = (props) => {
         }}
         onPress={() => {
           setOccupationName(item.name);
-          checkOccupation(item._id);
+          setOccupationId(item._id);
+          setOccupationModal(!occupationModal);
         }}
       >
         <View style={{ marginLeft: 10 }}>
@@ -95,10 +96,7 @@ const OccupationModal = (props) => {
       }}
     >
       <View style={{ backgroundColor: colors.background, height: "100%" }}>
-        <ModalHeader
-          text="Мэргэжил"
-          clicked={() => setOccupationModal(false)}
-        />
+        <ModalHeader text="Салбар" clicked={() => setOccupationModal(false)} />
         <TextInput
           placeholder="Хайх утга..."
           value={search}
@@ -126,7 +124,7 @@ const OccupationModal = (props) => {
   );
 };
 
-export default OccupationModal;
+export default CategoryModal;
 
 const styles = StyleSheet.create({
   text: {

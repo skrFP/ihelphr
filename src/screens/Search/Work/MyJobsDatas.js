@@ -1,20 +1,13 @@
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  Alert,
-} from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
+import CircularProgress from "react-native-circular-progress-indicator";
 import { useNavigation, useTheme } from "@react-navigation/native";
-import { api } from "../../../Constants";
-
-import Icon from "@expo/vector-icons/Entypo";
 import axios from "axios";
-import UserContext from "../../context/UserContext";
-const NormalWork = (props) => {
-  const { id, createUser, occupation, price, job } = props;
+import Icon from "@expo/vector-icons/Entypo";
+import { api } from "../../../../Constants";
+import UserContext from "../../../context/UserContext";
+const MyJobsDatas = (props) => {
+  const { id, createUser, occupation, type, salary, percent } = props;
   const navigation = useNavigation();
   const state = useContext(UserContext);
   const { colors } = useTheme();
@@ -22,7 +15,7 @@ const NormalWork = (props) => {
   const [isLike, setIsLike] = useState(false);
   const getCheckLike = () => {
     axios
-      .get(`${api}/api/v1/likes/${state.userId}/announcement`)
+      .get(`${api}/api/v1/likes/${state.userId}/job`)
       .then((res) => {
         setCheckLikeId(res.data.data);
       })
@@ -45,7 +38,7 @@ const NormalWork = (props) => {
         Alert.alert("Амжилттай устгалаа");
       })
       .catch((err) => {
-        alert(err);
+        // alert(err);
       });
   };
   const liked = () => {
@@ -56,10 +49,9 @@ const NormalWork = (props) => {
         Alert.alert("Амжилттай хадгаллаа");
       })
       .catch((err) => {
-        alert(err);
+        // alert(err);
       });
   };
-
   return (
     <View
       style={{
@@ -81,7 +73,7 @@ const NormalWork = (props) => {
       >
         <TouchableOpacity
           style={{ flexDirection: "row", alignItems: "center" }}
-          onPress={() => navigation.navigate("EmployeeWorkDetail", { id })}
+          onPress={() => navigation.navigate("EmployerWorkDetail", { id: id })}
         >
           <Image
             source={{
@@ -117,7 +109,7 @@ const NormalWork = (props) => {
                 fontSize: 14,
               }}
             >
-              {price}₮
+              {salary}₮
             </Text>
             <Text
               style={{
@@ -126,26 +118,40 @@ const NormalWork = (props) => {
                 fontWeight: "200",
               }}
             >
-              {job} - {createUser.firstName}
+              {type} - {createUser.firstName}
             </Text>
           </View>
         </TouchableOpacity>
-        {!state.isCompany && (
-          <View style={{}}>
-            <Icon
-              name={isLike ? "heart" : "heart-outlined"}
-              size={30}
-              color={"white"}
-              onPress={isLike ? unLiked : liked}
-              style={{ textAlign: "right", marginRight: 20 }}
-            />
-          </View>
-        )}
+        <View style={{ right: 10, flexDirection: "row" }}>
+          {!state.isCompany && (
+            <View style={{}}>
+              <Icon
+                name={isLike ? "heart" : "heart-outlined"}
+                size={30}
+                color={"white"}
+                onPress={isLike ? unLiked : liked}
+                style={{ textAlign: "right", marginRight: 20 }}
+              />
+            </View>
+          )}
+          <CircularProgress
+            value={percent}
+            activeStrokeColor={colors.primary}
+            activeStrokeSecondaryColor={"#D76D77"}
+            inActiveStrokeOpacity={0.5}
+            progressValueColor={colors.primaryText}
+            valueSuffix={"%"}
+            delay={1000}
+            radius={18}
+            activeStrokeWidth={5}
+            inActiveStrokeWidth={5}
+          />
+        </View>
       </View>
     </View>
   );
 };
 
-export default NormalWork;
+export default MyJobsDatas;
 
 const styles = StyleSheet.create({});

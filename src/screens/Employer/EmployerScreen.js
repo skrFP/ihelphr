@@ -98,13 +98,14 @@ const EmployerScreen = () => {
                 data={specialCompany}
                 error={specialCompanyError}
                 loading={specialCompanyLoading}
+                isFollowing={specialCompany.isFollowing}
               />
             </>
           }
           data={normalCompany}
           keyExtractor={(item, index) => index}
           renderItem={({ item }) => {
-            return <NormalCompany data={item} />;
+            return <NormalCompany data={item} isFollowing={item.isFollowing} />;
           }}
         />
       ) : (
@@ -124,6 +125,7 @@ const EmployerScreen = () => {
                         type={data.type}
                         urgent={data.urgent}
                         salary={data.salary}
+                        isSentCv={data.isSentCv}
                       />
                     </View>
                   );

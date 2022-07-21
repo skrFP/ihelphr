@@ -220,17 +220,32 @@ const PersonalDetailModal = (props) => {
         <Text style={[styles.textTitle, { color: colors.primaryText }]}>
           Төрсөн он сар
         </Text>
+        {isPickerShow && (
+          <DateTimePicker
+            value={date}
+            mode={"date"}
+            display={Platform.OS === "ios" ? "spinner" : "default"}
+            is24Hour={true}
+            maximumDate={new Date(2023, 15, 20)}
+            onChange={checkBirth}
+            style={styles.datePicker}
+            neutralButtonLabel="clear"
+          />
+        )}
+
         {!isPickerShow ? (
           <TouchableOpacity
             onPress={showPicker}
             style={{
               padding: 10,
-              backgroundColor: "#FFB6C1",
               borderWidth: 1,
               borderRadius: 20,
+              backgroundColor: "#C0C0C0",
             }}
           >
-            <Text style={{ textAlign: "center" }}>Сонгох</Text>
+            <Text style={[{ fontSize: 16 }]}>
+              {moment(date).format("YYYY-MM-DD")}
+            </Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
@@ -244,31 +259,6 @@ const PersonalDetailModal = (props) => {
           >
             <Text style={{ textAlign: "center" }}>Болсон</Text>
           </TouchableOpacity>
-        )}
-        {isPickerShow ? (
-          <DateTimePicker
-            value={date}
-            mode={"date"}
-            display={Platform.OS === "ios" ? "spinner" : "default"}
-            is24Hour={true}
-            maximumDate={new Date(2023, 15, 20)}
-            onChange={checkBirth}
-            style={styles.datePicker}
-            neutralButtonLabel="clear"
-          />
-        ) : (
-          <Text
-            style={[
-              {
-                color: colors.primaryText,
-                textAlign: "center",
-                fontSize: 16,
-                marginVertical: 5,
-              },
-            ]}
-          >
-            {moment(date).format("YYYY-MM-DD")}
-          </Text>
         )}
 
         {/*  birthPlace */}
@@ -324,7 +314,7 @@ const PersonalDetailModal = (props) => {
         </TouchableOpacity>
         <TouchableOpacity onPress={checkSalaryExpectation}>
           <Text style={[styles.textTitle, { color: colors.primaryText }]}>
-            Цалингын хүлээлт
+            Цалингийн хүлээлт
           </Text>
           <View
             style={{

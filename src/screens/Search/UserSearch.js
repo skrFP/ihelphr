@@ -37,7 +37,10 @@ const UserSearch = () => {
   const searchFilter = (text) => {
     if (text) {
       const newData = masterData.filter((item) => {
-        const itemData = item.name ? item.name.toUpperCase() : "".toUpperCase();
+        const itemData = item.lastName
+          ? item.lastName.toUpperCase()
+          : "".toUpperCase();
+        item.firstName ? item.firstName.toUpperCase() : "".toUpperCase();
         const textData = text.toUpperCase();
         return itemData.indexOf(textData) > -1;
       });
@@ -111,6 +114,7 @@ const UserSearch = () => {
             width: "90%",
             marginLeft: 10,
             borderRadius: 20,
+            color: colors.primaryText,
           }}
         />
       </View>

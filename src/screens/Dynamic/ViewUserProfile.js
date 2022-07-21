@@ -26,7 +26,6 @@ const ViewUserProfile = (props) => {
       .get(`${api}/api/v1/posts/${id}/user`)
       .then((res) => {
         setActivityData(res.data.data);
-        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err.response, "aaa1");

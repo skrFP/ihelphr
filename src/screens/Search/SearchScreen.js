@@ -18,7 +18,11 @@ const SearchScreen = () => {
 
   return (
     <SafeAreaView style={{ backgroundColor: colors.header }}>
-      {state.isCompany ? <CompanyHeader isNotification={true} /> : <Header />}
+      {state.isCompany ? (
+        <CompanyHeader isNotification={true} />
+      ) : (
+        <Header isFollowedCompany={true} />
+      )}
       <ScrollView style={{ backgroundColor: colors.background }}>
         <TouchableOpacity
           style={{
@@ -80,7 +84,7 @@ const SearchScreen = () => {
         >
           <Text style={{ textAlign: "center", color: colors.primaryText }}>
             {" "}
-            Мэргэжилээр зар хайх{" "}
+            Мэргэжлээр зар хайх{" "}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity

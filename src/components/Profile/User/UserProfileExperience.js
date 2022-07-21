@@ -63,7 +63,9 @@ const UserProfileExperience = ({ data }) => {
               >
                 <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate("CompanyProfileDetail", { id: e._id })
+                    navigation.navigate("ViewCompanyProfile", {
+                      id: e._id,
+                    })
                   }
                 >
                   <Image

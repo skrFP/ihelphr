@@ -1,12 +1,24 @@
 import { Image, View, TouchableOpacity, Text } from "react-native";
 import React, { useContext } from "react";
-import { Ionicons, SimpleLineIcons, AntDesign } from "@expo/vector-icons";
+import {
+  Ionicons,
+  SimpleLineIcons,
+  AntDesign,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import UserContext from "../../context/UserContext";
 import useUserProfile from "../../hooks/ProfileDetail/User/useUserProfile";
 const Header = (props) => {
-  const { isBack, isSearch, isEmployerSaved, isEmployeeSaved, userSearch } =
-    props;
+  const {
+    isBack,
+    isSearch,
+    isEmployerSaved,
+    isEmployeeSaved,
+    userSearch,
+    isFollowedCompany,
+    companyFilter,
+  } = props;
   const navigation = useNavigation();
   const { colors } = useTheme();
   const state = useContext(UserContext);
@@ -75,6 +87,13 @@ const Header = (props) => {
               size={25}
               color={colors.primaryText}
               onPress={() => navigation.navigate("UserSearch")}
+            />
+          ) : isFollowedCompany ? (
+            <MaterialIcons
+              name="follow-the-signs"
+              size={25}
+              color={colors.primaryText}
+              onPress={() => navigation.navigate("FollowedCompany")}
             />
           ) : null}
         </View>

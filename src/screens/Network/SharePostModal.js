@@ -16,7 +16,6 @@ const SharePostModal = (props) => {
     axios
       .post(`${api}/api/v1/shares/${id}`, { body: shareText })
       .then((res) => {
-        console.log(res.data.data);
         navigation.goBack();
       })
       .catch((err) => {

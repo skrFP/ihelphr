@@ -9,6 +9,7 @@ import LevelModal from "../../Employer/AddWorkModals/LevelModal";
 import OccupationModal from "../../Employer/AddWorkModals/OccupationModal";
 import SalaryModal from "../../Employer/AddWorkModals/SalaryModal";
 import TypeModal from "../../Employer/AddWorkModals/TypeModal";
+import { LinearGradient } from "expo-linear-gradient";
 const CustomSearchModal = () => {
   const { colors } = useTheme();
   const navigation = useNavigation();
@@ -102,12 +103,13 @@ const CustomSearchModal = () => {
               padding: 10,
               borderWidth: 1,
               borderRadius: 20,
-              marginVertical: 10,
+              marginTop: 10,
+              borderColor: colors.border,
             }}
             onPress={() => setAgeModal(true)}
           >
             <Text style={{ textAlign: "center", color: colors.primaryText }}>
-              {age ? `${age} нас` : "Нас сонгох"}
+              {age ? `${age} нас` : "Hас"}
             </Text>
           </TouchableOpacity>
           {/* Боловсрол */}
@@ -116,12 +118,19 @@ const CustomSearchModal = () => {
               padding: 10,
               borderWidth: 1,
               borderRadius: 20,
-              marginVertical: 10,
+              marginTop: 10,
+              borderColor: colors.border,
+              backgroundColor: education && "#FFB6C1",
             }}
             onPress={() => setEducationModal(true)}
           >
-            <Text style={{ textAlign: "center", color: colors.primaryText }}>
-              {education ? `${education}` : "Боловсролын шаардлага"}
+            <Text
+              style={{
+                textAlign: "center",
+                color: !education ? colors.primaryText : "black",
+              }}
+            >
+              {education ? `${education}` : "Боловсрол"}
             </Text>
           </TouchableOpacity>
           {/* Туршлага жилээр */}
@@ -130,12 +139,13 @@ const CustomSearchModal = () => {
               padding: 10,
               borderWidth: 1,
               borderRadius: 20,
-              marginVertical: 10,
+              marginTop: 10,
+              borderColor: colors.border,
             }}
             onPress={() => setExperienceModal(true)}
           >
             <Text style={{ textAlign: "center", color: colors.primaryText }}>
-              {experience ? `${experience} жил` : "Туршлага жилээр"}
+              {experience ? `${experience} жил` : "Туршлага"}
             </Text>
           </TouchableOpacity>
           {/* Хүйс */}
@@ -144,12 +154,13 @@ const CustomSearchModal = () => {
               padding: 10,
               borderWidth: 1,
               borderRadius: 20,
-              marginVertical: 10,
+              marginTop: 10,
+              borderColor: colors.border,
             }}
             onPress={() => setGenderModal(true)}
           >
             <Text style={{ textAlign: "center", color: colors.primaryText }}>
-              {gender ? `${gender}` : "Хүйс сонгох"}
+              {gender ? `${gender}` : "Хүйс"}
             </Text>
           </TouchableOpacity>
           {/* Level */}
@@ -158,7 +169,8 @@ const CustomSearchModal = () => {
               padding: 10,
               borderWidth: 1,
               borderRadius: 20,
-              marginVertical: 10,
+              marginTop: 10,
+              borderColor: colors.border,
             }}
             onPress={() => setLevelModal(true)}
           >
@@ -172,7 +184,8 @@ const CustomSearchModal = () => {
               padding: 10,
               borderWidth: 1,
               borderRadius: 20,
-              marginVertical: 10,
+              marginTop: 10,
+              borderColor: colors.border,
             }}
             onPress={() => setModalVisible(true)}
           >
@@ -186,7 +199,8 @@ const CustomSearchModal = () => {
               padding: 10,
               borderWidth: 1,
               borderRadius: 20,
-              marginVertical: 10,
+              marginTop: 10,
+              borderColor: colors.border,
             }}
             onPress={() => setOccupationModal(true)}
           >
@@ -200,29 +214,17 @@ const CustomSearchModal = () => {
               padding: 10,
               borderWidth: 1,
               borderRadius: 20,
-              marginVertical: 10,
+              marginTop: 10,
+              borderColor: colors.border,
             }}
             onPress={() => setTypeModal(true)}
           >
             <Text style={{ textAlign: "center", color: colors.primaryText }}>
-              {type ? `${type}` : "Цагын төрөл"}
+              {type ? `${type}` : "Цагийн төрөл"}
             </Text>
           </TouchableOpacity>
           {/* Хайх */}
           <TouchableOpacity
-            style={{
-              padding: 10,
-              borderWidth: 1,
-              borderRadius: 20,
-              marginVertical: 10,
-            }}
-            // salary: "2,100,000 - 2,500,000",
-            // age: "18-25",
-            // level: "Дунд шатны удирдлага",
-            // education: "Бакалавр",
-            // experience: "0-1",
-            // gender: "эр",
-            // type: "Бүтэн цаг",
             onPress={() =>
               navigation.navigate("CustomSearchedModal", {
                 salary: salary,
@@ -235,9 +237,20 @@ const CustomSearchModal = () => {
               })
             }
           >
-            <Text style={{ textAlign: "center", color: colors.primaryText }}>
-              Хайх
-            </Text>
+            <LinearGradient
+              colors={["#3A1C71", "#D76D77", "#FFAF7B"]}
+              start={[0.0, 0.5]}
+              end={[1.0, 0.5]}
+              style={{
+                borderRadius: 18,
+                padding: 10,
+                marginTop: 10,
+              }}
+            >
+              <Text style={{ textAlign: "center", color: colors.primaryText }}>
+                Хайх
+              </Text>
+            </LinearGradient>
           </TouchableOpacity>
         </View>
       </View>

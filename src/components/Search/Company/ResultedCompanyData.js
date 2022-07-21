@@ -1,12 +1,11 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
 import React, { useContext, useState } from "react";
+import { api } from "../../../../Constants";
 import { useNavigation, useTheme } from "@react-navigation/native";
+import UserContext from "../../../context/UserContext";
 import axios from "axios";
-import UserContext from "../../context/UserContext";
-import { api } from "../../../Constants";
-
-const DynamicFollower = (props) => {
-  const { followUser, isFollowing } = props;
+const ResultedCompanyData = (props) => {
+  const { item, isFollowing, typeName } = props;
   const { colors } = useTheme();
   const navigation = useNavigation();
   const [follow, setFollow] = useState(isFollowing);
@@ -16,9 +15,9 @@ const DynamicFollower = (props) => {
       setFollow(false);
       axios
         .post(
-          `${api}/api/v1/follows/${followUser._id}/${
+          `${api}/api/v1/follows/${
             state.isCompany ? state.companyId : state.userId
-          }`
+          }/${item.id}`
         )
         .then((res) => {
           console.log(res.data.data);
@@ -30,7 +29,7 @@ const DynamicFollower = (props) => {
       setFollow(true);
       axios
         .post(
-          `${api}/api/v1/follows/${followUser._id}/${
+          `${api}/api/v1/follows/${item.id}/${
             state.isCompany ? state.companyId : state.userId
           }`
         )
@@ -42,50 +41,44 @@ const DynamicFollower = (props) => {
         });
     }
   };
-
   return (
-    <>
+    <View style={{ marginTop: 10 }}>
       <View
         style={{
           flexDirection: "row",
-          alignItems: "center",
-          marginHorizontal: 20,
-          marginTop: 10,
           justifyContent: "space-between",
         }}
       >
         <TouchableOpacity
           style={{
             flexDirection: "row",
+            marginHorizontal: 10,
             alignItems: "center",
           }}
           onPress={() =>
-            navigation.navigate("UserProfileDetail", {
-              id: followUser._id,
-            })
+            navigation.navigate("ViewCompanyProfile", { id: item._id })
           }
         >
           <Image
-            source={{ uri: `${api}/upload/${followUser.profile}` }}
-            style={{ width: 50, height: 50, borderRadius: 50 }}
+            source={{ uri: `${api}/upload/${item.profile}` }}
+            style={{ width: 50, height: 50, borderRadius: 30 }}
           />
-          <Text
-            style={{
-              margin: 10,
-              fontWeight: "bold",
-              color: colors.primaryText,
-            }}
-          >
-            {followUser.firstName}
-          </Text>
+          <View style={{ marginLeft: 10 }}>
+            <Text style={{ color: colors.primaryText }}>{item.firstName}</Text>
+            <Text style={{ color: colors.secondaryText }}>
+              {item.category && item.category.name}
+            </Text>
+          </View>
         </TouchableOpacity>
         <TouchableOpacity
           style={{
             borderWidth: 1,
-            padding: 10,
-            paddingHorizontal: 20,
             borderColor: colors.border,
             borderRadius: 10,
+            alignItems: "center",
+            alignContent: "center",
+            paddingHorizontal: 10,
+            paddingVertical: 3,
           }}
           onPress={onFollow}
         >
@@ -93,12 +86,14 @@ const DynamicFollower = (props) => {
             style={{
               color: colors.primaryText,
               fontFamily: "Sf-bold",
+              marginTop: 10,
             }}
           >
             {follow ? "Дагадаг" : "Дагах"}
           </Text>
         </TouchableOpacity>
       </View>
+
       <View
         style={{
           borderWidth: 1,
@@ -106,10 +101,10 @@ const DynamicFollower = (props) => {
           marginVertical: 10,
         }}
       />
-    </>
+    </View>
   );
 };
 
-export default DynamicFollower;
+export default ResultedCompanyData;
 
 const styles = StyleSheet.create({});

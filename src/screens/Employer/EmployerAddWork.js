@@ -55,7 +55,6 @@ const EmployerAddWork = () => {
     axios
       .post(`${api}/api/v1/jobs/${state.companyId}`, addWork)
       .then((res) => {
-        console.log(res.data.data);
         navigation.goBack();
       })
       .catch((err) => alert(err));

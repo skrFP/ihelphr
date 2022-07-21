@@ -23,7 +23,6 @@ const ChangePasswordModal = () => {
         resetToken: recievedToken,
       })
       .then((res) => {
-        console.log(res.data.data);
         navigation.goBack();
       })
       .catch((err) => {
