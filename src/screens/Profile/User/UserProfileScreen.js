@@ -17,6 +17,7 @@ import EmptyStatus from "../../../components/Profile/User/Empty/EmptyStatus";
 import EmptyData from "../../../components/Profile/User/Empty/EmptyData";
 import { api } from "../../../../Constants";
 import Posts from "../../../components/Network/Posts";
+import UserPortf from "../../../components/Profile/User/CompanyPortf";
 const UserProfileScreen = () => {
   const state = useContext(UserContext);
   const navigation = useNavigation();
@@ -88,40 +89,53 @@ const UserProfileScreen = () => {
           ) : (
             <UserProfileCourse data={cv.course} />
           )}
-          <Text
-            style={{
-              color: colors.primaryText,
-              marginHorizontal: 10,
-              fontFamily: "Sf-bold",
-              fontSize: 20,
-            }}
-          >
-            Оруулсан нийтлэл
-          </Text>
+          {/* <UserPortf
+            image1={userProfile.portfolio.image1}
+            image2={userProfile.portfolio.image2}
+            image3={userProfile.portfolio.image3}
+            image4={userProfile.portfolio.image4}
+            image5={userProfile.portfolio.image5}
+            image6={userProfile.portfolio.image6}
+          /> */}
           {activityData.map((item) => {
             return (
-              <View key={item._id} style={{}}>
-                {item.createUser && (
-                  <Posts
-                    postId={item._id}
-                    createUser={item.createUser}
-                    createdAt={item.createdAt}
-                    body={item.body}
-                    photo={item.photo}
-                    isShared={item.isShare}
-                    sharedUser={item.sharePost && item.sharePost.createUser}
-                    sharedCreatedAt={item.sharePost && item.sharePost.createdAt}
-                    sharedBody={item.sharePost && item.sharePost.body}
-                    sharedPhoto={item.sharePost && item.sharePost.photo}
-                    likeCount={item.like}
-                    commentCount={item.comment}
-                    shareCount={item.share}
-                    isLiked={item.isLiked}
-                    isCompany={item.createUser.organization}
-                    isBoost={item.isBoost}
-                  />
-                )}
-              </View>
+              <>
+                <View key={item._id} style={{}}>
+                  <Text
+                    style={{
+                      color: colors.primaryText,
+                      marginHorizontal: 10,
+                      fontFamily: "Sf-bold",
+                      fontSize: 20,
+                    }}
+                  >
+                    Оруулсан нийтлэл
+                  </Text>
+
+                  {item.createUser && (
+                    <Posts
+                      postId={item._id}
+                      createUser={item.createUser}
+                      createdAt={item.createdAt}
+                      body={item.body}
+                      photo={item.photo}
+                      isShared={item.isShare}
+                      sharedUser={item.sharePost && item.sharePost.createUser}
+                      sharedCreatedAt={
+                        item.sharePost && item.sharePost.createdAt
+                      }
+                      sharedBody={item.sharePost && item.sharePost.body}
+                      sharedPhoto={item.sharePost && item.sharePost.photo}
+                      likeCount={item.like}
+                      commentCount={item.comment}
+                      shareCount={item.share}
+                      isLiked={item.isLiked}
+                      isCompany={item.createUser.organization}
+                      isBoost={item.isBoost}
+                    />
+                  )}
+                </View>
+              </>
             );
           })}
         </View>

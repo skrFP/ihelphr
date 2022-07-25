@@ -1,10 +1,16 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
 import React, { useContext, useState } from "react";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import axios from "axios";
 import UserContext from "../../context/UserContext";
 import { api } from "../../../Constants";
-import AntDesign from "@expo/vector-icons/AntDesign";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 const DynamicFollowing = (props) => {
   const { followUser, isFollowing } = props;
   const { colors } = useTheme();
@@ -54,31 +60,154 @@ const DynamicFollowing = (props) => {
           justifyContent: "space-between",
         }}
       >
-        <TouchableOpacity
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-          onPress={() =>
-            navigation.navigate("UserProfileDetail", {
-              id: followUser._id,
-            })
-          }
-        >
-          <Image
-            source={{ uri: `${api}/upload/${followUser.profile}` }}
-            style={{ width: 50, height: 50, borderRadius: 50 }}
-          />
-          <Text
+        {followUser.organization ? (
+          <TouchableOpacity
             style={{
-              margin: 10,
-              fontWeight: "bold",
-              color: colors.primaryText,
+              flexDirection: "row",
+              alignItems: "center",
             }}
+            onPress={() =>
+              navigation.navigate("ViewCompanyProfile", {
+                id: followUser._id,
+              })
+            }
           >
-            {followUser.firstName}
-          </Text>
-        </TouchableOpacity>
+            <ImageBackground
+              source={{
+                uri: `${api}/upload/${followUser.profile}`,
+              }}
+              style={{
+                width: 50,
+                height: 50,
+                borderRadius: 30,
+              }}
+              imageStyle={{ borderRadius: 30 }}
+            >
+              {followUser.isEmployer && (
+                <View
+                  style={{
+                    backgroundColor: "#ff914d",
+                    borderRadius: 20,
+                    alignItems: "center",
+                    position: "absolute",
+                    alignSelf: "flex-end",
+                    bottom: 0,
+                    padding: 4,
+                  }}
+                >
+                  <Ionicons
+                    name={"briefcase"}
+                    size={8}
+                    color={colors.primaryText}
+                  />
+                </View>
+              )}
+              {followUser.isEmployee && (
+                <View
+                  style={{
+                    backgroundColor: "#3da4e3",
+                    borderRadius: 20,
+                    alignItems: "center",
+                    position: "absolute",
+                    alignSelf: "flex-end",
+                    bottom: 0,
+                    padding: 4,
+                    right: followUser.isEmployer ? 14 : 0,
+                  }}
+                >
+                  <Ionicons
+                    name={"business"}
+                    size={8}
+                    color={colors.primaryText}
+                  />
+                </View>
+              )}
+            </ImageBackground>
+            <Text
+              style={{
+                margin: 10,
+                fontWeight: "bold",
+                color: colors.primaryText,
+              }}
+            >
+              {followUser.firstName}
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+            onPress={() =>
+              navigation.navigate("ViewUserProfile", {
+                id: followUser._id,
+              })
+            }
+          >
+            <ImageBackground
+              source={{
+                uri: `${api}/upload/${followUser.profile}`,
+              }}
+              style={{
+                width: 50,
+                height: 50,
+                borderRadius: 30,
+              }}
+              imageStyle={{ borderRadius: 30 }}
+            >
+              {followUser.isEmployer && (
+                <View
+                  style={{
+                    backgroundColor: "#ff914d",
+                    borderRadius: 20,
+                    alignItems: "center",
+                    position: "absolute",
+                    alignSelf: "flex-end",
+                    bottom: 0,
+                    padding: 4,
+                  }}
+                >
+                  <Ionicons
+                    name={"briefcase"}
+                    size={8}
+                    color={colors.primaryText}
+                  />
+                </View>
+              )}
+              {followUser.isEmployee && (
+                <View
+                  style={{
+                    backgroundColor: "#3da4e3",
+                    borderRadius: 20,
+                    alignItems: "center",
+                    position: "absolute",
+                    alignSelf: "flex-end",
+                    bottom: 0,
+                    padding: 4,
+                    right: followUser.isEmployer ? 14 : 0,
+                  }}
+                >
+                  <Ionicons
+                    name={"business"}
+                    size={8}
+                    color={colors.primaryText}
+                  />
+                </View>
+              )}
+            </ImageBackground>
+            <Text
+              style={{
+                margin: 10,
+                fontWeight: "bold",
+                color: colors.primaryText,
+              }}
+            >
+              {followUser.firstName}
+            </Text>
+          </TouchableOpacity>
+        )}
+
         <TouchableOpacity
           style={{
             backgroundColor: !follow ? "#FFB6C1" : null,

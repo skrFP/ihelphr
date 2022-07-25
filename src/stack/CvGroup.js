@@ -9,6 +9,7 @@ import UserSendWorkRequest from "../screens/Dynamic/UserSendWorkRequest";
 import MyBackButton from "../components/Header/MyBackButton";
 import NotificationScreen from "../screens/Dynamic/NotificationScreen";
 import ViewUserPost from "../screens/Dynamic/ViewUserPost";
+import ViewUserFollowings from "../screens/Dynamic/ViewUserFollowings";
 const CvGroup = () => {
   const CvStack = createNativeStackNavigator();
   return (
@@ -35,8 +36,8 @@ const CvGroup = () => {
           options={{ headerShown: false, fullScreenGestureEnabled: true }}
         />
         <CvStack.Screen
-          name="ViewUserFollowing"
-          component={ViewUserFollowing}
+          name="ViewUserFollowings"
+          component={ViewUserFollowings}
           options={{ headerShown: false, fullScreenGestureEnabled: true }}
         />
         <CvStack.Screen

@@ -12,6 +12,7 @@ import { api } from "../../../Constants";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import UserContext from "../../context/UserContext";
 import { AntDesign } from "@expo/vector-icons";
+import axios from "axios";
 const NormalCompany = (props) => {
   const { data, isFollowing, loading } = props;
   const navigation = useNavigation();
@@ -23,7 +24,7 @@ const NormalCompany = (props) => {
       setFollow(false);
       axios
         .post(
-          `${api}/api/v1/follows/${item.id}/${
+          `${api}/api/v1/follows/${data.id}/${
             state.isCompany ? state.companyId : state.userId
           }`
         )
@@ -37,7 +38,7 @@ const NormalCompany = (props) => {
       setFollow(true);
       axios
         .post(
-          `${api}/api/v1/follows/${item.id}/${
+          `${api}/api/v1/follows/${data.id}/${
             state.isCompany ? state.companyId : state.userId
           }`
         )
@@ -111,7 +112,7 @@ const NormalCompany = (props) => {
                 alignSelf: "flex-end",
                 bottom: 0,
                 padding: 5,
-                right: 20,
+                right: data.isEmployer ? 20 : 0,
               }}
             >
               <Ionicons

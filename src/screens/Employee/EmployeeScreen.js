@@ -107,12 +107,18 @@ const EmployeeScreen = () => {
           showsVerticalScrollIndicator={false}
           ListHeaderComponent={
             <>
-              <SpecialCompany
-                data={specialCompany}
-                error={specialCompanyError}
-                loading={specialCompanyLoading}
-                isFollowing={specialCompany.isFollowing}
-              />
+              {specialCompany.map((data) => {
+                return (
+                  <View>
+                    <SpecialCompany
+                      data={data}
+                      error={specialCompanyError}
+                      loading={specialCompanyLoading}
+                      isFollowing={data.isFollowing}
+                    />
+                  </View>
+                );
+              })}
             </>
           }
           data={normalCompany}
@@ -138,9 +144,9 @@ const EmployeeScreen = () => {
                         id={data._id}
                         createUser={data.createUser}
                         occupation={data.occupation}
-                        type={data.type}
                         urgent={data.urgent}
-                        salary={data.salary}
+                        salary={data.price}
+                        job={data.do}
                       />
                     </View>
                   );
@@ -152,8 +158,8 @@ const EmployeeScreen = () => {
                         id={data._id}
                         createUser={data.createUser}
                         occupation={data.occupation}
-                        type={data.type}
-                        salary={data.salary}
+                        salary={data.price}
+                        job={data.do}
                       />
                     </View>
                   );

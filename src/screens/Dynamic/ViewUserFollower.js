@@ -29,11 +29,6 @@ const ViewUserFollower = (props) => {
   }, []);
   return (
     <SafeAreaView style={{ backgroundColor: colors.header }}>
-      {state.isCompany ? (
-        <CompanyHeader isBack={true} />
-      ) : (
-        <Header isBack={true} />
-      )}
       <View style={{ backgroundColor: colors.background }}>
         {followerData.length > 0 ? (
           <FlatList

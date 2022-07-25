@@ -19,7 +19,7 @@ const SearchScreen = () => {
   return (
     <SafeAreaView style={{ backgroundColor: colors.header }}>
       {state.isCompany ? (
-        <CompanyHeader isNotification={true} />
+        <CompanyHeader isNotification={true} isFollowedCompany={true} />
       ) : (
         <Header isFollowedCompany={true} />
       )}
@@ -56,28 +56,30 @@ const SearchScreen = () => {
             Компани хайх{" "}
           </Text>
         </TouchableOpacity>
+        {!state.isCompany && (
+          <TouchableOpacity
+            style={{
+              padding: 10,
+
+              borderWidth: 1,
+              borderRadius: 20,
+              borderColor: colors.border,
+            }}
+            onPress={() => navigation.navigate("MyJobs")}
+          >
+            <Text style={{ textAlign: "center", color: colors.primaryText }}>
+              {" "}
+              Өөрт тохирох{" "}
+            </Text>
+          </TouchableOpacity>
+        )}
 
         <TouchableOpacity
           style={{
             padding: 10,
-
             borderWidth: 1,
             borderRadius: 20,
-            borderColor: colors.border,
-          }}
-          onPress={() => navigation.navigate("MyJobs")}
-        >
-          <Text style={{ textAlign: "center", color: colors.primaryText }}>
-            {" "}
-            Өөрт тохирох{" "}
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{
-            padding: 10,
-            borderWidth: 1,
-            borderRadius: 20,
-            marginVertical: 10,
+            marginVertical: !state.isCompany && 10,
             borderColor: colors.border,
           }}
           onPress={() => navigation.navigate("WorkSearch")}
@@ -94,6 +96,7 @@ const SearchScreen = () => {
             borderWidth: 1,
             borderRadius: 20,
             borderColor: colors.border,
+            marginTop: state.isCompany && 10,
           }}
           onPress={() => navigation.navigate("CategorySearch")}
         >

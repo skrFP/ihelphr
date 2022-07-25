@@ -33,14 +33,17 @@ const NetworkingScreen = () => {
   const [noMore, setNoMore] = useState(false);
   const [isFetching, setIsFetching] = useState(false);
   const [userProfile] = useUserProfile(state.userId);
+  let isMounted = true;
   const getFollowData = () => {
     axios
       .get(
         `${api}/api/v1/posts/${state.userId}/following?limit=4&sort=-createdAt&page=${pageCurrent}`
       )
       .then((res) => {
-        setFollowData([...followData, ...res.data.data]);
-        setPagination(res.data.pagination);
+        if (isMounted) {
+          setFollowData([...followData, ...res.data.data]);
+          setPagination(res.data.pagination);
+        }
       })
       .catch((err) => alert(err));
   };
@@ -48,8 +51,11 @@ const NetworkingScreen = () => {
     setIsLoading(false);
     setIsFetching(false);
     getFollowData();
-    return () => {};
+    return () => {
+      isMounted = false;
+    };
   }, [pageCurrent, isFetching, isFocused]);
+
   const onRefresh = () => {
     setIsFetching(true);
   };

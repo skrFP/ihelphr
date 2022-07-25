@@ -27,7 +27,7 @@ const UserProfileExperience = ({ data }) => {
             fontSize: 20,
           }}
         >
-          Туршалга
+          Туршлага
         </Text>
         <View style={{ flexDirection: "row" }}>
           <AntDesign
@@ -62,11 +62,17 @@ const UserProfileExperience = ({ data }) => {
                 }}
               >
                 <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate("ViewCompanyProfile", {
-                      id: e._id,
-                    })
-                  }
+                  onPress={() => {
+                    if (e.companyId !== null) {
+                      navigation.navigate("ViewCompanyProfile", {
+                        id: e._id,
+                      });
+                    } else {
+                      alert(
+                        "Хэрэглэгч өрөө оруулсан компани тул профайл байхгүй байна"
+                      );
+                    }
+                  }}
                 >
                   <Image
                     source={{ uri: `${api}/upload/${e.companyPhoto}` }}

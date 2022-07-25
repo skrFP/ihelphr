@@ -134,13 +134,38 @@ const ExperienceCompanyModal = (props) => {
               marginVertical: 10,
             }}
           />
-
-          <FlatList
-            data={filterData}
-            keyExtractor={(item, index) => index}
-            ItemSeparatorComponent={ItemSeparatorView}
-            renderItem={ItemView}
-          />
+          {filterData.length > 0 ? (
+            <FlatList
+              data={filterData}
+              keyExtractor={(item, index) => index}
+              ItemSeparatorComponent={ItemSeparatorView}
+              renderItem={ItemView}
+            />
+          ) : (
+            <TouchableOpacity
+              style={{
+                flexDirection: "row",
+                marginHorizontal: 10,
+                alignItems: "center",
+              }}
+              onPress={() => {
+                setCompanyModal(!companyModal);
+                setExperience({
+                  ...experience,
+                  company: search,
+                  companyPhoto: "photo_62429a7c4a8b192ee41485fb.jpg",
+                });
+              }}
+            >
+              <Image
+                source={require("../../../../../../assets/logo.png")}
+                style={{ width: 50, height: 50, borderRadius: 30 }}
+              />
+              <View style={{ marginLeft: 10 }}>
+                <Text style={{ color: colors.primaryText }}>{search}</Text>
+              </View>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </Modal>

@@ -291,7 +291,7 @@ const CompanyTop = (props) => {
               alignItems: "center",
             }}
             onPress={() =>
-              navigation.navigate("ViewUserFollowing", { id: data._id })
+              navigation.navigate("ViewUserFollowings", { id: data._id })
             }
           >
             <Text style={{ color: colors.primaryText }}>{followingCount}</Text>

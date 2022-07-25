@@ -35,6 +35,8 @@ const UserSavedWork = () => {
                   occupation={item.job.occupation}
                   type={item.job.type}
                   salary={item.job.salary}
+                  isEmployer={item.isEmployer}
+                  isEmployee={item.isEmployee}
                 />
               )}
             </View>

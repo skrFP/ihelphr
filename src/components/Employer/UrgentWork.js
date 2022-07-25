@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  ImageBackground,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigation, useTheme } from "@react-navigation/native";
@@ -15,21 +16,26 @@ import axios from "axios";
 import UserContext from "../../context/UserContext";
 import { Ionicons } from "@expo/vector-icons";
 const UrgentWork = (props) => {
-  const { id, createUser, occupation, type, urgent, salary, isSentCv } = props;
+  const { id, createUser, occupation, type, urgent, salary } = props;
   const navigation = useNavigation();
   const state = useContext(UserContext);
   const { colors } = useTheme();
   const [checkLikeId, setCheckLikeId] = useState([]);
   const [isLike, setIsLike] = useState(false);
+  const [isCvSent, setIsCvSent] = useState(false);
+  const [checkCvId, setCheckCvId] = useState([]);
   const getCheckLike = () => {
-    axios
-      .get(`${api}/api/v1/likes/${state.userId}/job?limit=100`)
-      .then((res) => {
-        setCheckLikeId(res.data.data);
-      })
-      .catch((err) => {
-        // alert(err);
-      });
+    {
+      !state.isCompany &&
+        axios
+          .get(`${api}/api/v1/likes/${state.userId}/job?limit=100`)
+          .then((res) => {
+            setCheckLikeId(res.data.data);
+          })
+          .catch((err) => {
+            // alert(err);
+          });
+    }
   };
   useEffect(() => {
     getCheckLike();
@@ -70,6 +76,29 @@ const UrgentWork = (props) => {
         Alert.alert(err.response.data.error.message);
       });
   };
+
+  const getCheckCv = () => {
+    {
+      !state.isCompany &&
+        axios
+          .get(`${api}/api/v1/applies/${state.userId}/apply`)
+          .then((res) => {
+            setCheckCvId(res.data.data);
+            console.log(res.data.data);
+          })
+          .catch((err) => {
+            alert(err);
+            console.log(err);
+          });
+    }
+  };
+  useEffect(() => {
+    getCheckCv();
+  }, []);
+  let cvCheck = checkCvId.map((e) => `${e.job}`);
+  useEffect(() => {
+    setIsCvSent(cvCheck.includes(`${id}`));
+  }, [checkCvId]);
   return (
     <View
       style={{
@@ -97,7 +126,7 @@ const UrgentWork = (props) => {
             })
           }
         >
-          <Image
+          <ImageBackground
             source={{
               uri: `${api}/upload/${createUser.profile}`,
             }}
@@ -107,7 +136,48 @@ const UrgentWork = (props) => {
               borderRadius: 30,
               marginHorizontal: 5,
             }}
-          />
+            imageStyle={{ borderRadius: 30 }}
+          >
+            {createUser.isEmployer && (
+              <View
+                style={{
+                  backgroundColor: "#ff914d",
+                  borderRadius: 20,
+                  alignItems: "center",
+                  position: "absolute",
+                  alignSelf: "flex-end",
+                  bottom: 0,
+                  padding: 5,
+                }}
+              >
+                <Ionicons
+                  name={"briefcase"}
+                  size={12}
+                  color={colors.primaryText}
+                />
+              </View>
+            )}
+            {createUser.isEmployee && (
+              <View
+                style={{
+                  backgroundColor: "#3da4e3",
+                  borderRadius: 20,
+                  alignItems: "center",
+                  position: "absolute",
+                  alignSelf: "flex-end",
+                  bottom: 0,
+                  padding: 5,
+                  right: createUser.isEmployer ? 20 : 0,
+                }}
+              >
+                <Ionicons
+                  name={"business"}
+                  size={12}
+                  color={colors.primaryText}
+                />
+              </View>
+            )}
+          </ImageBackground>
 
           <View>
             <Text
@@ -148,7 +218,7 @@ const UrgentWork = (props) => {
         {!state.isCompany && (
           <View style={{ flexDirection: "row", marginRight: 10 }}>
             <Ionicons
-              name={isSentCv ? "send" : "send-outline"}
+              name={isCvSent ? "send" : "send-outline"}
               size={26}
               color="white"
               style={{ marginRight: 10, top: 1 }}

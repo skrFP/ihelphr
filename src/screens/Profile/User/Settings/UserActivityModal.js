@@ -36,7 +36,6 @@ const UserActivityModal = () => {
         keyExtractor={(item, index) => index}
         ListHeaderComponent={<View style={{ marginBottom: 20 }} />}
         renderItem={({ item }) => {
-          console.log(item);
           return (
             <View>
               {item.type === "Comment" && (

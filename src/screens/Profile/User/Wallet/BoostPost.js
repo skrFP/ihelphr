@@ -4,9 +4,11 @@ import {
   TouchableOpacity,
   Image,
   ScrollView,
+  Alert,
+  View,
 } from "react-native";
 import React, { useContext, useState, useEffect } from "react";
-import { useTheme } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 import axios from "axios";
 import { api } from "../../../../../Constants";
 import UserContext from "../../../../context/UserContext";
@@ -14,11 +16,11 @@ import MyButton from "../../../../components/MyButton";
 
 const BoostPost = (props) => {
   const { data } = props.route.params;
-  console.log(data);
   const { colors } = useTheme();
   const [boostDay, setBoostDay] = useState(1);
   const [userPoint, setUserPoint] = useState([]);
   const state = useContext(UserContext);
+  const navigation = useNavigation();
   let isMounted = true;
   const UserProfileData = () => {
     axios
@@ -50,7 +52,14 @@ const BoostPost = (props) => {
         boost: boostDay,
       })
       .then((res) => {
-        console.log(res.data.data);
+        Alert.alert("Амжиллтай", "Таны пост бүүстлэгдлээ", [
+          {
+            text: "Буцах",
+            onPress: () => navigation.goBack(),
+            style: "cancel",
+          },
+          { text: "OK", onPress: () => navigation.goBack() },
+        ]);
       })
       .catch((err) => {
         console.log(err);
@@ -242,11 +251,9 @@ const BoostPost = (props) => {
             </Text>
           </Text>
         </TouchableOpacity>
-        <MyButton
-          text={"Бүүстлэх"}
-          style={{ margin: 20 }}
-          onPress={boostPost}
-        />
+        <View style={{ marginVertical: 10 }} />
+        <MyButton text={"Бүүстлэх"} onPress={boostPost} />
+        <View style={{ marginBottom: 10 }} />
       </ScrollView>
     </>
   );

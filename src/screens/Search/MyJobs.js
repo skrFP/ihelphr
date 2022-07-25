@@ -1,20 +1,18 @@
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList } from "react-native";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { api } from "../../../Constants";
-import { useNavigation, useTheme } from "@react-navigation/native";
 import MyJobsDatas from "./Work/MyJobsDatas";
+import { useIsFocused } from "@react-navigation/native";
 const MyJobs = () => {
   const [jobs, setJobs] = useState([]);
-  const { colors } = useTheme();
-  const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const getJobs = () => {
     axios
       .get(
-        `${api}/api/v1/jobs?select=createUser occupation salary type percent&limit=1000`
+        `${api}/api/v1/jobs/filters?select=createUser occupation salary type percent&limit=1000`
       )
       .then((res) => {
-        console.log(res.data.data);
         setJobs(res.data.data);
       })
       .catch((err) => {
@@ -23,7 +21,7 @@ const MyJobs = () => {
   };
   useEffect(() => {
     getJobs();
-  }, []);
+  }, [isFocused]);
 
   return (
     <FlatList
@@ -47,5 +45,3 @@ const MyJobs = () => {
 };
 
 export default MyJobs;
-
-const styles = StyleSheet.create({});

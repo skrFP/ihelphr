@@ -64,6 +64,10 @@ import ViewUserPost from "../screens/Dynamic/ViewUserPost";
 import ChangeCompanyPassword from "../screens/Profile/Company/CompanySetting/ChangeCompanyPassword";
 import WorkBoostModal from "../screens/Profile/User/Wallet/WorkBoostModal";
 import ViewCompanyJobs from "../screens/Dynamic/ViewCompanyJobs";
+import UserSendWorkRequest from "../screens/Dynamic/UserSendWorkRequest";
+import ViewPortfolio from "../screens/Dynamic/VIewPortfolio";
+import PostSettings from "../screens/Network/PostSettings";
+import CompanyWorkRequest from "../screens/Profile/Company/CompanySetting/CompanyWorkRequest";
 const ProfileGroup = () => {
   const ProfileStack = createNativeStackNavigator();
   const state = useContext(UserContext);
@@ -176,12 +180,22 @@ const ProfileGroup = () => {
               }}
             />
             <ProfileStack.Screen
+              name="CompanyWorkRequest"
+              component={CompanyWorkRequest}
+              options={{
+                headerShown: true,
+                presentation: "formSheet",
+                title: "Ирсэн ажлын санал",
+                headerLeft: () => <MyBackButton />,
+              }}
+            />
+            <ProfileStack.Screen
               name="CompanyRecievedCv"
               component={CompanyRecievedCv}
               options={{
                 headerShown: true,
                 presentation: "formSheet",
-                title: "Ирсэн ажлын санал",
+                title: "Ирсэн анкет",
                 headerLeft: () => <MyBackButton />,
               }}
             />
@@ -525,14 +539,34 @@ const ProfileGroup = () => {
       <ProfileStack.Group>
         <>
           <ProfileStack.Screen
-            name="ViewUserFollowing"
+            name="ViewUserFollowings"
             component={ViewUserFollowings}
-            options={{ headerShown: false, fullScreenGestureEnabled: true }}
+            options={{
+              headerShown: true,
+              presentation: "formSheet",
+              title: "Дагсан",
+              headerLeft: () => <MyBackButton />,
+            }}
+          />
+          <ProfileStack.Screen
+            name="UserSendWorkRequest"
+            component={UserSendWorkRequest}
+            options={{
+              headerShown: true,
+              presentation: "formSheet",
+              title: "Ажлын санал илгээх",
+              headerLeft: () => <MyBackButton />,
+            }}
           />
           <ProfileStack.Screen
             name="ViewUserFollower"
             component={ViewUserFollower}
-            options={{ headerShown: false, fullScreenGestureEnabled: true }}
+            options={{
+              headerShown: true,
+              presentation: "formSheet",
+              title: "Дагадаг",
+              headerLeft: () => <MyBackButton />,
+            }}
           />
           <ProfileStack.Screen
             name="ChangeAccountModal"
@@ -602,6 +636,7 @@ const ProfileGroup = () => {
               // presentation: "formSheet",
               title: "Пойнт ашиглах",
               headerLeft: () => <MyBackButton />,
+              fullScreenGestureEnabled: true,
             }}
           />
           <ProfileStack.Screen
@@ -623,6 +658,7 @@ const ProfileGroup = () => {
               // presentation: "formSheet",
               title: "Пост бүүстлэх",
               headerLeft: () => <MyBackButton />,
+              fullScreenGestureEnabled: true,
             }}
           />
         </>
@@ -653,10 +689,8 @@ const ProfileGroup = () => {
           name="ViewCompanyProfile"
           component={ViewCompanyProfile}
           options={{
-            headerShown: true,
-            presentation: "formSheet",
-            title: "Компани профайл",
-            headerLeft: () => <MyBackButton />,
+            headerShown: false,
+            fullScreenGestureEnabled: true,
           }}
         />
         <ProfileStack.Screen
@@ -664,7 +698,7 @@ const ProfileGroup = () => {
           component={ViewUserProfile}
           options={{
             headerShown: false,
-            presentation: "formSheet",
+            fullScreenGestureEnabled: true,
           }}
         />
         <ProfileStack.Screen
@@ -695,6 +729,23 @@ const ProfileGroup = () => {
             presentation: "formSheet",
             title: "Хэрэглэгчийн пост",
             headerLeft: () => <MyBackButton />,
+          }}
+        />
+        <ProfileStack.Screen
+          name="PostSettings"
+          component={PostSettings}
+          options={{
+            headerShown: true,
+            presentation: "formSheet",
+            title: "Тохиргоо",
+            headerLeft: () => <MyBackButton />,
+          }}
+        />
+        <ProfileStack.Screen
+          name="ViewPortfolio"
+          component={ViewPortfolio}
+          options={{
+            headerShown: false,
           }}
         />
       </ProfileStack.Group>

@@ -3,8 +3,8 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Image,
   Alert,
+  ImageBackground,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigation, useTheme } from "@react-navigation/native";
@@ -15,21 +15,24 @@ import axios from "axios";
 import UserContext from "../../context/UserContext";
 import { Ionicons } from "@expo/vector-icons";
 const UrgentWork = (props) => {
-  const { id, createUser, occupation, type, urgent, salary } = props;
+  const { id, createUser, occupation, job, urgent, salary } = props;
   const navigation = useNavigation();
   const state = useContext(UserContext);
   const { colors } = useTheme();
   const [checkLikeId, setCheckLikeId] = useState([]);
   const [isLike, setIsLike] = useState(false);
   const getCheckLike = () => {
-    axios
-      .get(`${api}/api/v1/likes/${state.userId}/job?limit=100`)
-      .then((res) => {
-        setCheckLikeId(res.data.data);
-      })
-      .catch((err) => {
-        // alert(err);
-      });
+    {
+      state.userId &&
+        axios
+          .get(`${api}/api/v1/likes/${state.userId}/announcement?limit=100`)
+          .then((res) => {
+            setCheckLikeId(res.data.data);
+          })
+          .catch((err) => {
+            // alert(err);
+          });
+    }
   };
   useEffect(() => {
     getCheckLike();
@@ -91,13 +94,13 @@ const UrgentWork = (props) => {
         <TouchableOpacity
           style={{ flexDirection: "row", alignItems: "center" }}
           onPress={() =>
-            navigation.navigate("WorkDetailScreen", {
+            navigation.navigate("EmployeeWorkDetail", {
               id: id,
               isLiked: isLike,
             })
           }
         >
-          <Image
+          <ImageBackground
             source={{
               uri: `${api}/upload/${createUser.profile}`,
             }}
@@ -107,7 +110,48 @@ const UrgentWork = (props) => {
               borderRadius: 30,
               marginHorizontal: 5,
             }}
-          />
+            imageStyle={{ borderRadius: 30 }}
+          >
+            {createUser.isEmployer && (
+              <View
+                style={{
+                  backgroundColor: "#ff914d",
+                  borderRadius: 20,
+                  alignItems: "center",
+                  position: "absolute",
+                  alignSelf: "flex-end",
+                  bottom: 0,
+                  padding: 5,
+                }}
+              >
+                <Ionicons
+                  name={"briefcase"}
+                  size={12}
+                  color={colors.primaryText}
+                />
+              </View>
+            )}
+            {createUser.isEmployee && (
+              <View
+                style={{
+                  backgroundColor: "#3da4e3",
+                  borderRadius: 20,
+                  alignItems: "center",
+                  position: "absolute",
+                  alignSelf: "flex-end",
+                  bottom: 0,
+                  padding: 5,
+                  right: createUser.isEmployer ? 20 : 0,
+                }}
+              >
+                <Ionicons
+                  name={"business"}
+                  size={12}
+                  color={colors.primaryText}
+                />
+              </View>
+            )}
+          </ImageBackground>
 
           <View>
             <Text
@@ -151,7 +195,7 @@ const UrgentWork = (props) => {
                 fontWeight: "200",
               }}
             >
-              {type} - {createUser.name}
+              {job} - {createUser.firstName}
             </Text>
           </View>
         </TouchableOpacity>
@@ -163,7 +207,9 @@ const UrgentWork = (props) => {
               size={26}
               color="white"
               style={{ marginRight: 10, top: 1 }}
-              onPress={() => sendCv(id)}
+              onPress={() =>
+                navigation.navigate("UserSendWorkRequest", { id: id })
+              }
             />
             <Icon
               name={isLike ? "heart" : "heart-outlined"}

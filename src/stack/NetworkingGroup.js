@@ -15,6 +15,8 @@ import EditPost from "../screens/Network/EditPost";
 import BoostPost from "../screens/Profile/User/Wallet/BoostPost";
 import ViewUserPost from "../screens/Dynamic/ViewUserPost";
 import NotificationScreen from "../screens/Dynamic/NotificationScreen";
+import ViewPortfolio from "../screens/Dynamic/VIewPortfolio";
+import PostLikeUser from "../screens/Network/PostLikeUser";
 const NetworkingGroup = () => {
   const NetworkingStack = createNativeStackNavigator();
   return (
@@ -55,6 +57,7 @@ const NetworkingGroup = () => {
             fullScreenGestureEnabled: true,
             presentation: "formSheet",
             title: "Тохиргоо",
+            headerLeft: () => <MyBackButton />,
           }}
         />
         <NetworkingStack.Screen
@@ -64,6 +67,17 @@ const NetworkingGroup = () => {
             fullScreenGestureEnabled: true,
             presentation: "formSheet",
             title: "Пост янзлах",
+            headerLeft: () => <MyBackButton />,
+          }}
+        />
+        <NetworkingStack.Screen
+          name="PostLikeUser"
+          component={PostLikeUser}
+          options={{
+            fullScreenGestureEnabled: true,
+            presentation: "formSheet",
+            title: "Лайк дарсан хүмүүс",
+            headerLeft: () => <MyBackButton />,
           }}
         />
       </NetworkingStack.Group>
@@ -79,14 +93,24 @@ const NetworkingGroup = () => {
           options={{ headerShown: false, fullScreenGestureEnabled: true }}
         />
         <NetworkingStack.Screen
-          name="ViewUserFollowing"
+          name="ViewUserFollowings"
           component={ViewUserFollowings}
-          options={{ headerShown: false, fullScreenGestureEnabled: true }}
+          options={{
+            headerShown: true,
+            presentation: "formSheet",
+            title: "Дагадаг",
+            headerLeft: () => <MyBackButton />,
+          }}
         />
         <NetworkingStack.Screen
           name="ViewUserFollower"
           component={ViewUserFollower}
-          options={{ headerShown: false, fullScreenGestureEnabled: true }}
+          options={{
+            headerShown: true,
+            presentation: "formSheet",
+            title: "Дагагч",
+            headerLeft: () => <MyBackButton />,
+          }}
         />
         <NetworkingStack.Screen
           name="ViewUserPosts"
@@ -124,6 +148,13 @@ const NetworkingGroup = () => {
           options={{
             headerShown: false,
             fullScreenGestureEnabled: true,
+          }}
+        />
+        <NetworkingStack.Screen
+          name="ViewPortfolio"
+          component={ViewPortfolio}
+          options={{
+            headerShown: false,
           }}
         />
         {/* <NetworkingStack.Screen */}

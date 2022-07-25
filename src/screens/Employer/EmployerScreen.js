@@ -94,12 +94,18 @@ const EmployerScreen = () => {
           showsVerticalScrollIndicator={false}
           ListHeaderComponent={
             <>
-              <SpecialCompany
-                data={specialCompany}
-                error={specialCompanyError}
-                loading={specialCompanyLoading}
-                isFollowing={specialCompany.isFollowing}
-              />
+              {specialCompany.map((data) => {
+                return (
+                  <View key={data._id}>
+                    <SpecialCompany
+                      data={data}
+                      error={specialCompanyError}
+                      loading={specialCompanyLoading}
+                      isFollowing={data.isFollowing}
+                    />
+                  </View>
+                );
+              })}
             </>
           }
           data={normalCompany}

@@ -6,12 +6,14 @@ import {
   Image,
   TextInput,
   SafeAreaView,
+  ImageBackground,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { api } from "../../../Constants";
+
 const UserSearch = () => {
   const { colors } = useTheme();
   const navigation = useNavigation();
@@ -23,7 +25,7 @@ const UserSearch = () => {
     return () => {};
   }, []);
   const fetchUser = () => {
-    const apiURL = `${api}/api/v1/cvs?select=isFollowing firstName lastName profile workingCompany&limit=1000`;
+    const apiURL = `${api}/api/v1/cvs?select=isFollowing firstName lastName profile workingCompany status&limit=1000&organization=false`;
     fetch(apiURL)
       .then((response) => response.json())
       .then((responseJson) => {
@@ -61,10 +63,24 @@ const UserSearch = () => {
         }}
         onPress={() => navigation.navigate("ViewUserProfile", { id: item._id })}
       >
-        <Image
+        <ImageBackground
+          style={{ width: 50, height: 50 }}
           source={{ uri: `${api}/upload/${item.profile}` }}
-          style={{ width: 50, height: 50, borderRadius: 30 }}
-        />
+          imageStyle={{ borderRadius: 50 }}
+        >
+          <Image
+            source={
+              item.status === "opentowork"
+                ? require("../../../assets/open.png")
+                : item.status === "lookingForJob"
+                ? require("../../../assets/looking.png")
+                : item.status === "getEmployee"
+                ? require("../../../assets/hiring.png")
+                : null
+            }
+            style={{ width: 54, height: 54, right: 2, bottom: 2 }}
+          />
+        </ImageBackground>
         <View style={{ marginLeft: 10 }}>
           <Text style={{ color: colors.primaryText }}>
             {item.lastName} {item.firstName}

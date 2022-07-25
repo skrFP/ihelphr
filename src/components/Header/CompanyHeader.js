@@ -1,6 +1,6 @@
 import { Image, View, TouchableOpacity, Text } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
-import { Ionicons, AntDesign } from "@expo/vector-icons";
+import { Ionicons, AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import UserContext from "../../context/UserContext";
 import axios from "axios";
@@ -12,6 +12,7 @@ const CompanyHeader = (props) => {
     isEmployerAddWork,
     isSearch,
     isNotification,
+    isFollowedCompany,
   } = props;
   const navigation = useNavigation();
   const { colors } = useTheme();
@@ -80,6 +81,13 @@ const CompanyHeader = (props) => {
                   initial: false,
                 })
               }
+            />
+          ) : isFollowedCompany ? (
+            <MaterialIcons
+              name="follow-the-signs"
+              size={25}
+              color={colors.primaryText}
+              onPress={() => navigation.navigate("FollowedCompany")}
             />
           ) : null}
         </View>

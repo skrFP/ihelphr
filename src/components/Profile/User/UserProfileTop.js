@@ -301,7 +301,7 @@ const UserProfileTop = ({ userProfile, cv }) => {
             alignItems: "center",
           }}
           onPress={() =>
-            navigation.navigate("ViewUserFollowing", { id: userProfile._id })
+            navigation.navigate("ViewUserFollowings", { id: userProfile._id })
           }
         >
           <Text style={{ color: colors.primaryText }}>

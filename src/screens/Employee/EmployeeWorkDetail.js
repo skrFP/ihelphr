@@ -1,9 +1,16 @@
-import { StyleSheet, Text, View, Image, Alert } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Alert,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { api } from "../../../Constants";
 import { AntDesign } from "@expo/vector-icons";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "@expo/vector-icons/Entypo";
@@ -256,38 +263,32 @@ const EmployeeWorkDetail = (props) => {
         style={{
           backgroundColor: "#2c3539",
           borderTopRightRadius: 20,
-          bottom: -35,
           position: "absolute",
           left: 0,
           right: 0,
           padding: 20,
           borderTopLeftRadius: 20,
+          bottom: 0,
         }}
-        onPress={() => sendCv(workDetail._id)}
+        onPress={() => navigation.navigate("UserSendWorkRequest", { id: id })}
       >
-        <View
+        <Text
           style={{
-            backgroundColor: "#2c3539",
+            textAlign: "center",
+            fontSize: 20,
+            color: colors.primaryText,
+            bottom: 5,
           }}
         >
-          <Text
-            style={{
-              textAlign: "center",
-              fontSize: 20,
-              color: colors.primaryText,
-              bottom: 5,
-            }}
-          >
-            Анкет илгээх{" "}
-            <Ionicons
-              // send
-              name="send-outline"
-              size={20}
-              color={colors.primaryText}
-              style={{}}
-            />
-          </Text>
-        </View>
+          Ажлын санал тавих
+          <Ionicons
+            // send
+            name="send-outline"
+            size={20}
+            color={colors.primaryText}
+            style={{}}
+          />
+        </Text>
       </TouchableOpacity>
     </SafeAreaView>
   );

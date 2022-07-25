@@ -12,7 +12,11 @@ const FollowedCompany = () => {
   const { colors } = useTheme();
   const getFollowerData = () => {
     axios
-      .get(`${api}/api/v1/follows/${state.userId}/cv`)
+      .get(
+        `${api}/api/v1/follows/${
+          state.isCompany ? state.companyId : state.userId
+        }/cv`
+      )
       .then((res) => {
         setFollowingData(res.data.data);
       })
@@ -34,7 +38,16 @@ const FollowedCompany = () => {
             renderItem={({ item }) => {
               return (
                 <View>
-                  {item.followUser && (
+                  {state.isCompany ? (
+                    <>
+                      {!item.followUser.organization && (
+                        <DynamicFollowing
+                          followUser={item.followUser}
+                          isFollowing={item.isFollowing}
+                        />
+                      )}
+                    </>
+                  ) : (
                     <>
                       {item.followUser.organization && (
                         <DynamicFollowing

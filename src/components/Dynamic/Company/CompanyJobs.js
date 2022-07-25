@@ -9,7 +9,7 @@ const CompanyJobs = (props) => {
   const { colors } = useTheme();
 
   return (
-    <View
+    <TouchableOpacity
       style={{
         backgroundColor: "#454545",
         marginHorizontal: 10,
@@ -17,6 +17,7 @@ const CompanyJobs = (props) => {
         marginVertical: 4,
         borderRadius: 10,
       }}
+      onPress={() => navigation.navigate("CompanyWorkDetail", { id })}
     >
       <View
         style={{
@@ -25,10 +26,7 @@ const CompanyJobs = (props) => {
           alignItems: "center",
         }}
       >
-        <TouchableOpacity
-          style={{ flexDirection: "row", alignItems: "center" }}
-          onPress={() => navigation.navigate("CompanyWorkDetail", { id })}
-        >
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Image
             source={{
               uri: `${api}/upload/${createUser.profile}`,
@@ -86,28 +84,9 @@ const CompanyJobs = (props) => {
               {type} - {createUser.name}
             </Text>
           </View>
-        </TouchableOpacity>
-        <View style={{}}>
-          <Text
-            style={{
-              color: colors.primaryText,
-              width: "80%",
-              textAlign: "center",
-            }}
-          >
-            Зарыг үзсэн тоо:{" "}
-            <Text
-              style={{
-                color: colors.primaryText,
-                fontFamily: "Sf-bold",
-              }}
-            >
-              {count}
-            </Text>
-          </Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

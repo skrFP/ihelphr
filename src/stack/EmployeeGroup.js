@@ -11,6 +11,9 @@ import MyBackButton from "../components/Header/MyBackButton";
 import CompanyWorkDetail from "../screens/Profile/Company/CompanyWorkDetail";
 import ViewCompanyJobs from "../screens/Dynamic/ViewCompanyJobs";
 import NotificationScreen from "../screens/Dynamic/NotificationScreen";
+import UserSendWorkRequest from "../screens/Dynamic/UserSendWorkRequest";
+import EmployerSendWorkModal from "../screens/Dynamic/EmployerSendWorkModal";
+import ViewPortfolio from "../screens/Dynamic/VIewPortfolio";
 const EmployeeGroup = () => {
   const EmployeeStack = createNativeStackNavigator();
   return (
@@ -51,12 +54,22 @@ const EmployeeGroup = () => {
         <EmployeeStack.Screen
           name="ViewUserFollower"
           component={ViewUserFollower}
-          options={{ headerShown: false, fullScreenGestureEnabled: true }}
+          options={{
+            headerShown: true,
+            presentation: "formSheet",
+            title: "Дагагч",
+            headerLeft: () => <MyBackButton />,
+          }}
         />
         <EmployeeStack.Screen
           name="ViewUserFollowings"
           component={ViewUserFollowings}
-          options={{ headerShown: false, fullScreenGestureEnabled: true }}
+          options={{
+            headerShown: true,
+            presentation: "formSheet",
+            title: "Дагасан",
+            headerLeft: () => <MyBackButton />,
+          }}
         />
         <EmployeeStack.Screen
           name="ViewCompanyJobs"
@@ -65,6 +78,26 @@ const EmployeeGroup = () => {
             headerShown: true,
             presentation: "formSheet",
             title: "Ажлын зар",
+            headerLeft: () => <MyBackButton />,
+          }}
+        />
+        <EmployeeStack.Screen
+          name="EmployerSendWorkModal"
+          component={EmployerSendWorkModal}
+          options={{
+            headerShown: true,
+            presentation: "formSheet",
+            title: "Анкет илгээх",
+            headerLeft: () => <MyBackButton />,
+          }}
+        />
+        <EmployeeStack.Screen
+          name="UserSendWorkRequest"
+          component={UserSendWorkRequest}
+          options={{
+            headerShown: true,
+            presentation: "formSheet",
+            title: "Ажлын санал илгээх",
             headerLeft: () => <MyBackButton />,
           }}
         />
@@ -81,6 +114,13 @@ const EmployeeGroup = () => {
             presentation: "formSheet",
             title: "Ажлын зар",
             headerLeft: () => <MyBackButton />,
+          }}
+        />
+        <EmployeeStack.Screen
+          name="ViewPortfolio"
+          component={ViewPortfolio}
+          options={{
+            headerShown: false,
           }}
         />
       </EmployeeStack.Group>

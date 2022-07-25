@@ -60,9 +60,15 @@ const UserProfileCourse = ({ data }) => {
             >
               <View style={{ flexDirection: "row", marginHorizontal: 20 }}>
                 <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate("ViewCompanyProfile", { id: e._id })
-                  }
+                // onPress={() => {
+                //   if (e.schoolId !== null) {
+                //     navigation.navigate("ViewCompanyProfile", { id: e._id });
+                //   } else {
+                //     alert(
+                //       "хэрэглэгч өрөө оруулсан сургууль тул профайл байхгүй байна"
+                //     );
+                //   }
+                // }}
                 >
                   <Image
                     source={{ uri: `${api}/upload/${e.schoolPhoto}` }}
@@ -84,7 +90,7 @@ const UserProfileCourse = ({ data }) => {
                   >
                     {moment(e.start).format("YYYY")}{" "}
                     {e.isStudying
-                      ? moment().format("YYYY")
+                      ? `сурч байгаа`
                       : moment(e.end).format("YYYY")}
                   </Text>
                 </View>

@@ -3,7 +3,7 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Image,
+  ImageBackground,
   Alert,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
@@ -13,22 +13,26 @@ import { api } from "../../../Constants";
 import Icon from "@expo/vector-icons/Entypo";
 import axios from "axios";
 import UserContext from "../../context/UserContext";
+import Ionicons from "@expo/vector-icons/Ionicons";
 const SpecialWork = (props) => {
-  const { id, createUser, occupation, type, salary } = props;
+  const { id, createUser, occupation, salary, job } = props;
   const navigation = useNavigation();
   const state = useContext(UserContext);
   const { colors } = useTheme();
   const [checkLikeId, setCheckLikeId] = useState([]);
   const [isLike, setIsLike] = useState(false);
   const getCheckLike = () => {
-    axios
-      .get(`${api}/api/v1/likes/${state.userId}/job`)
-      .then((res) => {
-        setCheckLikeId(res.data.data);
-      })
-      .catch((err) => {
-        // alert(err);
-      });
+    {
+      state.userId &&
+        axios
+          .get(`${api}/api/v1/likes/${state.userId}/announcement`)
+          .then((res) => {
+            setCheckLikeId(res.data.data);
+          })
+          .catch((err) => {
+            // alert(err);
+          });
+    }
   };
   useEffect(() => {
     getCheckLike();
@@ -79,9 +83,11 @@ const SpecialWork = (props) => {
       >
         <TouchableOpacity
           style={{ flexDirection: "row", alignItems: "center" }}
-          onPress={() => navigation.navigate("WorkDetailScreen", { id })}
+          onPress={() =>
+            navigation.navigate("EmployeeWorkDetail", { id, isLiked: isLike })
+          }
         >
-          <Image
+          <ImageBackground
             source={{
               uri: `${api}/upload/${createUser.profile}`,
             }}
@@ -91,8 +97,48 @@ const SpecialWork = (props) => {
               borderRadius: 30,
               marginHorizontal: 5,
             }}
-          />
-
+            imageStyle={{ borderRadius: 30 }}
+          >
+            {createUser.isEmployer && (
+              <View
+                style={{
+                  backgroundColor: "#ff914d",
+                  borderRadius: 20,
+                  alignItems: "center",
+                  position: "absolute",
+                  alignSelf: "flex-end",
+                  bottom: 0,
+                  padding: 5,
+                }}
+              >
+                <Ionicons
+                  name={"briefcase"}
+                  size={12}
+                  color={colors.primaryText}
+                />
+              </View>
+            )}
+            {createUser.isEmployee && (
+              <View
+                style={{
+                  backgroundColor: "#3da4e3",
+                  borderRadius: 20,
+                  alignItems: "center",
+                  position: "absolute",
+                  alignSelf: "flex-end",
+                  bottom: 0,
+                  padding: 5,
+                  right: createUser.isEmployer ? 20 : 0,
+                }}
+              >
+                <Ionicons
+                  name={"business"}
+                  size={12}
+                  color={colors.primaryText}
+                />
+              </View>
+            )}
+          </ImageBackground>
           <View>
             <Text
               style={{
@@ -135,7 +181,7 @@ const SpecialWork = (props) => {
                 fontWeight: "200",
               }}
             >
-              {type} - {createUser.name}
+              {job} - {createUser.firstName}
             </Text>
           </View>
         </TouchableOpacity>

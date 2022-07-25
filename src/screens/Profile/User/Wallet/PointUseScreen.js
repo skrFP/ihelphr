@@ -131,7 +131,6 @@ const PointUseScreen = () => {
               ) : (
                 <MyButton
                   text="Пост бүүстлэх"
-                  style={{ marginTop: 10 }}
                   onPress={() => {
                     navigation.navigate("ProductUsePoint", { type: "post" });
                     setModalVisible(false);

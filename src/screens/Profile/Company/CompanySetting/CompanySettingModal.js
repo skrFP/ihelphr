@@ -6,7 +6,7 @@ import {
   Alert,
   ActivityIndicator,
 } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { MaterialIcons } from "@expo/vector-icons";
 import UserContext from "../../../../context/UserContext";
@@ -17,6 +17,30 @@ const CompanySettingModal = () => {
   const { colors } = useTheme();
   const state = useContext(UserContext);
   const [loading, setLoading] = useState(false);
+  const [companyProfile, setCompanyProfile] = useState(null);
+  let isMounted = true;
+  const loadCompanyProfile = () => {
+    axios
+      .get(
+        `${api}/api/v1/profiles/${state.companyId}?select=isEmployee isEmployer`
+      )
+      .then((res) => {
+        if (isMounted) {
+          setCompanyProfile(res.data.data);
+        }
+        console.log(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    loadCompanyProfile();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
   const companyExit = () => {
     state.logout();
   };
@@ -53,6 +77,9 @@ const CompanySettingModal = () => {
         <ActivityIndicator size={30} color={"#FFB6C1"} />
       </View>
     );
+  }
+  if (!companyProfile) {
+    return null;
   }
   return (
     <View style={{ marginHorizontal: 20, flex: 1 }}>
@@ -101,37 +128,93 @@ const CompanySettingModal = () => {
           Ашиглаж буй үйлчилгээ
         </Text>
       </TouchableOpacity>
-      {/* Line */}
-      <View
-        style={{
-          borderWidth: 0.5,
-          borderColor: colors.border,
-          marginVertical: 10,
-        }}
-      />
-      {/* Irsen cv nuud */}
-      <TouchableOpacity
-        style={{ flexDirection: "row", alignItems: "center", marginTop: 20 }}
-        onPress={() => {
-          navigation.navigate("CompanyRecievedCv");
-        }}
-      >
-        <MaterialIcons name="archive" size={28} color={colors.primaryText} />
 
-        <Text
-          style={{ color: colors.primaryText, marginLeft: 20, fontSize: 18 }}
-        >
-          Ирсэн ажлын санал
-        </Text>
-      </TouchableOpacity>
+      {/* Irsen cv nuud */}
+      {companyProfile.isEmployer && (
+        <>
+          {/* Line */}
+          <View
+            style={{
+              borderWidth: 0.5,
+              borderColor: colors.border,
+              marginVertical: 10,
+            }}
+          />
+          <TouchableOpacity
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginTop: 20,
+            }}
+            onPress={() => {
+              navigation.navigate("CompanyRecievedCv");
+            }}
+          >
+            <MaterialIcons
+              name="archive"
+              size={28}
+              color={colors.primaryText}
+            />
+
+            <Text
+              style={{
+                color: colors.primaryText,
+                marginLeft: 20,
+                fontSize: 18,
+              }}
+            >
+              Ирсэн анкет
+            </Text>
+          </TouchableOpacity>
+        </>
+      )}
+      {/* Irsen ajliin sanal */}
+      {companyProfile.isEmployee && (
+        <>
+          <View
+            style={{
+              borderWidth: 0.5,
+              borderColor: colors.border,
+              marginVertical: 10,
+            }}
+          />
+          <TouchableOpacity
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginTop: 20,
+            }}
+            onPress={() => {
+              navigation.navigate("CompanyWorkRequest");
+            }}
+          >
+            <MaterialIcons
+              name="archive"
+              size={28}
+              color={colors.primaryText}
+            />
+
+            <Text
+              style={{
+                color: colors.primaryText,
+                marginLeft: 20,
+                fontSize: 18,
+              }}
+            >
+              Ирсэн ажлын санал
+            </Text>
+          </TouchableOpacity>
+          <View
+            style={{
+              borderWidth: 0.5,
+              borderColor: colors.border,
+              marginVertical: 10,
+            }}
+          />
+        </>
+      )}
+
       {/* Line */}
-      <View
-        style={{
-          borderWidth: 0.5,
-          borderColor: colors.border,
-          marginVertical: 10,
-        }}
-      />
 
       {/* Change password */}
       <TouchableOpacity

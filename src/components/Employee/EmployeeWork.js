@@ -3,7 +3,7 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Image,
+  ImageBackground,
   Alert,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
@@ -12,6 +12,7 @@ import Icon from "@expo/vector-icons/Entypo";
 import axios from "axios";
 import { api } from "../../../Constants";
 import UserContext from "../../context/UserContext";
+import Ionicons from "@expo/vector-icons/Ionicons";
 const EmployeeWork = (props) => {
   const { id, createUser, occupation, type, salary } = props;
   const navigation = useNavigation();
@@ -21,7 +22,7 @@ const EmployeeWork = (props) => {
   const [isLike, setIsLike] = useState(false);
   const getCheckLike = () => {
     axios
-      .get(`${api}/api/v1/likes/${state.userId}/job`)
+      .get(`${api}/api/v1/likes/${state.userId}/announcement`)
       .then((res) => {
         setCheckLikeId(res.data.data);
       })
@@ -82,7 +83,7 @@ const EmployeeWork = (props) => {
           style={{ flexDirection: "row", alignItems: "center" }}
           onPress={() => navigation.navigate("UserWorkDetail", { id })}
         >
-          <Image
+          <ImageBackground
             source={{
               uri: `${api}/upload/${createUser.profile}`,
             }}
@@ -92,7 +93,48 @@ const EmployeeWork = (props) => {
               borderRadius: 30,
               marginHorizontal: 5,
             }}
-          />
+            imageStyle={{ borderRadius: 30 }}
+          >
+            {createUser.isEmployer && (
+              <View
+                style={{
+                  backgroundColor: "#ff914d",
+                  borderRadius: 20,
+                  alignItems: "center",
+                  position: "absolute",
+                  alignSelf: "flex-end",
+                  bottom: 0,
+                  padding: 5,
+                }}
+              >
+                <Ionicons
+                  name={"briefcase"}
+                  size={12}
+                  color={colors.primaryText}
+                />
+              </View>
+            )}
+            {createUser.isEmployee && (
+              <View
+                style={{
+                  backgroundColor: "#3da4e3",
+                  borderRadius: 20,
+                  alignItems: "center",
+                  position: "absolute",
+                  alignSelf: "flex-end",
+                  bottom: 0,
+                  padding: 5,
+                  right: createUser.isEmployer ? 20 : 0,
+                }}
+              >
+                <Ionicons
+                  name={"business"}
+                  size={12}
+                  color={colors.primaryText}
+                />
+              </View>
+            )}
+          </ImageBackground>
 
           <View>
             <Text

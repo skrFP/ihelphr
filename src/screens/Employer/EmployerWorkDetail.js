@@ -18,6 +18,8 @@ const EmployerWorkDetail = (props) => {
   const navigation = useNavigation();
   const { colors } = useTheme();
   const [isLike, setIsLike] = useState(isLiked);
+  const [isCvSent, setIsCvSent] = useState(false);
+  const [checkCvId, setCheckCvId] = useState([]);
   const getWorkDetail = () => {
     axios
       .get(`${api}/api/v1/jobs/${id}`)
@@ -31,9 +33,7 @@ const EmployerWorkDetail = (props) => {
   useEffect(() => {
     getWorkDetail();
   }, []);
-  if (!workDetail) {
-    return null;
-  }
+
   const sendCv = (id) => {
     axios
       .post(`${api}/api/v1/applies/${id}`)
@@ -44,7 +44,28 @@ const EmployerWorkDetail = (props) => {
         // Alert.alert(err.response.data.error.message);
       });
   };
-
+  const getCheckCv = () => {
+    {
+      !state.isCompany &&
+        axios
+          .get(`${api}/api/v1/applies/${state.userId}/apply`)
+          .then((res) => {
+            setCheckCvId(res.data.data);
+            console.log(res.data.data);
+          })
+          .catch((err) => {
+            alert(err);
+            console.log(err);
+          });
+    }
+  };
+  useEffect(() => {
+    getCheckCv();
+  }, []);
+  let cvCheck = checkCvId.map((e) => `${e.job}`);
+  useEffect(() => {
+    setIsCvSent(cvCheck.includes(`${id}`));
+  }, [checkCvId]);
   const unLiked = () => {
     axios
       .delete(`${api}/api/v1/likes/${id}/job`)
@@ -67,6 +88,9 @@ const EmployerWorkDetail = (props) => {
         alert(err);
       });
   };
+  if (!workDetail) {
+    return null;
+  }
   return (
     <SafeAreaView style={{ backgroundColor: colors.header }}>
       {state.isCompany ? (

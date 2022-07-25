@@ -18,7 +18,7 @@ import CourseSchoolModal from "./EditModal/CourseSchoolModal";
 const CourseAddModal = () => {
   const navigation = useNavigation();
   const { colors } = useTheme();
-  const [isEnabled, setIsEnabled] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(true);
   const [schoolModal, setSchoolModal] = useState(false);
   const [course, setCourse] = useState({
     field: "",

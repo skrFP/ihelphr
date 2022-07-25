@@ -25,6 +25,8 @@ import EmployerWorkDetail from "../screens/Employer/EmployerWorkDetail";
 import FollowedCompany from "../screens/Search/FollowedCompany";
 import CompanyFilterModal from "../screens/Search/Company/CompanyFilterModal";
 import ResultedCompanyModal from "../screens/Search/Company/ResultedCompanyModal";
+import UserSendWorkRequest from "../screens/Dynamic/UserSendWorkRequest";
+import ViewPortfolio from "../screens/Dynamic/VIewPortfolio";
 const SearchGroup = () => {
   const SearchStack = createNativeStackNavigator();
   return (
@@ -134,7 +136,7 @@ const SearchGroup = () => {
         <SearchStack.Screen
           name="ViewCompanyProfile"
           component={ViewCompanyProfile}
-          options={{ headerShown: false, fullScreenGestureEnabled: true }}
+          options={{ headerShown: false, presentation: "formSheet" }}
         />
         <SearchStack.Screen
           name="ViewCompanyJobs"
@@ -159,14 +161,15 @@ const SearchGroup = () => {
         <SearchStack.Screen
           name="ViewUserProfile"
           component={ViewUserProfile}
-          options={{ headerShown: false, fullScreenGestureEnabled: true }}
+          options={{ headerShown: false, presentation: "formSheet" }}
         />
         <SearchStack.Screen
           name="ViewUserFollower"
           component={ViewUserFollower}
           options={{
-            fullScreenGestureEnabled: true,
-            title: "Дагуулдаг хүмүүс",
+            headerShown: true,
+            presentation: "formSheet",
+            title: "Дагагч",
             headerLeft: () => <MyBackButton />,
           }}
         />
@@ -175,8 +178,9 @@ const SearchGroup = () => {
           component={ViewUserFollowings}
           options={{
             fullScreenGestureEnabled: true,
-            title: "Дагдаг хүмүүс",
+            title: "Дагадаг",
             headerLeft: () => <MyBackButton />,
+            presentation: "formSheet",
           }}
         />
         <SearchStack.Screen
@@ -225,6 +229,13 @@ const SearchGroup = () => {
             title: "Компани",
             headerLeft: () => <MyBackButton />,
             presentation: "formSheet",
+          }}
+        />
+        <SearchStack.Screen
+          name="ViewPortfolio"
+          component={ViewPortfolio}
+          options={{
+            headerShown: false,
           }}
         />
       </SearchStack.Group>

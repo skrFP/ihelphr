@@ -159,47 +159,69 @@ const Portfolio = (props) => {
   };
   const sendNetworkingPost = () => {
     const xhr = new XMLHttpRequest();
-    const fileExt = postImage1.substring(postImage1.lastIndexOf(".") + 1);
     xhr.addEventListener("load", (event) => handleUploadComplete(event));
     xhr.upload.addEventListener("progress", handleUploadProgress);
     const formData = new FormData();
-    const formData1 = new FormData();
-    const formData2 = new FormData();
-    const formData3 = new FormData();
-    const formData4 = new FormData();
-    const formData5 = new FormData();
-    formData.append("file", {
-      uri: postImage1,
-      type: `image/${fileExt}`,
-      name: "portf__099",
-    });
-    formData1.append("file", {
-      uri: postImage2,
-      type: `image/${fileExt}`,
-      name: "portf__098",
-    });
-    formData2.append("file", {
-      uri: postImage3,
-      type: `image/${fileExt}`,
-      name: "portf__098",
-    });
-    formData3.append("file", {
-      uri: postImage4,
-      type: `image/${fileExt}`,
-      name: "portf__098",
-    });
-    formData4.append("file", {
-      uri: postImage5,
-      type: `image/${fileExt}`,
-      name: "portf__098",
-    });
-    formData5.append("file", {
-      uri: postImage6,
-      type: `image/${fileExt}`,
-      name: "portf__098",
-    });
+    if (postImage1) {
+      const fileExt =
+        postImage1 && postImage1.substring(postImage1.lastIndexOf(".") + 1);
+      formData.append("file1", {
+        uri: postImage1,
+        type: `image/${fileExt}`,
+        name: "portf__1",
+      });
+    }
+    if (postImage2) {
+      const fileExt =
+        postImage2 && postImage2.substring(postImage2.lastIndexOf(".") + 1);
+      formData.append("file2", {
+        uri: postImage2,
+        type: `image/${fileExt}`,
+        name: "portf__2",
+      });
+    }
+    if (postImage3) {
+      const fileExt =
+        postImage3 && postImage3.substring(postImage3.lastIndexOf(".") + 1);
+      formData.append("file3", {
+        uri: postImage3,
+        type: `image/${fileExt}`,
+        name: "portf__3",
+      });
+    }
+    if (postImage4) {
+      const fileExt =
+        postImage4 && postImage4.substring(postImage4.lastIndexOf(".") + 1);
+      formData.append("file4", {
+        uri: postImage4,
+        type: `image/${fileExt}`,
+        name: "portf__4",
+      });
+    }
+    if (postImage5) {
+      const fileExt =
+        postImage5 && postImage5.substring(postImage5.lastIndexOf(".") + 1);
+      formData.append("file5", {
+        uri: postImage5,
+        type: `image/${fileExt}`,
+        name: "portf__5",
+      });
+    }
+    if (postImage6) {
+      const fileExt =
+        postImage6 && postImage6.substring(postImage6.lastIndexOf(".") + 1);
+      formData.append("file6", {
+        uri: postImage6,
+        type: `image/${fileExt}`,
+        name: "portf__6",
+      });
+    }
+
     xhr.open("PUT", `${api}/api/v1/cvs/portfolio`);
-    xhr.send(formData, formData1, formData2, formData3, formData4, formData5);
+    xhr.send(formData);
+    xhr.onload = function (e) {
+      console.log("Request Status", xhr.status);
+    };
   };
   const handleUploadComplete = () => {
     setUploadProgress(0);

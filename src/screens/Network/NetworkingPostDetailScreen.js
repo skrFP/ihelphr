@@ -19,15 +19,14 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { api } from "../../../Constants";
 import NetworkingTextInput from "../../components/NetworkingTextInput";
 const NetworkingPostDetailScreen = (props) => {
-  const { id } = props.route.params;
+  const { id, isLike } = props.route.params;
   const navigation = useNavigation();
   const [postDetail, setPostDetail] = useState([]);
   const [refresh, setRefresh] = useState(false);
   useEffect(() => {
-    let source = axios.CancelToken.source();
     const loadData = () => {
       axios
-        .get(`${api}/api/v1/posts/${id}`, { cancelToken: source.token })
+        .get(`${api}/api/v1/posts/${id}`)
         .then((res) => {
           setPostDetail(res.data.data);
         })
@@ -37,9 +36,6 @@ const NetworkingPostDetailScreen = (props) => {
     };
 
     loadData();
-    return () => {
-      source.cancel();
-    };
   }, []);
   const [commentData, setCommentData] = useState([]);
   useEffect(() => {
@@ -54,7 +50,7 @@ const NetworkingPostDetailScreen = (props) => {
           setCommentData(res.data.data);
         })
         .catch((err) => {
-          alert(err);
+          console.log(err);
         });
     };
 
@@ -63,7 +59,7 @@ const NetworkingPostDetailScreen = (props) => {
       source.cancel();
     };
   }, [refresh]);
-  const [commentText, setCommentText] = useState("Hi guys!");
+  const [commentText, setCommentText] = useState("");
   const postComment = () => {
     setRefresh(false);
     axios
@@ -75,7 +71,7 @@ const NetworkingPostDetailScreen = (props) => {
         alert(err);
       });
   };
-  const [liked, setLiked] = useState(postDetail.isLiked);
+  const [liked, setLiked] = useState(isLike);
 
   const onLike = () => {
     if (liked) {
@@ -175,8 +171,8 @@ const NetworkingPostDetailScreen = (props) => {
                 <TouchableOpacity
                   style={{ flexDirection: "row", alignItems: "center" }}
                   onPress={() =>
-                    navigation.navigate("UserProfileDetail", {
-                      id: createUser._id,
+                    navigation.navigate("ViewUserProfile", {
+                      id: postDetail.createUser._id,
                     })
                   }
                 >

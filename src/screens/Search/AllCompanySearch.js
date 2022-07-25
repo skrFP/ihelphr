@@ -25,7 +25,7 @@ const AllCompanySearch = () => {
     return () => {};
   }, []);
   const fetchCompany = () => {
-    const apiURL = `${api}/api/v1/profiles?select=profile firstName category isFollowing&limit=1000`;
+    const apiURL = `${api}/api/v1/profiles?select=profile firstName category isFollowing isEmployer isEmployee&limit=1000`;
     fetch(apiURL)
       .then((response) => response.json())
       .then((responseJson) => {

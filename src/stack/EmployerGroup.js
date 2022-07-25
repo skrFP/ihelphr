@@ -10,6 +10,12 @@ import UserWorkDetail from "../screens/Profile/User/Settings/UserWorkDetail";
 import CompanyWorkDetail from "../screens/Profile/Company/CompanyWorkDetail";
 import ViewCompanyJobs from "../screens/Dynamic/ViewCompanyJobs";
 import NotificationScreen from "../screens/Dynamic/NotificationScreen";
+import EmployerSendWorkModal from "../screens/Dynamic/EmployerSendWorkModal";
+import CvDetailScreen from "../components/Cv/CvDetailScreen";
+import UserSendWorkRequest from "../screens/Dynamic/UserSendWorkRequest";
+import ViewPortfolio from "../screens/Dynamic/VIewPortfolio";
+import ViewUserFollower from "../screens/Dynamic/ViewUserFollower";
+import ViewUserFollowings from "../screens/Dynamic/ViewUserFollowings";
 const EmployerGroup = () => {
   const EmployerStack = createNativeStackNavigator();
   return (
@@ -48,6 +54,26 @@ const EmployerGroup = () => {
           }}
         />
         <EmployerStack.Screen
+          name="EmployerSendWorkModal"
+          component={EmployerSendWorkModal}
+          options={{
+            headerShown: true,
+            presentation: "formSheet",
+            title: "Анкет илгээх",
+            headerLeft: () => <MyBackButton />,
+          }}
+        />
+        <EmployerStack.Screen
+          name="UserSendWorkRequest"
+          component={UserSendWorkRequest}
+          options={{
+            headerShown: true,
+            presentation: "formSheet",
+            title: "Ажлын санал илгээх",
+            headerLeft: () => <MyBackButton />,
+          }}
+        />
+        <EmployerStack.Screen
           name="UserWorkDetail"
           component={UserWorkDetail}
           options={{
@@ -79,6 +105,33 @@ const EmployerGroup = () => {
             headerShown: true,
             presentation: "formSheet",
             title: "Ажлын зар",
+            headerLeft: () => <MyBackButton />,
+          }}
+        />
+        <EmployerStack.Screen
+          name="ViewPortfolio"
+          component={ViewPortfolio}
+          options={{
+            headerShown: false,
+          }}
+        />
+        <EmployerStack.Screen
+          name="ViewUserFollower"
+          component={ViewUserFollower}
+          options={{
+            headerShown: true,
+            presentation: "formSheet",
+            title: "Дагагч",
+            headerLeft: () => <MyBackButton />,
+          }}
+        />
+        <EmployerStack.Screen
+          name="ViewUserFollowings"
+          component={ViewUserFollowings}
+          options={{
+            headerShown: true,
+            presentation: "formSheet",
+            title: "Дагасан",
             headerLeft: () => <MyBackButton />,
           }}
         />

@@ -1,10 +1,11 @@
-import { Text, View, TouchableOpacity, Image } from "react-native";
+import { Text, View, TouchableOpacity, ImageBackground } from "react-native";
 import React, { useContext, useState } from "react";
 import axios from "axios";
 import { api } from "../../../../Constants";
 import UserContext from "../../../context/UserContext";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import Ionicons from "@expo/vector-icons/Ionicons";
 const EmployeeData = (props) => {
   const { colors } = useTheme();
   const navigation = useNavigation();
@@ -55,10 +56,57 @@ const EmployeeData = (props) => {
             navigation.navigate("ViewCompanyProfile", { id: item._id })
           }
         >
-          <Image
-            source={{ uri: `${api}/upload/${item.profile}` }}
-            style={{ width: 50, height: 50, borderRadius: 30 }}
-          />
+          <ImageBackground
+            source={{
+              uri: `${api}/upload/${item.profile}`,
+            }}
+            style={{
+              width: 50,
+              height: 50,
+            }}
+            imageStyle={{ borderRadius: 30 }}
+          >
+            {item.isEmployer && (
+              <View
+                style={{
+                  backgroundColor: "#ff914d",
+                  borderRadius: 20,
+                  alignItems: "center",
+                  position: "absolute",
+                  alignSelf: "flex-end",
+                  bottom: 0,
+                  padding: 5,
+                }}
+              >
+                <Ionicons
+                  name={"briefcase"}
+                  size={6}
+                  color={colors.primaryText}
+                />
+              </View>
+            )}
+            {item.isEmployee && (
+              <View
+                style={{
+                  backgroundColor: "#3da4e3",
+                  borderRadius: 20,
+                  alignItems: "center",
+                  position: "absolute",
+                  alignSelf: "flex-end",
+                  bottom: 0,
+                  padding: 5,
+                  right: item.isEmployer ? 12 : 0,
+                }}
+              >
+                <Ionicons
+                  name={"business"}
+                  size={6}
+                  color={colors.primaryText}
+                />
+              </View>
+            )}
+          </ImageBackground>
+
           <View style={{ marginLeft: 10 }}>
             <Text style={{ color: colors.primaryText }}>{item.firstName}</Text>
             <Text style={{ color: colors.secondaryText }}>

@@ -6,12 +6,14 @@ import {
   Image,
   Dimensions,
   ImageBackground,
+  Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
 import axios from "axios";
 import { api } from "../../../../Constants";
+import UserContext from "../../../context/UserContext";
 
 const fullWidth = Dimensions.get("screen").width;
 const fullHeight = Dimensions.get("screen").height;
@@ -19,11 +21,16 @@ const UserProfileTop = ({ userProfile, isFollowing }) => {
   const { colors } = useTheme();
   const navigation = useNavigation();
   const [following, setFollowing] = useState(isFollowing);
+  const state = useContext(UserContext);
   const onFollow = () => {
     if (following) {
       setFollowing(false);
       axios
-        .post(`${api}/api/v1/follows/${userProfile._id}`)
+        .post(
+          `${api}/api/v1/follows/${userProfile._id}/${
+            state.isCompany ? state.companyId : state.userId
+          }`
+        )
         .then((res) => {
           Alert.alert("Амжилттай дагахаа болилоо");
         })
@@ -33,7 +40,11 @@ const UserProfileTop = ({ userProfile, isFollowing }) => {
     } else {
       setFollowing(true);
       axios
-        .post(`${api}/api/v1/follows/${userProfile._id}`)
+        .post(
+          `${api}/api/v1/follows/${userProfile._id}/${
+            state.isCompany ? state.companyId : state.userId
+          }`
+        )
         .then((res) => {
           Alert.alert("Амжилттай дагалаа");
         })
@@ -42,6 +53,7 @@ const UserProfileTop = ({ userProfile, isFollowing }) => {
         });
     }
   };
+
   return (
     <>
       {/* Cover */}
@@ -226,7 +238,7 @@ const UserProfileTop = ({ userProfile, isFollowing }) => {
             alignItems: "center",
           }}
           onPress={() =>
-            navigation.navigate("ViewUserFollowing", { id: userProfile._id })
+            navigation.navigate("ViewUserFollowings", { id: userProfile._id })
           }
         >
           <Text style={{ color: colors.primaryText }}>

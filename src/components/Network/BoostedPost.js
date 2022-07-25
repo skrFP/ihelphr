@@ -7,45 +7,36 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { api } from "../../../Constants";
-import moment from "moment";
-import "moment/locale/mn";
 import axios from "axios";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import UserContext from "../../context/UserContext";
 const fullWidth = Dimensions.get("screen").width;
-const Posts = (props) => {
+const BoostedPost = (props) => {
   const {
     postId,
     createUser,
     body,
     photo,
-    isShared,
-    sharedUser,
-    createdAt,
-    sharedCreatedAt,
-    sharedBody,
-    sharedPhoto,
+
     likeCount,
     commentCount,
     shareCount,
+    isLiked,
     isCompany,
-    isBoost,
   } = props;
   // Like unlike func
-  const [isLike, setIsLike] = useState(false);
+  const [liked, setLiked] = useState(isLiked);
   const state = useContext(UserContext);
   const { colors } = useTheme();
   const navigation = useNavigation();
   const [counter, setCounter] = useState(likeCount);
-  const [checkLikeId, setCheckLikeId] = useState([]);
-
   const onLike = () => {
-    if (isLike) {
-      setIsLike(false);
+    if (liked) {
+      setLiked(false);
       axios
         .delete(`${api}/api/v1/likes/${postId}`)
         .then((res) => {
@@ -56,7 +47,7 @@ const Posts = (props) => {
           alert(err.response.data);
         });
     } else {
-      setIsLike(true);
+      setLiked(true);
       axios
         .post(`${api}/api/v1/likes/${postId}`)
         .then((res) => {
@@ -68,32 +59,20 @@ const Posts = (props) => {
         });
     }
   };
-  const getCheckLike = () => {
-    {
-      !state.isCompany &&
-        axios
-          .get(`${api}/api/v1/likes/${state.userId}/posts`)
-          .then((res) => {
-            setCheckLikeId(res.data.data);
-          })
-          .catch((err) => {
-            alert(err);
-            console.log(err);
-          });
-    }
-  };
-  useEffect(() => {
-    getCheckLike();
-  }, []);
-  let sonin1 = checkLikeId.map((e) => `${e.post}`);
-  useEffect(() => {
-    setIsLike(sonin1.includes(`${postId}`));
-  }, [checkLikeId]);
+
   return (
     <>
-      {/* Shared user */}
-      {isShared && (
-        <>
+      {/* User Post */}
+      <View style={{ marginTop: 10 }}>
+        {/* User detail and body and photos */}
+        <View
+          style={{
+            marginHorizontal: 0,
+            borderWidth: 0,
+            borderColor: colors.border,
+          }}
+        >
+          {/* End hereglegchiin medeelel */}
           <View
             style={{
               flex: 1,
@@ -103,22 +82,21 @@ const Posts = (props) => {
             }}
           >
             <TouchableOpacity
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginLeft: 10,
+                marginTop: 10,
+              }}
               onPress={() =>
                 isCompany
-                  ? navigation.navigate("ViewProfileProfile", {
+                  ? navigation.navigate("ViewCompanyProfile", {
                       id: createUser._id,
                     })
                   : navigation.navigate("ViewUserProfile", {
                       id: createUser._id,
                     })
               }
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                // marginHorizontal: data.isShare ? 0 : 10,
-                marginLeft: 10,
-                marginTop: 10,
-              }}
             >
               <ImageBackground
                 source={{
@@ -144,163 +122,29 @@ const Posts = (props) => {
                 <Text style={{ fontWeight: "bold", color: colors.primaryText }}>
                   {createUser.lastName} {createUser.firstName}{" "}
                 </Text>
-                <Text style={{ color: colors.secondaryText }}>
-                  {createUser.profession}{" "}
-                  {createUser.workingCompany && `@${createUser.workingCompany}`}
-                </Text>
-                <Text
-                  style={{
-                    color: colors.secondaryText,
-                    fontFamily: "Sf-thin",
-                  }}
-                >
-                  {moment(createdAt).fromNow()}
-                </Text>
-              </View>
-            </TouchableOpacity>
-            {/* Post setting ooriin */}
-            {!isShared ? null : createUser._id === state.userId ? (
-              <TouchableOpacity
-                style={{}}
-                onPress={() =>
-                  navigation.navigate("PostSettings", { id: postId })
-                }
-              >
-                <Entypo
-                  name="dots-three-horizontal"
-                  size={24}
-                  color="white"
-                  style={{ marginRight: 10 }}
-                />
-              </TouchableOpacity>
-            ) : null}
-          </View>
-          <Text
-            style={{ margin: 5, color: colors.primaryText, marginLeft: 10 }}
-          >
-            {" "}
-            {body}{" "}
-          </Text>
-        </>
-      )}
-      {/* User Post */}
-      <View style={{ marginTop: !isShared && 10 }}>
-        {/* User detail and body and photos */}
-        <View
-          style={{
-            marginHorizontal: isShared ? 20 : 0,
-            borderWidth: isShared ? 0.3 : 0,
-            borderColor: colors.border,
-          }}
-        >
-          {/* isShared true false aaraa sharelesen zar uguin ylgaa garna */}
-          {/* End hereglegchiin medeelel */}
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "space-between",
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <TouchableOpacity
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                marginLeft: 10,
-                marginTop: 10,
-              }}
-              onPress={() =>
-                isCompany
-                  ? navigation.navigate("ViewCompanyProfile", {
-                      id: isShared ? sharedUser._id : createUser._id,
-                    })
-                  : navigation.navigate("ViewUserProfile", {
-                      id: isShared ? sharedUser._id : createUser._id,
-                    })
-              }
-            >
-              <ImageBackground
-                source={{
-                  uri: `${api}/upload/${
-                    isShared ? sharedUser.profile : createUser.profile
-                  }`,
-                }}
-                style={{ width: 50, height: 50 }}
-                imageStyle={{ borderRadius: 50 }}
-              >
-                <Image
-                  style={{ width: 54, height: 54, bottom: 2, right: 2 }}
-                  source={
-                    createUser.status === "lookingForJob"
-                      ? require("../../../assets/looking.png")
-                      : createUser.status === "opentowork"
-                      ? require("../../../assets/open.png")
-                      : createUser.status === "getEmployee"
-                      ? require("../../../assets/hiring.png")
-                      : null
-                  }
-                />
-              </ImageBackground>
-              <View style={{ marginLeft: 10 }}>
-                <Text style={{ fontWeight: "bold", color: colors.primaryText }}>
-                  {isShared ? sharedUser.lastName : createUser.lastName}{" "}
-                  {isShared ? sharedUser.firstName : createUser.firstName}{" "}
-                </Text>
-                {isBoost ? (
-                  <>
-                    <Text
-                      style={{
-                        color: colors.secondaryText,
-                      }}
-                    >
-                      {createUser.profession}{" "}
-                      {createUser.workingCompany &&
-                        `@${createUser.workingCompany}`}
-                    </Text>
-                    <Text
-                      style={{
-                        color: colors.secondaryText,
-                      }}
-                    >
-                      Sponsored
-                    </Text>
-                  </>
-                ) : (
-                  <>
-                    <Text
-                      style={{
-                        color: colors.secondaryText,
-                      }}
-                    >
-                      {isShared ? (
-                        <Text>
-                          {sharedUser.profession}{" "}
-                          {sharedUser.workingCompany &&
-                            `@${sharedUser.workingCompany}`}
-                        </Text>
-                      ) : (
-                        <Text>
-                          {createUser.profession}{" "}
-                          {createUser.workingCompany &&
-                            `@${createUser.workingCompany}`}
-                        </Text>
-                      )}
-                    </Text>
-                    <Text
-                      style={{
-                        color: colors.secondaryText,
-                        fontFamily: "Sf-thin",
-                      }}
-                    >
-                      {moment(isShared ? sharedCreatedAt : createdAt).fromNow()}
-                    </Text>
-                  </>
-                )}
+
+                <>
+                  <Text
+                    style={{
+                      color: colors.secondaryText,
+                    }}
+                  >
+                    {createUser.profession}{" "}
+                    {createUser.workingCompany &&
+                      `@${createUser.workingCompany}`}
+                  </Text>
+                  <Text
+                    style={{
+                      color: colors.secondaryText,
+                    }}
+                  >
+                    Sponsored
+                  </Text>
+                </>
               </View>
             </TouchableOpacity>
             {/* Post settings ooriin*/}
-            {isShared ? null : createUser._id === state.userId ? (
+            {createUser._id === state.userId ? (
               <TouchableOpacity
                 onPress={() =>
                   navigation.navigate("PostSettings", { id: postId })
@@ -319,7 +163,6 @@ const Posts = (props) => {
             onPress={() =>
               navigation.navigate("NetworkingPostDetailScreen", {
                 id: postId,
-                isLike: isLike,
               })
             }
           >
@@ -327,7 +170,7 @@ const Posts = (props) => {
             {body ? (
               <Text style={{ margin: 10, color: colors.primaryText }}>
                 {" "}
-                {isShared ? sharedBody : body}{" "}
+                {body}{" "}
               </Text>
             ) : (
               <View style={{ margin: 10 }} />
@@ -349,26 +192,6 @@ const Posts = (props) => {
                 />
               </>
             )}
-            {/* shared photo */}
-            {sharedPhoto && (
-              <>
-                <Image
-                  source={{
-                    uri: `${api}/upload/${sharedPhoto}`,
-                  }}
-                  style={{
-                    width: fullWidth,
-                    height: 350,
-                    alignSelf: "center",
-                  }}
-                />
-                <View
-                  style={{
-                    margin: 10,
-                  }}
-                />
-              </>
-            )}
           </TouchableOpacity>
         </View>
       </View>
@@ -378,7 +201,7 @@ const Posts = (props) => {
           flexDirection: "row",
           justifyContent: "space-between",
           marginHorizontal: 20,
-          marginTop: isShared ? 20 : 0,
+          marginTop: 0,
         }}
       >
         <Text
@@ -388,8 +211,8 @@ const Posts = (props) => {
             fontSize: 12,
           }}
           onPress={() =>
-            navigation.navigate("PostLikeUser", {
-              postId: postId,
+            navigation.navigate("NetworkingPostDetailScreen", {
+              id: postId,
             })
           }
         >
@@ -405,7 +228,6 @@ const Posts = (props) => {
           onPress={() =>
             navigation.navigate("NetworkingPostDetailScreen", {
               id: postId,
-              isLike: isLike,
             })
           }
         >
@@ -421,7 +243,6 @@ const Posts = (props) => {
             onPress={() =>
               navigation.navigate("NetworkingPostDetailScreen", {
                 id: postId,
-                isLike: isLike,
               })
             }
           >
@@ -450,13 +271,13 @@ const Posts = (props) => {
           onPress={onLike}
         >
           <MaterialCommunityIcons
-            name={isLike ? "heart-multiple" : "heart-multiple-outline"}
+            name={liked ? "heart-multiple" : "heart-multiple-outline"}
             size={24}
-            color={isLike ? "#FFB6C1" : colors.primaryText}
+            color={liked ? "#FFB6C1" : colors.primaryText}
           />
 
           <Text style={{ color: colors.secondaryText, marginLeft: 5 }}>
-            {isLike ? "Таалагдлаа" : "Таалагдлаа"}
+            {liked ? "Таалагдлаа" : "Таалагдлаа"}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -464,7 +285,6 @@ const Posts = (props) => {
           onPress={() =>
             navigation.navigate("NetworkingPostDetailScreen", {
               id: postId,
-              isLike: isLike,
             })
           }
         >
@@ -505,6 +325,6 @@ const Posts = (props) => {
   );
 };
 
-export default Posts;
+export default BoostedPost;
 
 const styles = StyleSheet.create({});

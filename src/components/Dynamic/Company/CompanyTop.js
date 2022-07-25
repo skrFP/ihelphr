@@ -7,7 +7,7 @@ import {
   Dimensions,
   Alert,
 } from "react-native";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import {
   AntDesign,
@@ -36,6 +36,9 @@ const CompanyTop = (props) => {
   } = props;
   const [following, setFollowing] = useState(isFollow);
   const state = useContext(UserContext);
+
+  // const [isCvSent, setIsCvSent] = useState(false);
+  // const [checkCvId, setCheckCvId] = useState([]);
   const onFollow = () => {
     if (following) {
       setFollowing(false);
@@ -67,6 +70,28 @@ const CompanyTop = (props) => {
         });
     }
   };
+  // const getCheckCv = () => {
+  //   {
+  //     !state.isCompany &&
+  //       axios
+  //         .get(`${api}/api/v1/applies/${state.userId}/apply`)
+  //         .then((res) => {
+  //           setCheckCvId(res.data.data);
+  //           console.log(res.data.data);
+  //         })
+  //         .catch((err) => {
+  //           alert(err);
+  //           console.log(err);
+  //         });
+  //   }
+  // };
+  // useEffect(() => {
+  //   getCheckCv();
+  // }, []);
+  // let cvCheck = checkCvId.map((e) => `${e.job}`);
+  // useEffect(() => {
+  //   setIsCvSent(cvCheck.includes(`${id}`));
+  // }, [checkCvId]);
   return (
     <>
       {/* Cover */}
@@ -203,37 +228,86 @@ const CompanyTop = (props) => {
             justifyContent: "space-around",
           }}
         >
-          <TouchableOpacity
-            style={{
-              backgroundColor: "#FFB6C1",
-              marginHorizontal: 5,
-              paddingVertical: 2,
-              alignItems: "center",
-              borderRadius: 10,
-              flex: 0.66,
-            }}
-          >
-            {/* Профайл янзлах */}
-            <View style={{ flexDirection: "row", alignSelf: "center" }}>
-              <MaterialCommunityIcons
-                name="cube-send"
-                size={24}
-                color={colors.border}
-                style={{ top: 7 }}
-              />
-              <Text
-                style={{
-                  textAlign: "center",
-                  top: 10,
-                  color: colors.border,
-                  right: 5,
-                }}
-              >
-                {" "}
-                Анкет илгээх{"   "}
-              </Text>
-            </View>
-          </TouchableOpacity>
+          {!state.isCompany && (
+            <>
+              {data.isEmployer && (
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: "#FFB6C1",
+                    marginHorizontal: 5,
+                    paddingVertical: 2,
+                    alignItems: "center",
+                    borderRadius: 10,
+                    flex: 0.66,
+                  }}
+                  onPress={() => {
+                    navigation.navigate("EmployerSendWorkModal", {
+                      id: id,
+                      isSentCv: data.isSentCv,
+                    });
+                  }}
+                >
+                  {/* Профайл янзлах */}
+                  <View style={{ flexDirection: "row", alignSelf: "center" }}>
+                    <MaterialCommunityIcons
+                      name="cube-send"
+                      size={24}
+                      color={colors.border}
+                      style={{ top: 7 }}
+                    />
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        top: 10,
+                        color: colors.border,
+                        right: 5,
+                      }}
+                    >
+                      {" "}
+                      Анкет илгээх{"   "}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              )}
+            </>
+          )}
+
+          {data.isEmployee && (
+            <TouchableOpacity
+              style={{
+                backgroundColor: "#FFB6C1",
+                marginHorizontal: 5,
+                paddingVertical: 2,
+                alignItems: "center",
+                borderRadius: 10,
+                flex: 0.66,
+              }}
+              onPress={() =>
+                navigation.navigate("UserSendWorkRequest", { id: id })
+              }
+            >
+              {/* Профайл янзлах */}
+              <View style={{ flexDirection: "row", alignSelf: "center" }}>
+                <MaterialCommunityIcons
+                  name="cube-send"
+                  size={24}
+                  color={colors.border}
+                  style={{ top: 7 }}
+                />
+                <Text
+                  style={{
+                    textAlign: "center",
+                    top: 10,
+                    color: colors.border,
+                    right: 5,
+                  }}
+                >
+                  {" "}
+                  Ажлын санал тавих{"   "}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )}
 
           {/* Тохиргоо */}
           <TouchableOpacity

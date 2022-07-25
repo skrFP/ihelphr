@@ -89,6 +89,7 @@ const CourseSchoolModal = (props) => {
       setSearch(text);
     }
   };
+
   return (
     <Modal
       animationType="slide"
@@ -109,7 +110,7 @@ const CourseSchoolModal = (props) => {
         >
           <ModalHeader
             text="Ажлын туршлага"
-            clicked={() => setTypeModal(false)}
+            clicked={() => setSchoolModal(false)}
           />
 
           <TextInput
@@ -131,13 +132,39 @@ const CourseSchoolModal = (props) => {
               marginVertical: 10,
             }}
           />
-
-          <FlatList
-            data={filterData}
-            keyExtractor={(item, index) => index}
-            ItemSeparatorComponent={ItemSeparatorView}
-            renderItem={ItemView}
-          />
+          {filterData.length > 0 ? (
+            <FlatList
+              data={filterData}
+              keyExtractor={(item, index) => index}
+              ItemSeparatorComponent={ItemSeparatorView}
+              renderItem={ItemView}
+              showsVerticalScrollIndicator={false}
+            />
+          ) : (
+            <TouchableOpacity
+              style={{
+                flexDirection: "row",
+                marginHorizontal: 10,
+                alignItems: "center",
+              }}
+              onPress={() => {
+                setSchoolModal(!schoolModal);
+                setCourse({
+                  ...course,
+                  school: search,
+                  schoolPhoto: "photo_62429a7c4a8b192ee41485fb.jpg",
+                });
+              }}
+            >
+              <Image
+                source={require("../../../../../../assets/logo.png")}
+                style={{ width: 50, height: 50, borderRadius: 30 }}
+              />
+              <View style={{ marginLeft: 10 }}>
+                <Text style={{ color: colors.primaryText }}>{search}</Text>
+              </View>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </Modal>

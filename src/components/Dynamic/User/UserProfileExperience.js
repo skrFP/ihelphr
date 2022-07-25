@@ -26,7 +26,7 @@ const UserProfileExperience = ({ data }) => {
             fontSize: 20,
           }}
         >
-          Туршалга
+          Туршлага
         </Text>
       </View>
       {data.map((e) => {

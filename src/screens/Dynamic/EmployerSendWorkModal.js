@@ -7,27 +7,38 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import * as Print from "expo-print";
 import { shareAsync } from "expo-sharing";
 import { api } from "../../../Constants";
-import CompanyHeader from "../Header/CompanyHeader";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import useUserProfile from "../../hooks/ProfileDetail/User/useUserProfile";
-import Border from "../Border";
+import Border from "../../components/Border";
+import UserContext from "../../context/UserContext";
 
-const CvDetailScreen = (props) => {
-  const { id } = props.route.params;
+const EmployerSendWorkModal = (props) => {
+  const { id, isSentCv } = props.route.params;
+  const state = useContext(UserContext);
   const [data, setData] = useState([]);
   const { colors } = useTheme();
-  const [userProfile] = useUserProfile(id);
+  const [userProfile] = useUserProfile(state.userId);
   const navigation = useNavigation();
   const getCvData = () => {
     axios
-      .get(`${api}/api/v1/questionnaires/${id}`)
+      .get(`${api}/api/v1/questionnaires/${state.userId}`)
       .then((res) => {
         setData(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const sendCv = () => {
+    axios
+      .post(`${api}/api/v1/applies/${id}/profile`)
+      .then((res) => {
+        console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -39,113 +50,119 @@ const CvDetailScreen = (props) => {
   if (!userProfile) {
     return null;
   }
+
   const html = `
-  <html lang="en">
-  <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  </head>
-  <style>
-      * {
-    box-sizing: border-box;
-  }   
-      p {
-          font-size: 18px;
-      }
-      .column {
-    float: left;
-    width: 50%;
-    padding: 10px;
-    height: 300px; 
-    align-items: center;
-  }
-  .row:after {
-    content: "";
-    display: table;
-    clear: both;
-    align-items: center;
-  }
-  </style> 
-  <body>
-      <div style="font-family:Arial, Helvetica, sans-serif;">
-          <h1 style="margin-top: 120px;">
-              ${data.lastName} ${data.firstName}
-          </h1>
-          <div class="row">
-          <div class="column">
-              <img width="63%" src="${api}/upload/${data.profile}" alt="">
-          </div>
-          <div class="column"  style="float:right; padding-right: 15%; ">
-              <h3 style="color: #338DFF;"> CONTACTS</h3>
-              <p">Born in Erdenet city, Mongolia <br>
-                  Lives in Ulaanbaatar, Mongolia <br>
-                  <span style="font-size:12px;"> address </span> </p>
-              <br>
-              <a  href="naki.mongolia@gmail.com">naki.mongolia@gmail.com</a> <br>
-              <a  href="namkhaidorj@ihelp.mn">namkhaidorj@ihelp.mn</a> <br>
-              <span  style="font-size: 12px;"> e-mail </span>      
-              <p> 
-                  976-99757475 <br>
-                  <span style="font-size: 12px;"> phone number </span>
-              </p>
-          </div>
-      </div>
-          <h3> <span style="color: #338DFF;">⭐EXPERIENCES </span></h3>
-          <div>
-          <p id="demo"></p>
-            <p>· CEO, <span> ihelp.mn, Novelist LLC,</span> Ulaanbaatar, Mongolia, Jan 2021 to present </p>
+    <html lang="en">
+  
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <style>
+        * {
+      box-sizing: border-box;
+    }   
+        p {
+            font-size: 18px;
+        }
+        .column {
+      float: left;
+      width: 50%;
+      padding: 10px;
+      height: 300px; 
+      align-items: center;
+    }
+    .row:after {
+      content: "";
+      display: table;
+      clear: both;
+      align-items: center;
+    }
+    </style> 
+    <body>
+        <div style="font-family:Arial, Helvetica, sans-serif;">
+            <h1 style="margin-top: 120px;">
+                ${data.lastName} ${data.firstName}
+            </h1>
+            <div class="row">
+            <div class="column">
+                <img width="63%" src="${api}/upload/${data.profile}" alt="">
+            </div>
+            <div class="column"  style="float:right; padding-right: 15%; ">
+                <h3 style="color: #338DFF;"> CONTACTS</h3>
+                <p">Born in Erdenet city, Mongolia <br>
+                    Lives in Ulaanbaatar, Mongolia <br>
+                    <span style="font-size:12px;"> address </span> </p>
+                <br>
+                <a  href="naki.mongolia@gmail.com">naki.mongolia@gmail.com</a> <br>
+                <a  href="namkhaidorj@ihelp.mn">namkhaidorj@ihelp.mn</a> <br>
+                <span  style="font-size: 12px;"> e-mail </span>      
+                <p> 
+                    976-99757475 <br>
+                    <span style="font-size: 12px;"> phone number </span>
+                </p>
+            </div>
         </div>
-          <h3 style="color: #338DFF;">🎓 EDUCATION</h3>
-          <div>
-              <p>· International Business Management & Marketing, Pre-master’s program, University of Sheffield, UK,
-                  2019-2020</p>
-              <p>· Bachelor of International Economic Relations, National University of Mongolia (NUM), School of
-                  International Relations and Public Administration (SIRPA), 2012 to 2016</p>
-              <p>· High school education, Erdmiin san school, Erdenet city, Mongolia, 2009-2012</p>
-          </div>
-          <h3 style="color: #338DFF;">👑 AWARDS</h3>
-          <div>
-              <p>· Best of the year, Bloomberg TV Mongolia, National News Corporation LLC, 2019 </p>
-              <p>· The Leader Youngman of the Year, Mongolian Youth Organization, 2018</p>
-              <p>· The first place in the essay contest, “Passport to the world”, Education USA /EARC/, 2016</p>
-              <p>· The best delegate prize of the Model United Nations, awarded by NUM-SIRPA, 2015</p>
-              <p>· Student’s scholarship awarded by Zorig Foundation & LG, 2014 </p>
-              <p>· 3rd place in essay contest of World peaceful day, 2012</p>
-          </div>
-          <h3 style="color: #338DFF;">💻 COMPUTER SKILLS</h3>
-          <div>
-              <p>· <span style="color: blue;">Basic: </span>Windows software, macOS</p>
-              <p>· <span style="color: blue;">Intermediate: </span>Camtasia Studio, Microsoft Dynamic NAV</p>
-              <p>· <span style="color: blue;">Advanced: </span>Google apps; Microsoft office; other online platforms</p>
-          </div>
-          <h3 style="color: #338DFF;">✏️ LANGUAGE</h3>
-          <div>
-              <p>· <span style="color: blue;">Native: </span> Mongolian, <span style="color: blue;"> Advanced:
-                  </span>English</p>
-          </div>
-          <h3 style="color: #338DFF;">🎲 HOBBIES AND INTERESTS</h3>
-          <div>
-              <p>· <span style="color: blue;"> Hosting: </span>Morning View Series – Motivational & inspirational content
-                  that interviews successful leaders to share their experience, principles & philosophy to youth -
-                  <br> <span><a href=" www.youtube.com/c/morningviewseries"> www.youtube.com/c/morningviewseries</a>
-                  </span>
-              </p>
-              <p>· <span style="color: blue;"> Volunteering: </span>One Asia 2015</p>
-              <p>· <span style="color: blue;"> Public speaking: </span>World Speech day 2016; NUM-SIRPA UN Model 2015;
-                  Mongolian National Orator Championship 2015; Scientific conferences etc.</p>
-          </div>
-          <h2 style="color:#338DFF ;">DETAILED SKILLS & ACHIEVEMENTS</h2>
-          <p>✓ Experienced in business planning, customer acquisition, negotiation, communication and event organization
-          </p>
-          <p>✓ Expanded acquaintance and communication</p>
-          <p>✓ Increased interpretation skills and ability to make understand individual</p>
-          <p>✓ Improved leadership skills</p>
-          <p>✓ Enhanced skills in research and development</p>
-          <p>✓ Strengthened motivation to reach targeted goals and ambition</p>
-      </div>
-  </body>
-  </html>
-  `;
+            <h3> <span style="color: #338DFF;">⭐EXPERIENCES </span></h3>
+            <div>
+              ${
+                data.experience &&
+                data.experience.map((e) => {
+                  return e.end;
+                })
+              }
+              </div>
+            <h3 style="color: #338DFF;">🎓 EDUCATION</h3>
+            <div>
+                <p>· International Business Management & Marketing, Pre-master’s program, University of Sheffield, UK,
+                    2019-2020</p>
+                <p>· Bachelor of International Economic Relations, National University of Mongolia (NUM), School of
+                    International Relations and Public Administration (SIRPA), 2012 to 2016</p>
+                <p>· High school education, Erdmiin san school, Erdenet city, Mongolia, 2009-2012</p>
+            </div>
+            <h3 style="color: #338DFF;">👑 AWARDS</h3>
+            <div>
+                <p>· Best of the year, Bloomberg TV Mongolia, National News Corporation LLC, 2019 </p>
+                <p>· The Leader Youngman of the Year, Mongolian Youth Organization, 2018</p>
+                <p>· The first place in the essay contest, “Passport to the world”, Education USA /EARC/, 2016</p>
+                <p>· The best delegate prize of the Model United Nations, awarded by NUM-SIRPA, 2015</p>
+                <p>· Student’s scholarship awarded by Zorig Foundation & LG, 2014 </p>
+                <p>· 3rd place in essay contest of World peaceful day, 2012</p>
+            </div>
+            <h3 style="color: #338DFF;">💻 COMPUTER SKILLS</h3>
+            <div>
+                <p>· <span style="color: blue;">Basic: </span>Windows software, macOS</p>
+                <p>· <span style="color: blue;">Intermediate: </span>Camtasia Studio, Microsoft Dynamic NAV</p>
+                <p>· <span style="color: blue;">Advanced: </span>Google apps; Microsoft office; other online platforms</p>
+            </div>
+            <h3 style="color: #338DFF;">✏️ LANGUAGE</h3>
+            <div>
+                <p>· <span style="color: blue;">Native: </span> Mongolian, <span style="color: blue;"> Advanced:
+                    </span>English</p>
+            </div>
+            <h3 style="color: #338DFF;">🎲 HOBBIES AND INTERESTS</h3>
+            <div>
+                <p>· <span style="color: blue;"> Hosting: </span>Morning View Series – Motivational & inspirational content
+                    that interviews successful leaders to share their experience, principles & philosophy to youth -
+                    <br> <span><a href=" www.youtube.com/c/morningviewseries"> www.youtube.com/c/morningviewseries</a>
+                    </span>
+                </p>
+                <p>· <span style="color: blue;"> Volunteering: </span>One Asia 2015</p>
+                <p>· <span style="color: blue;"> Public speaking: </span>World Speech day 2016; NUM-SIRPA UN Model 2015;
+                    Mongolian National Orator Championship 2015; Scientific conferences etc.</p>
+            </div>
+            <h2 style="color:#338DFF ;">DETAILED SKILLS & ACHIEVEMENTS</h2>
+            <p>✓ Experienced in business planning, customer acquisition, negotiation, communication and event organization
+            </p>
+            <p>✓ Expanded acquaintance and communication</p>
+            <p>✓ Increased interpretation skills and ability to make understand individual</p>
+            <p>✓ Improved leadership skills</p>
+            <p>✓ Enhanced skills in research and development</p>
+            <p>✓ Strengthened motivation to reach targeted goals and ambition</p>
+        </div>
+    </body>
+    </html>
+    `;
   const printToFile = async () => {
     // On iOS/android prints the given html. On web prints the HTML from the current page.
     const { uri } = await Print.printToFileAsync({
@@ -156,7 +173,6 @@ const CvDetailScreen = (props) => {
 
   return (
     <SafeAreaView style={{ backgroundColor: colors.header }}>
-      <CompanyHeader isBack={true} />
       <ScrollView
         style={{ backgroundColor: colors.background }}
         showsVerticalScrollIndicator={false}
@@ -542,7 +558,6 @@ const CvDetailScreen = (props) => {
         <TouchableOpacity
           style={{
             padding: 10,
-
             borderWidth: 1,
             borderRadius: 20,
             marginVertical: 10,
@@ -564,10 +579,10 @@ const CvDetailScreen = (props) => {
             marginVertical: 10,
             margin: 20,
           }}
-          onPress={() => navigation.navigate("UserSendWorkRequest", { id: id })}
+          onPress={sendCv}
         >
           <Text style={{ textAlign: "center", color: colors.primaryText }}>
-            Ажлын санал тавих
+            {isSentCv ? "Ажлын санал илгээгдсэн" : "Ажлын санал тавих"}
           </Text>
         </TouchableOpacity>
         {/* Profile ruu ochih */}
@@ -580,10 +595,14 @@ const CvDetailScreen = (props) => {
             marginVertical: 10,
             margin: 20,
           }}
-          onPress={() => navigation.navigate("ViewUserProfile", { id: id })}
+          onPress={() => {
+            navigation.navigate("Профайл", {
+              screen: "UserProfileScreen",
+            });
+          }}
         >
           <Text style={{ textAlign: "center", color: colors.primaryText }}>
-            Профайл руу очих
+            Анкет янзлах
           </Text>
         </TouchableOpacity>
         <View style={{ marginVertical: 100 }} />
@@ -592,6 +611,6 @@ const CvDetailScreen = (props) => {
   );
 };
 
-export default CvDetailScreen;
+export default EmployerSendWorkModal;
 
 const styles = StyleSheet.create({});
